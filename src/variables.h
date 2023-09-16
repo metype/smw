@@ -1115,3 +1115,17 @@ enum GameMode {
   gm_EndingTheEndFadeIn = 0x28,
   gm_EndingTheEnd = 0x29,
 };
+
+enum ControllerButtons {
+  cb_Nothing = 0x00,
+  cb_Left = 0x01,
+  cb_Right = 0x02,
+  cb_Down = 0x04,
+  cb_Up = 0x08,
+  cb_Start = 0x10,
+  cb_Select = 0x20,
+  cb_YAndX = 0x40,
+  cb_BAndA = 0x80,
+  cb_L = 0x10,
+  cb_R = 0x20,
+};
