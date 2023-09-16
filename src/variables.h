@@ -333,9 +333,9 @@ extern uint8 ptr_layer2_is_bg;
 #define player_sub_ypos (*(uint8*)(g_ram+0x13DC))
 #define player_turning_around_flag (*(uint8*)(g_ram+0x13DD))
 #define player_override_walking_frames (*(uint8*)(g_ram+0x13DE))
-#define player_cape_image (*(uint8*)(g_ram+0x13DF))
-#define player_current_pose (*(uint8*)(g_ram+0x13E0))
-#define player_slope_player_is_on1 (*(uint8*)(g_ram+0x13E1))
+#define player_cape_image (*(uint8*)(g_ram+0x13DF))                     // The Cape on Mario's Back?
+#define player_current_pose (*(uint8*)(g_ram+0x13E0))                   // Current Player Sprite
+#define player_slope_player_is_on1 (*(uint8*)(g_ram+0x13E1))            // 45° Slope?
 #define player_spinjump_fireball_timer (*(uint8*)(g_ram+0x13E2))
 #define player_wall_walk_status (*(uint8*)(g_ram+0x13E3))
 #define player_pmeter (*(uint8*)(g_ram+0x13E4))
@@ -344,7 +344,7 @@ extern uint8 ptr_layer2_is_bg;
 #define player_cape_hitbox_x (*(uint16*)(g_ram+0x13E9))
 #define player_cape_hitbox_y (*(uint16*)(g_ram+0x13EB))
 #define player_sliding_on_ground (*(uint8*)(g_ram+0x13ED))
-#define player_slope_player_is_on2 (*(uint8*)(g_ram+0x13EE))
+#define player_slope_player_is_on2 (*(uint8*)(g_ram+0x13EE))            // 90° Slope?
 #define player_on_ground_flag (*(uint8*)(g_ram+0x13EF))
 #define player_facing_direction_on_net_door (*(uint8*)(g_ram+0x13F0))
 #define flag_enable_vert_scroll (*(uint8*)(g_ram+0x13F1))
