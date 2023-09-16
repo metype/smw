@@ -1117,6 +1117,7 @@ enum GameMode {
 };
 
 enum ControllerButtons {
+  // io_controller_hold1
   cb_Nothing = 0x00,
   cb_Left = 0x01,
   cb_Right = 0x02,
@@ -1126,6 +1127,38 @@ enum ControllerButtons {
   cb_Select = 0x20,
   cb_YAndX = 0x40,
   cb_BAndA = 0x80,
+
+  // io_controller_hold2
   cb_L = 0x10,
   cb_R = 0x20,
 };
+
+#define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
+#define CON_HOLD_RIGHT  (io_controller_hold1 & cb_Right)
+#define CON_HOLD_UP     (io_controller_hold1 & cb_Up)
+#define CON_HOLD_DOWN   (io_controller_hold1 & cb_Down)
+//#define CON_HOLD_YX     (io_controller_hold1 & cb_YAndX)
+#define CON_HOLD_Y     (io_controller_hold1 & cb_YAndX)
+#define CON_HOLD_X     (io_controller_hold2 & cb_YAndX)
+//#define CON_HOLD_AB     (io_controller_hold1 & cb_BAndA)
+#define CON_HOLD_B     (io_controller_hold1 & cb_BAndA)
+#define CON_HOLD_A      (io_controller_hold2 & cb_BAndA)
+#define CON_HOLD_START  (io_controller_hold1 & cb_Start)
+#define CON_HOLD_SELECT (io_controller_hold1 & cb_Select)
+#define CON_HOLD_L      (io_controller_hold2 & cb_L)
+#define CON_HOLD_R      (io_controller_hold2 & cb_R)
+
+#define CON_PRESS_LEFT   (io_controller_press1 & cb_Left)
+#define CON_PRESS_RIGHT  (io_controller_press1 & cb_Right)
+#define CON_PRESS_UP     (io_controller_press1 & cb_Up)
+#define CON_PRESS_DOWN   (io_controller_press1 & cb_Down)
+//#define CON_PRESS_YX     (io_controller_press1 & cb_YAndX)
+#define CON_PRESS_Y     (io_controller_press1 & cb_YAndX)
+#define CON_PRESS_X     (io_controller_press2 & cb_YAndX)
+//#define CON_PRESS_AB     ((io_controller_press1 | io_controller_press2) & cb_BAndA)
+#define CON_PRESS_B     (io_controller_press1 & cb_BAndA)
+#define CON_PRESS_A      (io_controller_press2 & cb_BAndA)
+#define CON_PRESS_START  (io_controller_press1 & cb_Start)
+#define CON_PRESS_SELECT (io_controller_press1 & cb_Select)
+#define CON_PRESS_L      (io_controller_press2 & cb_L)
+#define CON_PRESS_R      (io_controller_press2 & cb_R)
