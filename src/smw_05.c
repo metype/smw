@@ -2348,28 +2348,28 @@ bool LoadLevel() {  // 05d796
   if (counter_sublevels_entered) {
     uint8 v0 = ((misc_level_layout_flags & 1) != 0) ? HIBYTE(player_ypos) : HIBYTE(player_xpos);
     r14w = (ow_players_map[(uint8)player_current_characterx4 >> 2] != 0) << 8 | misc_subscreen_exit_entrance_number_lo[v0];
-   
+
     r14w = LmHook_LoadLevelInfo_A(r14w, v0);
 
     if (flag_use_secondary_entrance) {
-      uint16 j = r14w;
-      r14w = (r14w & ~0xff) | kLevelInfo_05F800[j];
-      uint8 r0 = kLevelInfo_05FA00[j];
-      LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[r0 & 0xF];
-      HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[r0 & 0xF];
-      LOBYTE(mirror_current_layer1_ypos) = kLoadLevel_DATA_05D708[(r0 & 0x30) >> 4];
-      LOBYTE(mirror_current_layer2_ypos) = kLoadLevel_DATA_05D70C[r0 >> 6];
-      r1 = kLevelInfo_05FC00[j];
-      LOBYTE(player_xpos) = kLoadLevel_DATA_05D750[r1 >> 5];
-      HIBYTE(player_xpos) = kLoadLevel_DATA_05D758[r1 >> 5];
-      if (HAS_LM_FEATURE(kLmFeature_LoadLevel)) {
+    uint16 j = r14w;
+    r14w = (r14w & ~0xff) | kLevelInfo_05F800[j];
+    uint8 r0 = kLevelInfo_05FA00[j];
+    LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[r0 & 0xF];
+    HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[r0 & 0xF];
+    LOBYTE(mirror_current_layer1_ypos) = kLoadLevel_DATA_05D708[(r0 & 0x30) >> 4];
+    LOBYTE(mirror_current_layer2_ypos) = kLoadLevel_DATA_05D70C[r0 >> 6];
+    r1 = kLevelInfo_05FC00[j];
+    LOBYTE(player_xpos) = kLoadLevel_DATA_05D750[r1 >> 5];
+    HIBYTE(player_xpos) = kLoadLevel_DATA_05D758[r1 >> 5];
+    if (HAS_LM_FEATURE(kLmFeature_LoadLevel)) {
         int tt = LmHook_LoadLevelInfo_E(j, r14w, r0, r1);
         if (tt < 0)
-          return true;
+        return true;
         r2 = tt;
-      } else {
+    } else {
         misc_level_header_entrance_settings = kLm5FE00[j] & 7;
-      }
+    }
     }
   } else {
     v1 = 0;
@@ -2391,9 +2391,10 @@ bool LoadLevel() {  // 05d796
     if (v2 >= 0x25)
       v2 -= 0x24;
     r14w = (ow_players_map[(uint8)v1] != 0) << 8 | v2;
+    //printf("r14w = %i\n", r14w);
     r14w = LmHook_LoadLevelInfo_C(r14w);
   }
-  
+
   ptr_layer1_data = kLevelData_Layer1(r14w).ptr;
   ptr_layer2_data = kLevelData_Layer2(r14w).ptr;
   ptr_layer2_is_bg = kLevelData_Layer2_IsBg[r14w];
@@ -2402,10 +2403,7 @@ bool LoadLevel() {  // 05d796
     lunar_magic_FE = r14w + 1;
 
   HIBYTE(v5) = 0;
-  ptr_sprite_list_data = (LongPtr){ 
-    .bank = kLmSpritePtrBankByte[r14w],
-    .addr = kLoadLevel_SpriteDataPtrs[r14w]
-  };
+  ptr_sprite_list_data = (LongPtr){.bank = kLmSpritePtrBankByte[r14w], .addr = kLoadLevel_SpriteDataPtrs[r14w]};
   uint8 sprite_hdr = *GetSpriteListPtr();
   sprites_sprite_memory_setting = sprite_hdr & 0x1F;
   sprites_sprite_buoyancy_settings = sprite_hdr & 0xC0;
@@ -2440,9 +2438,9 @@ bool LoadLevel() {  // 05d796
     flag_layer1_vert_scroll_level_setting = 1;
   }
   // disable the write to var13CD if LM
-  if (counter_sublevels_entered || ((g_lunar_magic || (lm_var13CD = r2 >> 4)), flag_got_midpoint = 0,
-                                    ow_current_event_number = kLoadLevel_DATA_05D608[ow_level_number_lo],
-                                    (ow_level_tile_settings[ow_level_number_lo] & 0x40) == 0)) {
+  if (counter_sublevels_entered ||
+      ((g_lunar_magic || (lm_var13CD = r2 >> 4)), flag_got_midpoint = 0,
+       ow_current_event_number = kLoadLevel_DATA_05D608[ow_level_number_lo], (ow_level_tile_settings[ow_level_number_lo] & 0x40) == 0)) {
     r1 &= 0x1F;
     if ((misc_level_layout_flags & 1) != 0) {
       HIBYTE(player_ypos) = r1;
@@ -2483,7 +2481,7 @@ bool LoadLevel() {  // 05d796
       LOBYTE(mirror_current_layer1_ypos) = -64;
       LOBYTE(mirror_current_layer2_ypos) = -64;
       misc_level_header_entrance_settings = 0;
-      ptr_sprite_list_data = (LongPtr){ .bank = 7, .addr = 0xc3ee };
+      ptr_sprite_list_data = (LongPtr){.bank = 7, .addr = 0xc3ee};
       LmHook_LoadLevelInfo();
       uint8 sprite_hdr = *GetSpriteListPtr();
       sprites_sprite_memory_setting = sprite_hdr & 0x1F;
