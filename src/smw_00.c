@@ -4635,7 +4635,7 @@ LABEL_43:
           v6 = 0;
 LABEL_54:
           if (!timer_time_to_float_after_cape_flight) {
-            if ((*(&io_controller_hold1 + v5) & 0x80) == 0) {
+            if ((*(&io_controller_hold1 + v5) & 0x80) == 0) {   // What does this do?
 LABEL_60:
               if (v6 == 2) {
                 HandlePlayerPhysics_D930(2);
@@ -4655,7 +4655,8 @@ LABEL_60:
         }
       }
 LABEL_62:
-      if ((io_controller_hold1 & 0x80) == 0)
+      //if ((io_controller_hold1 & 0x80) == 0)
+      if(!CON_HOLD_B)
         HandlePlayerPhysics_D930(0);
       else
         HandlePlayerPhysics_D930(1);
@@ -4681,17 +4682,19 @@ LABEL_62:
       v0 = 2;
     goto LABEL_20;
   }
-  uint8 v1 = (uint8)(io_controller_hold1 & 3) >> 1;
+  //uint8 v1 = /*(uint8)*/(io_controller_hold1 & 3) >> 1; // uint8 casted to uint8?
+  uint8 curPlayerDir = CON_HOLD_RIGHT >> 1;   // I think that's what v1 is supposed to be used for?
   if (player_facing_direction)
-    v1 ^= 1;
-  v0 = v1;
-  if (v1 == player_cape_glide_index) {
+    curPlayerDir ^= 1;
+  v0 = curPlayerDir;
+  if (curPlayerDir == player_cape_glide_index) {
 LABEL_20:
     if (timer_change_diving_state)
       goto LABEL_27;
   }
 LABEL_21:
-  if ((io_controller_hold1 & 0x40) == 0)
+  //if ((io_controller_hold1 & 0x40) == 0)
+  if (!CON_HOLD_Y)
     v0 = 4;
   if (player_cape_flying_phase != kHandlePlayerPhysics_DATA_00D7D4[v0]) {
     player_cape_flying_phase += kHandlePlayerPhysics_CapeSpeed[v0];
