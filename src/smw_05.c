@@ -338,7 +338,7 @@ void LoadSublevel() {  // 05801e
   }
   blocks_screen_to_place_current_object = 0;
   BeginLoadingLevelData();
-  if (sign8(misc_game_mode - 34))
+  if (sign8(misc_game_mode - gm_EndingFadeToEnemies2))
     LoadSublevel_02A751();
 }
 
@@ -581,7 +581,7 @@ void LoadLevelHeader() {  // 0584e3
   graphics_level_sprite_graphics_setting = r0 & 0xF;
   uint8 v3 = kLoadLevelHeader_LevelMusicTable[(r0 >> 4) & 7];
   if (HAS_LM_FEATURE(kLmFeature_MusicRegTweak)) {
-    if (misc_game_mode >= 7)
+    if (misc_game_mode >= gm_TitleScreen)
       misc_music_register_backup = v3;
   } else {
     if ((misc_music_register_backup & 0x80) != 0)
@@ -1048,7 +1048,7 @@ void DisplayMessage() {  // 05b10c
       if (misc_color_of_palace_switch_pressed1) {
         ++counter_enemy_rollcall_screen;
         flag_got_midpoint = 1;
-        sub_5B165(1);
+        ExitToOverworldWithAction(1);
         return;
       }
     }
@@ -1146,12 +1146,12 @@ void DisplayMessage() {  // 05b10c
 
 void DisplayMessage_ExitToOverworldNoEvent() {  // 05b160
   misc_intro_level_flag = 0;
-  sub_5B165(0);
+  ExitToOverworldWithAction(0);
 }
 
-void sub_5B165(uint8 a) {  // 05b165
+void ExitToOverworldWithAction(uint8 a) {  // 05b165
   misc_exit_level_action = a;
-  misc_game_mode = 11;
+  misc_game_mode = gm_FadeToOverworld;
 }
 
 void DisplayMessage_DrawSwitchBlocks(uint8 k) {  // 05b2eb
