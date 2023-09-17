@@ -1,3 +1,8 @@
+#ifndef VARIABLES_H
+#define VARIABLES_H
+
+#include "common_rtl.h"
+
 //#define r0w (*(uint16*)(g_ram+0x0))
 //#define r1w (*(uint16*)(g_ram+0x1))
 //#define r2w (*(uint16*)(g_ram+0x2))
@@ -333,9 +338,9 @@ extern uint8 ptr_layer2_is_bg;
 #define player_sub_ypos (*(uint8*)(g_ram+0x13DC))
 #define player_turning_around_flag (*(uint8*)(g_ram+0x13DD))
 #define player_override_walking_frames (*(uint8*)(g_ram+0x13DE))
-#define player_cape_image (*(uint8*)(g_ram+0x13DF))
-#define player_current_pose (*(uint8*)(g_ram+0x13E0))
-#define player_slope_player_is_on1 (*(uint8*)(g_ram+0x13E1))
+#define player_cape_image (*(uint8*)(g_ram+0x13DF))                     // The Cape on Mario's Back?
+#define player_current_pose (*(uint8*)(g_ram+0x13E0))                   // Current Player Sprite
+#define player_slope_player_is_on1 (*(uint8*)(g_ram+0x13E1))            // 45° Slope?
 #define player_spinjump_fireball_timer (*(uint8*)(g_ram+0x13E2))
 #define player_wall_walk_status (*(uint8*)(g_ram+0x13E3))
 #define player_pmeter (*(uint8*)(g_ram+0x13E4))
@@ -344,7 +349,7 @@ extern uint8 ptr_layer2_is_bg;
 #define player_cape_hitbox_x (*(uint16*)(g_ram+0x13E9))
 #define player_cape_hitbox_y (*(uint16*)(g_ram+0x13EB))
 #define player_sliding_on_ground (*(uint8*)(g_ram+0x13ED))
-#define player_slope_player_is_on2 (*(uint8*)(g_ram+0x13EE))
+#define player_slope_player_is_on2 (*(uint8*)(g_ram+0x13EE))            // 90° Slope?
 #define player_on_ground_flag (*(uint8*)(g_ram+0x13EF))
 #define player_facing_direction_on_net_door (*(uint8*)(g_ram+0x13F0))
 #define flag_enable_vert_scroll (*(uint8*)(g_ram+0x13F1))
@@ -840,7 +845,7 @@ extern uint8 ptr_layer2_is_bg;
 #define cluster_spr_table1e66 ((uint8*)(g_ram+0x1E66))
 #define cluster_spr_table1e7a ((uint8*)(g_ram+0x1E7A))
 #define cluster_spr_table1e8e ((uint8*)(g_ram+0x1E8E))
-#define ow_level_tile_settings ((uint8*)(g_ram+0x1EA2))
+#define ow_level_tile_settings ((uint8 *)(g_ram + 0x1EA2))
 #define ow_event_flags ((uint8*)(g_ram+0x1F02))
 #define ow_players_map ((uint8*)(g_ram+0x1F11))
 #define ow_players_animation ((uint16*)(g_ram+0x1F13))
@@ -1054,3 +1059,117 @@ typedef struct ExAnimationInfo {
 #define lm_timer_var (*(uint8 *)(g_ram + 0x1ffe0))
 
 extern bool g_lunar_magic;
+
+enum SpriteStatus {
+  ss_NonExistant = 0x0,
+  ss_Init = 0x1,
+  ss_FallOffScreen = 0x2,
+  ss_Smushed = 0x3,
+  ss_SpinJumped = 0x4,
+  ss_Unknown = 0x5,
+  ss_TurnToCoin = 0x6,
+  ss_Unused = 0x7,
+  ss_Normal = 0x8,
+  ss_Carryable = 0x9,
+  ss_Kicked = 0xA,
+  ss_Carried = 0xB,
+  ss_Fleeing = 0xC
+};
+
+enum GameMode {
+  gm_LoadNintendoPresents = 0x00,
+  gm_NintendoPresents = 0x01,
+  gm_FadeToTitleScreen = 0x02,
+  gm_LoadTitleScreen = 0x03,
+  gm_PrepareTitleScreen = 0x04,
+  gm_TitleScreenFadeIn = 0x05,
+  gm_TitleScreenCircle = 0x06,
+  gm_TitleScreen = 0x07,
+  gm_TitleScreenFileSelect = 0x08,
+  gm_TitleScreenFileDelete = 0x09,
+  gm_TitleScreenPlayerSelect = 0x0A,
+  gm_FadeToOverworld = 0x0B,
+  gm_LoadOverworld = 0x0C,
+  gm_OverworldFadeIn = 0x0D,
+  gm_Overworld = 0x0E,
+  gm_FadeToLevel = 0x0F,
+  gm_FadeToLevelBlack = 0x10,
+  gm_LoadLevelMarioStart = 0x11,
+  gm_PrepareLevel = 0x12,
+  gm_LevelFadeIn = 0x13,
+  gm_Level = 0x14,
+  gm_FadeToGameOverOrTimeUp = 0x15,
+  gm_LoadGameOverOrTimeUp = 0x16,
+  gm_GameOverOrTimeUp = 0x17,
+  gm_LoadCreditsCutscene = 0x18,
+  gm_LoadCreditsCutscene2 = 0x19,
+  gm_LoadCreditsCutscene3 = 0x1A,
+  gm_EndingCreditsCutscene = 0x1B,
+  gm_EndingFadeToYoshisHouse = 0x1C,
+  gm_EndingLoadYoshisHouse = 0x1D,
+  gm_EndingYoshisHouseFadeIn = 0x1E,
+  gm_EndingYoshisHouse = 0x1F,
+  gm_EndingFadeToEnemies = 0x20,
+  gm_EndingFadeToEnemiesBlack = 0x21,
+  gm_EndingFadeToEnemies2 = 0x22,
+  gm_EndingFadeToEnemiesBlack2 = 0x23,
+  gm_EndingEnemiesFadeIn = 0x24,
+  gm_EndingEnemies = 0x25,
+  gm_EndingFadeToEnd = 0x26,
+  gm_EndingLoadTheEnd = 0x27,
+  gm_EndingTheEndFadeIn = 0x28,
+  gm_EndingTheEnd = 0x29,
+};
+
+enum ControllerButtons {
+  // io_controller_hold1
+  cb_Nothing = 0x00,
+  cb_Left = 0x01,
+  cb_Right = 0x02,
+  cb_Down = 0x04,
+  cb_Up = 0x08,
+  cb_Start = 0x10,
+  cb_Select = 0x20,
+  cb_YAndX = 0x40,
+  cb_BAndA = 0x80,
+
+  // io_controller_hold2
+  cb_L = 0x10,
+  cb_R = 0x20,
+};
+
+#define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
+#define CON_HOLD_RIGHT  (io_controller_hold1 & cb_Right)
+#define CON_HOLD_UP     (io_controller_hold1 & cb_Up)
+#define CON_HOLD_DOWN   (io_controller_hold1 & cb_Down)
+//#define CON_HOLD_YX     (io_controller_hold1 & cb_YAndX)
+#define CON_HOLD_Y      (io_controller_hold1 & cb_YAndX)
+#define CON_HOLD_X      (io_controller_hold2 & cb_YAndX)
+//#define CON_HOLD_AB     (io_controller_hold1 & cb_BAndA)
+#define CON_HOLD_B      (io_controller_hold1 & cb_BAndA)
+#define CON_HOLD_A      (io_controller_hold2 & cb_BAndA)
+#define CON_HOLD_START  (io_controller_hold1 & cb_Start)
+#define CON_HOLD_SELECT (io_controller_hold1 & cb_Select)
+#define CON_HOLD_L      (io_controller_hold2 & cb_L)
+#define CON_HOLD_R      (io_controller_hold2 & cb_R)
+
+#define CON_PRESS_LEFT    (io_controller_press1 & cb_Left)
+#define CON_PRESS_RIGHT   (io_controller_press1 & cb_Right)
+#define CON_PRESS_UP      (io_controller_press1 & cb_Up)
+#define CON_PRESS_DOWN    (io_controller_press1 & cb_Down)
+//#define CON_PRESS_YX     (io_controller_press1 & cb_YAndX)
+#define CON_PRESS_Y       (io_controller_press1 & cb_YAndX)
+#define CON_PRESS_X       (io_controller_press2 & cb_YAndX)
+//#define CON_PRESS_AB     ((io_controller_press1 | io_controller_press2) & cb_BAndA)
+#define CON_PRESS_B       (io_controller_press1 & cb_BAndA)
+#define CON_PRESS_A       (io_controller_press2 & cb_BAndA)
+#define CON_PRESS_START   (io_controller_press1 & cb_Start)
+#define CON_PRESS_SELECT  (io_controller_press1 & cb_Select)
+#define CON_PRESS_L       (io_controller_press2 & cb_L)
+#define CON_PRESS_R       (io_controller_press2 & cb_R)
+
+/* Custom Phys */
+#define ALLOW_CEL_DASH    1
+#define ALLOW_DJUMP       1
+
+#endif

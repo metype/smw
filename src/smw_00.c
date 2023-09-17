@@ -3,6 +3,11 @@
 #include "smw_rtl.h"
 #include "variables.h"
 #include "assets/smw_assets.h"
+#include "CustomPhys.h"
+
+/* Custom Vars */
+int canCelDash = 1;
+int canDJump = 1;
 
 static FuncV *const kInitAndMainLoop_GameModePtrs[42] = {
     &GameMode00_LoadNintendoPresents,
@@ -4449,8 +4454,22 @@ LABEL_6:
 void HandlePlayerPhysics() {  // 00d5f2
   uint8 v4;
   uint8 r1 = 0;
+
+  if(ALLOW_CEL_DASH && CON_PRESS_L && canCelDash){
+    PHYS_DoCelDash(100, 100, 1);
+    canCelDash = 0;
+  }
+
+  if(ALLOW_DJUMP && CON_PRESS_B && canDJump){
+    PHYS_DoDoubleJump(100, 1);
+    canDJump = 0;
+  }
+
   if (!player_in_air_flag) {
+    canCelDash = 1;
+    canDJump = 1;
     player_ducking_flag = 0;
+
     if (!player_sliding_on_ground && (io_controller_hold1 & 4) != 0) {
       player_ducking_flag = io_controller_hold1 & 4;
       flag_cape_to_sprite_interaction = 0;
