@@ -317,7 +317,7 @@ void SmwVectorReset() {
   } while ((v0 & 0x8000) == 0);
   reset_sprites_y_function_in_ram[386] = 107;
   HandleSPCUploads_UploadSPCEngine();
-  misc_game_mode = 0;
+  misc_game_mode = gm_LoadNintendoPresents;
   misc_intro_level_flag = 0;
   InitializeFirst8KBOfRAM();
   HandleSPCUploads_UploadSamples();
@@ -1749,7 +1749,7 @@ void GameMode07_TitleScreenDemo() {  // 009c64
       if (LmHook_CustomTitleScreenDemo())
         GameMode14_InLevel();
       else
-        misc_game_mode = 2;
+        misc_game_mode = gm_FadeToTitleScreen;
       return;
     }
 
@@ -1774,7 +1774,7 @@ void GameMode07_TitleScreenDemo() {  // 009c64
 }
 
 void GameMode07_TitleScreenDemo_FadeOutToTitleScreen() {  // 009c89
-  misc_game_mode = 2;
+  misc_game_mode = gm_FadeToTitleScreen;
 }
 
 void GameMode07_TitleScreenDemo_InitializeFileSelect() {  // 009c9f
@@ -1812,7 +1812,8 @@ void GameMode08_FileSelect() {  // 009cd1
   if ((v0 = HandleMenuCursor_Main_ReturnsTwice(2)) == 0xff)
     return;
 
-  ++*(uint16 *)&misc_game_mode;
+  ++misc_game_mode;
+  //++*(uint16 *)&misc_game_mode;
   if (v0 == 3) {
     misc_which_file_to_erase = 0;
     BufferFileSelectText_Entry3(0, 0);
@@ -1968,7 +1969,7 @@ void GameMode0A_PlayerSelect_Entry2() {  // 009e17
 
 void GameMode0A_PlayerSelect_009E62() {  // 009e62
   SetKeepGameModeActiveTimer_OneFrame();
-  misc_game_mode = 11;
+  misc_game_mode = gm_FadeToOverworld;
 }
 
 void HandleMenuCursor_009E82(uint8 j) {  // 009e82
@@ -2133,7 +2134,7 @@ void GameMode0C_LoadOverworld() {  // 00a087
     if (!HAS_LM_FEATURE(kLmFeature_DontResetOwPlayersMap))
       ow_players_map[0] = 0;
     mirror_mosaic_size_and_bgenable = -16;
-    misc_game_mode = 16;
+    misc_game_mode = gm_FadeToLevelBlack;
     return;
   }
   ClearLayer3Tilemap();
@@ -2260,7 +2261,7 @@ void GameMode14_InLevel() {  // 00a1da
       if ((io_controller_hold1 & 0x20) != 0 && (ow_level_tile_settings[ow_level_number_lo] & 0x80) && (int8)misc_exit_level_action <= 0) {
         misc_exit_level_action = 0x80;
         ++counter_enemy_rollcall_screen;
-        misc_game_mode = 11;
+        misc_game_mode = gm_FadeToOverworld;
       }
     } else {
       if ((misc_nmito_use_flag & 0x80) == 0) {
@@ -3448,7 +3449,7 @@ LABEL_11:
           if (timer_bonus_game_end == 68)
             io_music_ch1 = 20;
           if (timer_bonus_game_end == 1)
-            misc_game_mode = 11;
+            misc_game_mode = gm_FadeToOverworld;
         }
         uint8 v3 = timer_blue_pswitch;
         if (timer_blue_pswitch < timer_silver_pswitch)
@@ -3487,7 +3488,7 @@ void PlayerState0B_RescuedPeach() {  // 00c5b5
   player_sliding_on_ground = 0;
   if (timer_end_level) {
     CreditsFadeOut();
-    if (misc_game_mode != 20) {
+    if (misc_game_mode != gm_Level) {
       PlayerState00_00C95B();
       return;
     }
@@ -3662,7 +3663,7 @@ void PlayerState0A_NoYoshiCutscene() {  // 00c870
   if (kPlayerState0A_NoYoshiCutscene_DATA_00C848[v1 - 2] == 0xFF) {
 LABEL_23:
     ++flag_show_player_start;
-    misc_game_mode = 15;
+    misc_game_mode = gm_FadeToLevel;
     if (v1 >= 0x11)
       ++yoshi_carry_over_levels_flag;
     PlayerState0A_NoYoshiCutscene_00C90A();
@@ -3799,7 +3800,7 @@ void PlayerState00_LevelFinished(uint8 j, uint8 a) {  // 00c9fe
       }
     }
     misc_currently_active_boss_end_cutscene = v2;
-    j = 24;
+    j = gm_LoadCreditsCutscene;
   }
 LABEL_9:
   misc_game_mode = j;
@@ -4267,7 +4268,7 @@ void PlayerState09_Death() {  // 00d0b6
     if ((--player_current_life_count & 0x80) == 0) {
       if (HAS_LM_FEATURE(kLmFeature_TimerTweaks) && lm_timer_var != 0 || 
           counter_timer_ones | counter_timer_tens | counter_timer_hundreds) {
-        misc_game_mode = 11;
+        misc_game_mode = gm_FadeToOverworld;
         return;
       }
       misc_death_message_to_display = 29;
@@ -4277,7 +4278,7 @@ void PlayerState09_Death() {  // 00d0b6
     }
     timer_display_death_message_animation = -64;
     timer_time_to_display_death_message = -1;
-    misc_game_mode = 21;
+    misc_game_mode = gm_FadeToGameOverOrTimeUp;
     return;
   }
   if (player_anim_timer < 0x26) {
@@ -4416,7 +4417,7 @@ void PlayerStateXX_EnterPipe_00D26A() {  // 00d26a
 
 void IncrementSublevelsEnteredAndPrepareToLoadSublevel() {  // 00d273
   ++counter_sublevels_entered;
-  misc_game_mode = 15;
+  misc_game_mode = gm_FadeToLevel;
 }
 
 void UnusedAddToWarpPipeTimerRoutine() {  // 00d27c

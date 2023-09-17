@@ -831,7 +831,7 @@ void OwProcess03_StandingStill() {  // 049120
       if (HandleOverworldStarPipeWarp_GetIndex()) {
         ++ow_warping_on_pipe_or_star_flag;
         misc_exit_level_action = 0;
-        misc_game_mode = 11;
+        misc_game_mode = gm_FadeToOverworld;
       }
       return;
     }
@@ -1454,7 +1454,7 @@ LABEL_5:
   if ((int16)(v1 - mirror_current_layer1_ypos) < 0) {
     ++ow_warping_on_pipe_or_star_flag;
     misc_exit_level_action = 0;
-    misc_game_mode = 11;
+    misc_game_mode = gm_FadeToOverworld;
   }
 }
 

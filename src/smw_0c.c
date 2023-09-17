@@ -169,7 +169,7 @@ void GameMode25_ShowEnemyRollcallScreen_Bank0C() {  // 0c93a5
 
 void GameMode21_DelayEnemyRollcall_Bank03() {  // 0c93ad
   if (!--HIBYTE(misc_layer3_yspeed)) {
-    misc_game_mode = 35;
+    misc_game_mode = gm_EndingFadeToEnemiesBlack2;
     counter_enemy_rollcall_screen = -1;
   }
 }
@@ -1095,7 +1095,7 @@ LABEL_7:
     if (!HIBYTE(misc_layer3_yspeed)) {
       ++misc_game_mode;
       if (counter_enemy_rollcall_screen != 12)
-        misc_game_mode = 34;
+        misc_game_mode = gm_EndingFadeToEnemies2;
     }
     goto LABEL_10;
   }
@@ -1613,7 +1613,7 @@ void CheckIfPlayerCanEndCastleDestructionCutscene() {  // 0ccfde
   if (!(HIBYTE(get_PointU16(l1_l2_scroll_spr_speed, 0)[1].y) | l1_l2_scroll_spr_current_state[1]) &&
       ((io_controller_press2 | io_controller_press1) & 0xC0) != 0) {
     l1_l2_scroll_spr_current_state[0] = 0;
-    misc_game_mode = 11;
+    misc_game_mode = gm_FadeToOverworld;
   }
 }
 

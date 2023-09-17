@@ -695,7 +695,7 @@ uint8 LmHook_HandleVerticalSubScreenCrossingForCurrentObject(void) {
 }
 
 void LmHook_UploadLevelLayer1And2Tilemaps(void) {
-  if (misc_game_mode == 1) {
+  if (misc_game_mode == gm_NintendoPresents) {
     lm_vram_upload_enable_0 = 0;
     lm_vram_upload_enable_6 = 0;
     lm_vram_upload_enable_12 = 0;
@@ -703,7 +703,7 @@ void LmHook_UploadLevelLayer1And2Tilemaps(void) {
     return;
   }
 
-  if (misc_game_mode >= 0x20) {
+  if (misc_game_mode >= gm_EndingFadeToEnemies) {
     UploadLevelLayer1And2Tilemaps();
     return;
   }
@@ -1346,14 +1346,14 @@ static FuncV *const kLmFunc_UpdateTilemapD[32] = {
 };
 
 void LmHook_BufferTilemap_L1(void) {
-  if (misc_game_mode >= 0x20)
+  if (misc_game_mode >= gm_EndingFadeToEnemies)
     BufferScrollingTiles_Layer1_Init();
   else
     kLmHook_BufferTilemap_L1[misc_level_mode_setting]();
 }
 
 void LmHook_BufferTilemap_L2(void) {
-  if (misc_game_mode >= 0x20)
+  if (misc_game_mode >= gm_EndingFadeToEnemies)
     BufferScrollingTiles_Layer2_Init();
   else
     kLmHook_BufferTilemap_L2[misc_level_mode_setting]();
@@ -1802,7 +1802,7 @@ uint16 LmHook_HandleStandardLevelCameraScrollG(uint16 r2, uint16 r4) {
 uint16 LmHook_LoadStripeImage(uint16 r3) {
   uint16 r9, r11;
 
-  if (misc_game_mode != 20 && misc_game_mode != 7 && misc_game_mode != 19 && misc_game_mode != 5)
+  if (misc_game_mode != gm_Level && misc_game_mode != gm_TitleScreen && misc_game_mode != gm_LevelFadeIn && misc_game_mode != gm_TitleScreenFadeIn)
     return r3; // Org code
 
   if ((r3 & 0x7000) != 0x2000) {
@@ -2211,7 +2211,7 @@ int LmHook_LoadLevelInfo_E(uint16 k, uint16 lvl, uint8 r0, uint8 r1) {
     HIBYTE(player_ypos) = r2 & 0x3F;
   }
   if ((r2 & 0x80) != 0) {
-    misc_game_mode = 12;
+    misc_game_mode = gm_LoadOverworld;
     mirror_screen_display_register = 0;
     misc_mosaic_direction = 0;
     mirror_mosaic_size_and_bgenable = 0;
