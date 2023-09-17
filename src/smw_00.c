@@ -4443,6 +4443,7 @@ LABEL_6:
 void HandlePlayerPhysics() {  // 00d5f2
   uint8 playerAccel;
   uint8 isPlayerHoldingLeft = 0;
+  //printf("Player x pos : %i\n", player_xpos);
   //printf("io_controller_hold1&2: %u, %u\n", io_controller_hold1, io_controller_hold2);
   if (!player_in_air_flag) {
     player_ducking_flag = 0;

@@ -2353,11 +2353,11 @@ bool LoadLevel() {  // 05d796
 
 
     if (flag_use_secondary_entrance) {
+      uint16 temp_level_data_index = level_data_index;
         v1 = (uint8)player_current_characterx4 >> 2;
         level_data_index = (ow_players_map[(uint8)v1] != 0) << 8;
 
         level_data_index = LmHook_LoadLevelInfo_C(level_data_index);
-        uint16 temp_level_data_index = level_data_index;
         uint8 _5FA00_LevelDataBits = kLevelInfo_05FA00[temp_level_data_index];
         LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[_5FA00_LevelDataBits & 0b00001111];
         HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[_5FA00_LevelDataBits & 0b00001111];
@@ -2420,13 +2420,22 @@ bool LoadLevel() {  // 05d796
   HIBYTE(mirror_current_layer2_ypos) = 0;
   flag_disable_no_yoshi_intro = kLevelInfo_05F600[level_data_index] & 0x80;
   misc_level_layout_flags = (uint8)(kLevelInfo_05F600[level_data_index] & 0x60) >> 5;
-  if (!flag_use_secondary_entrance) {
-    v10 = kLevelInfo_05F000[level_data_index] & 0xF;
-    player_ypos = PAIR16(kLoadLevel_DATA_05D740[v10], kLoadLevel_DATA_05D730[v10]);
-    r2 = kLevelInfo_05F200[level_data_index];
-    v10 = r2 & 7;
-    player_xpos = PAIR16(kLoadLevel_DATA_05D758[v10], kLoadLevel_DATA_05D750[v10]);
-    misc_entrance_action = (uint8)(r2 & 0x38) >> 3;
+  if (1) {
+    if (flag_use_secondary_entrance) {
+        v10 = kLevelInfo_05F000[level_data_index] & 0xF;
+        player_ypos = kLevelInfo_05FA00[v10] & 0b00001111;
+        r2 = kLm5FE00[level_data_index];
+        printf("0x%02X", r2);
+        player_xpos = (kLevelInfo_05FC00[level_data_index] >> 5) | (kLm5FE00[level_data_index] & 0b00010000);
+        //misc_entrance_action = kLm5FE00[level_data_index] & 7;
+    } else {
+        v10 = kLevelInfo_05F000[level_data_index] & 0xF;
+        player_ypos = PAIR16(kLoadLevel_DATA_05D740[v10], kLoadLevel_DATA_05D730[v10]);
+        r2 = kLevelInfo_05F200[level_data_index];
+        v10 = r2 & 7;
+        player_xpos = PAIR16(kLoadLevel_DATA_05D758[v10], kLoadLevel_DATA_05D750[v10]);
+        misc_entrance_action = (uint8)(r2 & 0x38) >> 3;
+    }
     LmHook_ExpandLvlHdr(level_data_index);
     r2 = kLevelInfo_05F400[level_data_index];
     v10 = r2 & 3;
