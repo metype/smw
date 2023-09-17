@@ -4448,20 +4448,16 @@ LABEL_6:
 }
 
 void HandlePlayerPhysics() {  // 00d5f2
-  //uint8 v4;
   uint8 playerAccel;
-  //uint8 r1 = 0;
   uint8 isPlayerHoldingLeft = 0;
   //printf("io_controller_hold1&2: %u, %u\n", io_controller_hold1, io_controller_hold2);
   if (!player_in_air_flag) {
     player_ducking_flag = 0;
-    //if (!player_sliding_on_ground && (io_controller_hold1 & 4) != 0) {
     if (!player_sliding_on_ground && CON_HOLD_DOWN != 0) {
-      player_ducking_flag = CON_HOLD_DOWN;//io_controller_hold1 & 4;
+      player_ducking_flag = CON_HOLD_DOWN;
       flag_cape_to_sprite_interaction = 0;
     }
     if (misc_player_on_solid_sprite == 2 || (player_blocked_flags & 8) != 0 || !(CON_PRESS_A || CON_PRESS_B)) {
-        //((io_controller_press2 | io_controller_press1) & 0x80) == 0) {
       if (player_ducking_flag) {
         if (player_xspeed) {
           if (!flag_ice_level)
@@ -4470,18 +4466,14 @@ void HandlePlayerPhysics() {  // 00d5f2
         goto LABEL_12;
       }
     } else {
-      //uint8 v0 = player_xspeed;
       uint8 playerHortSpeed = player_xspeed;
       if ((player_xspeed & 0x80) != 0)
         playerHortSpeed = -player_xspeed;
-        //v0 = -player_xspeed;
       uint8 playerJumpHeight = (playerHortSpeed >> 2) & 0xFE;   // I think this correlates to jump height?
-      //uint8 v1 = (v0 >> 2) & 0xFE;
-      //if ((io_controller_press2 & 0x80) == 0 || player_carrying_something_flag2) {
       if (!CON_PRESS_A || player_carrying_something_flag2) {
         io_sound_ch2 = 1;
       } else {
-        player_spin_jump_flag = 1;//player_carrying_something_flag2 + 1;
+        player_spin_jump_flag = 1;
         io_sound_ch3 = 4;
         player_spinjump_fireball_timer = kHandlePlayerPhysics_DATA_00D5F0[player_facing_direction];
         if (player_riding_yoshi_flag)
@@ -4491,7 +4483,6 @@ void HandlePlayerPhysics() {  // 00d5f2
       //printf("player_carrying_something_flag2: %d\n", player_carrying_something_flag2);
       //printf("player_spin_jump_flag: %d\n", player_spin_jump_flag);
       player_yspeed = kHandlePlayerPhysics_JumpHeightTable[playerJumpHeight];
-      //uint8 v2 = 11;
       uint8 isPlayerInAir = 11;
       if (player_pmeter >= 0x70) {
         if (!timer_wait_before_cape_flight_begins)
@@ -4525,14 +4516,12 @@ LABEL_27:
     goto LABEL_28;
   }
   player_sliding_on_ground = 0;
-  //int8 v3 = CON_HOLD_LEFT;//io_controller_hold1 & 1;
   int8 isPlayerFacingLeftInt = CON_HOLD_LEFT;
   if (!player_cape_flying_phase) {
-    //if (v3 != player_facing_direction) {
-      if (isPlayerFacingLeftInt != player_facing_direction) {
+    if (isPlayerFacingLeftInt != player_facing_direction) {
       if (!player_carrying_something_flag2) {
 LABEL_39:
-        player_facing_direction = CON_HOLD_LEFT;//io_controller_hold1 & 1;
+        player_facing_direction = CON_HOLD_LEFT;
         goto LABEL_40;
       }
       if (!timer_display_player_face_screen_pose) {
@@ -4541,8 +4530,7 @@ LABEL_39:
       }
     }
 LABEL_40:
-    isPlayerHoldingLeft = CON_HOLD_LEFT;//io_controller_hold1 & 1;
-    //playerAccel = player_slope_player_is_on1 | (4 * v3);
+    isPlayerHoldingLeft = CON_HOLD_LEFT;
     playerAccel = player_slope_player_is_on1 | (4 * isPlayerFacingLeftInt);
     if (player_xspeed && ((*((uint8 *)kHandlePlayerPhysics_MarioAccel + playerAccel + 1) ^ player_xspeed) & 0x80) != 0 &&
         !timer_player_slides_when_turing) {
@@ -4554,26 +4542,20 @@ LABEL_40:
     }
     goto LABEL_46;
   }
-  //if (v3 != player_facing_direction && (io_controller_press1 & 0x80) == 0)
   if (isPlayerFacingLeftInt != player_facing_direction && !CON_PRESS_B)
     goto LABEL_27;
   player_slope_player_is_on1 = kHandlePlayerPhysics_DATA_00D5EE[player_facing_direction];
-  isPlayerHoldingLeft = CON_HOLD_LEFT;//io_controller_hold1 & 1;
-  //playerAccel = player_slope_player_is_on1 | (4 * v3);
+  isPlayerHoldingLeft = CON_HOLD_LEFT;
   playerAccel = player_slope_player_is_on1 | (4 * isPlayerFacingLeftInt);
 LABEL_46:;
   uint8 v5 = 0;   // Not entirely sure what this does?
-  //if ((io_controller_hold1 & 0x40) == 0)
   if (!CON_HOLD_Y)
     goto LABEL_54;
   playerAccel += 2;
   v5 = 1;
-  //uint8 v6 = player_xspeed;
   uint8 playerHortSpeed2 = player_xspeed;
   if ((player_xspeed & 0x80) != 0)
-    //v6 = -player_xspeed;
     playerHortSpeed2 = -player_xspeed;
-  //if (sign8(v6 - 35))
   if (sign8(playerHortSpeed2 - 35))
     goto LABEL_54;
   if (!player_in_air_flag) {
@@ -4607,7 +4589,8 @@ void HandlePlayerPhysics_00D742(uint8 k, uint8 j) {  // 00d742
 void HandlePlayerPhysics_00D764() {  // 00d764
   HandlePlayerPhysics_UpdatePMeter();
   if (!player_in_air_flag)
-    HandlePlayerPhysics_00D76B();
+    HandlePlayerPhysics_00D772(player_slope_player_is_on1 >> 2, player_slope_player_is_on1 >> 1);
+    //HandlePlayerPhysics_00D76B();
 }
 
 void HandlePlayerPhysics_00D76B() {  // 00d76b
