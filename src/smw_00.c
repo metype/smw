@@ -1052,7 +1052,7 @@ void GameMode00_LoadNintendoPresents_0093CA() {  // 0093ca
 void GameMode00_LoadNintendoPresents_0093EA(uint8 k, uint8 j) {  // 0093ea
   misc_nmito_use_flag = 1;
   SetVisibleLayers(0x20, k, j);
-  misc_game_mode = gm_NintendoPresents;
+  ++misc_game_mode;
 }
 
 void SetVisibleLayers(uint8 a, uint8 k, uint8 j) {  // 0093fd
@@ -1310,8 +1310,12 @@ void GameMode11_LoadSublevel_0096D5() {  // 0096d5
   HandleStandardLevelCameraScroll();
   LoadSublevel();
   if (misc_intro_level_flag) {
-    if (misc_intro_level_flag != 0xE9)
-      goto LABEL_14;
+    if (misc_intro_level_flag != 0xE9) {
+      mirror_screen_display_register = 0;
+      misc_mosaic_direction = 0;
+      ++misc_game_mode;
+      return;
+    }
     misc_music_register_backup = 19;
   }
   uint8 v1 = misc_music_register_backup;
@@ -1321,7 +1325,6 @@ void GameMode11_LoadSublevel_0096D5() {  // 0096d5
     io_music_ch1 = v1;
   }
   misc_music_register_backup = v1 & 0xBF;
-LABEL_14:
   mirror_screen_display_register = 0;
   misc_mosaic_direction = 0;
   ++misc_game_mode;
