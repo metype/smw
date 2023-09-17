@@ -4769,15 +4769,16 @@ uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 addToPemeter) {   // 00d96a
 }
 
 void HandlePlayerPhysics_Swimming() {  // 00d988
-  int8 v4;
+  //int8 v4;
+  int8 curPlayerDir;
   player_sliding_on_ground = 0;
   player_ducking_flag = 0;
   player_cape_flying_phase = 0;
   player_spin_jump_flag = 0;
   uint8 v0 = player_yspeed;
   if (player_carrying_something_flag2) {
-    if (player_in_air_flag || ((io_controller_press2 | io_controller_press1) & 0x80) == 0) {
-      if ((io_controller_hold1 & 4) == 0)
+    if (player_in_air_flag || !CON_PRESS_A) {
+      if (!CON_HOLD_DOWN)
         goto LABEL_7;
     } else {
       player_in_air_flag = 11;
@@ -4802,16 +4803,16 @@ LABEL_7:;
     }
     player_yspeed = v2;
     uint8 v3 = 0x80;
-    v4 = io_controller_hold1 & 3;
+    curPlayerDir = io_controller_hold1 & 3;
     if ((io_controller_hold1 & 3) != 0)
       goto LABEL_34;
-    v4 = player_facing_direction;
+    curPlayerDir = player_facing_direction;
 LABEL_33:
     v3 = 120;
 LABEL_34:
-    player_facing_direction = v4 & 1;
-    uint8 v7 = 4 * (v4 & 1);
-    uint8 v8 = v3 | v4 & 1;
+    player_facing_direction = curPlayerDir & 1;
+    uint8 v7 = 4 * (curPlayerDir & 1);
+    uint8 v8 = v3 | curPlayerDir & 1;
     if (flag_layer3_tide_level)
       v8 += 4;
     uint8 v9 = v8;
@@ -4820,7 +4821,7 @@ LABEL_34:
     HandlePlayerPhysics_00D742(v7, v9);
     goto LABEL_43;
   }
-  if (((io_controller_press2 | io_controller_press1) & 0x80) != 0 && !player_can_jump_out_of_water) {
+  if ((CON_PRESS_A != 0 || CON_PRESS_B != 0) && !player_can_jump_out_of_water) {
     HandlePlayerPhysics_00DAA9();
     if (!player_in_air_flag) {
       player_in_air_flag = 11;
@@ -4831,7 +4832,7 @@ LABEL_34:
   }
   if ((counter_local_frames & 3) == 0)
     v0 += 2;
-  uint8 v5 = (uint8)(io_controller_hold1 & 0xC) >> 2;
+  uint8 v5 = (io_controller_hold1 & 0xC) >> 2;
   uint8 v6 = v0;
   if ((v0 & 0x80) != 0) {
     if (v0 < kHandlePlayerPhysics_SwimYSpeed[v5])
@@ -4840,8 +4841,8 @@ LABEL_34:
     v6 = 64;
   }
   player_yspeed = v6;
-  if (player_in_air_flag || (io_controller_hold1 & 4) == 0) {
-    v4 = io_controller_hold1 & 3;
+  if (player_in_air_flag || !CON_HOLD_DOWN) {
+    curPlayerDir = io_controller_hold1 & 3;
     if ((io_controller_hold1 & 3) != 0)
       goto LABEL_33;
   } else {
