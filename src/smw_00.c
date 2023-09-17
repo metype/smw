@@ -4496,7 +4496,7 @@ LABEL_25:
 LABEL_28:
     SpawnPlayerTurnAroundSmoke();
     if (player_slope_player_is_on2) {
-      HandlePlayerPhysics_UpdatePMeter();
+      HandlePlayerPhysics_UpdatePMeterEx(0);
       HandlePlayerPhysics_00D742(((player_slope_player_is_on1 & 2) != 0) + (player_slope_player_is_on1 >> 2) + 118,
                                       ((player_slope_player_is_on1 & 4) != 0) + (player_slope_player_is_on1 >> 3) - 121);
       return;
@@ -4584,7 +4584,7 @@ void HandlePlayerPhysics_00D742(uint8 k, uint8 j) {  // 00d742
 }
 
 void HandlePlayerPhysics_00D764() {  // 00d764
-  HandlePlayerPhysics_UpdatePMeter();
+  HandlePlayerPhysics_UpdatePMeterEx(0);
   if (!player_in_air_flag)
     HandlePlayerPhysics_00D772(player_slope_player_is_on1 >> 2, player_slope_player_is_on1 >> 1);
     //HandlePlayerPhysics_00D76B();
