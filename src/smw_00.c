@@ -1052,7 +1052,7 @@ void GameMode00_LoadNintendoPresents_0093CA() {  // 0093ca
 void GameMode00_LoadNintendoPresents_0093EA(uint8 k, uint8 j) {  // 0093ea
   misc_nmito_use_flag = 1;
   SetVisibleLayers(0x20, k, j);
-  ++misc_game_mode;
+  misc_game_mode = gm_NintendoPresents;
 }
 
 void SetVisibleLayers(uint8 a, uint8 k, uint8 j) {  // 0093fd
@@ -1067,34 +1067,28 @@ void SetVisibleLayers(uint8 a, uint8 k, uint8 j) {  // 0093fd
 void GameMode01_ShowNintendoPresents() {  // 00940f
   if (!--timer_title_screen_input_timer) {
     GraphicsDecompressionRoutines_DecompressGFX32And33();
-    ++misc_game_mode;
+    misc_game_mode = gm_FadeToTitleScreen;
   }
 }
 
 void GameMode06_CircleEffect() {  // 00941b
   CheckWhichControllersArePluggedIn();
   if (GameMode07_TitleScreenDemo_009CBE()) {
-    GameMode06_CircleEffect_009440(0xEC);
-    ++misc_game_mode;
+    GameMode06_CircleEffect_ChangeHDMAScalingTimer(0xEC);
+    misc_game_mode = gm_TitleScreen;
     GameMode07_TitleScreenDemo_InitializeFileSelect();
   } else if (!--timer_title_screen_input_timer) {
     ++timer_title_screen_input_timer;
     if ((uint8)(timer_hdmawindow_scaling_factor + 4) < 0xF0)
-      GameMode06_CircleEffect_009440(timer_hdmawindow_scaling_factor + 4);
+      GameMode06_CircleEffect_ChangeHDMAScalingTimer(timer_hdmawindow_scaling_factor + 4);
     else
-      ++misc_game_mode;
+      misc_game_mode = gm_TitleScreen;
   }
 }
 
-void GameMode06_CircleEffect_009440(uint8 a) {  // 009440
+void GameMode06_CircleEffect_ChangeHDMAScalingTimer(uint8 a) {
   timer_hdmawindow_scaling_factor = a;
-  GameMode06_CircleEffect_009443();
-}
-
-void GameMode06_CircleEffect_009443() {  // 009443
-  uint8 r0 = 0x80;
-  uint8 r1 = 112;
-  UpdateHDMAWindowBuffer_KeyholeEntry(UpdateHDMAWindowBuffer_SetCircleHDMAPointer(), r0, r1);
+  UpdateHDMAWindowBuffer_KeyholeEntry(UpdateHDMAWindowBuffer_SetCircleHDMAPointer(), 0x80, 112);
 }
 
 void GameMode19_Cutscene() {  // 009468
@@ -1608,7 +1602,7 @@ void GameMode04_PrepareTitleScreen() {  // 009a8b
   mirror_bg3_and4_window_mask_settings = 0;
   mirror_object_and_color_window_settings = 35;
   mirror_color_math_initial_settings = 18;
-  GameMode06_CircleEffect_009443();
+  UpdateHDMAWindowBuffer_KeyholeEntry(UpdateHDMAWindowBuffer_SetCircleHDMAPointer(), 0x80, 112);
   timer_title_screen_input_timer = 16;
 }
 
