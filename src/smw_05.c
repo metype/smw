@@ -2349,24 +2349,15 @@ bool LoadLevel() {  // 05d796
     uint8 v0 = ((misc_level_layout_flags & 1) != 0) ? HIBYTE(player_ypos) : HIBYTE(player_xpos);
     level_data_index = (ow_players_map[(uint8)player_current_characterx4 >> 2] != 0) << 8 | misc_subscreen_exit_entrance_number_lo[v0];
 
-    printf("level_data_index = %X\n", level_data_index);
-
     level_data_index = LmHook_LoadLevelInfo_A(level_data_index, v0);
 
-    /*for (uint16 i = 0; i <= 512; i ++) {
-      printf("0x%02X%02X ", (kLm5FE00[i] & 8) >> 3, kLevelInfo_05F800[i]);
-      if (i % 16 == 0) {
-        printf("\n");
-      }
-    }*/
 
     if (flag_use_secondary_entrance) {
-        uint16 temp_level_data_index = level_data_index;
         v1 = (uint8)player_current_characterx4 >> 2;
         level_data_index = (ow_players_map[(uint8)v1] != 0) << 8;
 
         level_data_index = LmHook_LoadLevelInfo_C(level_data_index);
-        printf("level_data_index = %X\n", level_data_index);
+        uint16 temp_level_data_index = level_data_index;
         uint8 _5FA00_LevelDataBits = kLevelInfo_05FA00[temp_level_data_index];
         LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[_5FA00_LevelDataBits & 0b00001111];
         HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[_5FA00_LevelDataBits & 0b00001111];
@@ -2406,7 +2397,6 @@ bool LoadLevel() {  // 05d796
     level_data_index = (ow_players_map[(uint8)v1] != 0) << 8 | v2;
     
     level_data_index = LmHook_LoadLevelInfo_C(level_data_index);
-    printf("level_data_index = %X\n", level_data_index);
   }
 
   ptr_layer1_data = kLevelData_Layer1(level_data_index).ptr;
