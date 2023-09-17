@@ -4918,7 +4918,7 @@ LABEL_15:
     return;
   }
   uint8 v9 = player_swimming_flag;
-  if (CON_PRESS_B != 0) {
+  if ((io_controller_press1 & 0x80) != 0) {
     player_in_air_flag = 11;
     player_yspeed = kHandlePlayerPhysics_JumpFromVineYSpeed[player_swimming_flag];
     io_sound_ch2 = 1;
@@ -4926,7 +4926,7 @@ LABEL_29:
     player_climbing_flag = 0;
     return;
   }
-  if (CON_PRESS_Y && (player_climbing_flag & 0x80) != 0) {
+  if ((io_controller_press1 & 0x40) && (player_climbing_flag & 0x80) != 0) {
     io_sound_ch1 = 1;
     player_facing_direction_on_net_door = v8;
     player_facing_direction = ((uint8)(player_xpos & 8) >> 3) ^ 1;
@@ -4934,7 +4934,7 @@ LABEL_29:
   }
   player_current_pose = kHandlePlayerPhysics_ClimbingPoses[v8];
   if ((io_controller_hold1 & 3) != 0) {
-    int8 v10 = (io_controller_hold1 & 3) >> 1;
+    int8 v10 = (uint8)(io_controller_hold1 & 3) >> 1;
     if ((player_collision_var8b & 0x18) == 24)
       goto LABEL_25;
     if ((player_climbing_flag & 0x80) == 0)
@@ -4944,8 +4944,8 @@ LABEL_25:
       player_xspeed = kHandlePlayerPhysics_ClimbingSpeed[(uint8)(player_swimming_flag | (2 * v10))];
   }
   uint8 v11 = io_controller_hold1 & 0xC;
-  if ((io_controller_hold1 & 0xC) != 0) {   // What does 12 mean?!?!?!?!?!?!?!?!?!?!?!?1?!?!?!
-    if (!CON_HOLD_UP) {
+  if ((io_controller_hold1 & 0xC) != 0) {
+    if ((io_controller_hold1 & 8) == 0) {
       int8 v12 = player_collision_var8b & 1;
       player_collision_var8b >>= 1;
       if (!v12)
