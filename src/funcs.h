@@ -1644,7 +1644,7 @@ void Spr0F4_FastBGScroll(void);
 void Spr0F5_Layer2ScrollWhenTouched(void);
 void UnusedScrollSpriteRoutine(void);
 void UpdateLayerPositionWithScrollSprite(uint8 k);
-void sub_5B165(uint8 a);
+void ExitToOverworldWithAction(uint8 a);
 
 // Bank 7
 uint8 Spr07B_GoalTape_07F200(uint8 k, uint8 j, uint16 R2, uint16 r4);

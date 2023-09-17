@@ -840,7 +840,7 @@ extern uint8 ptr_layer2_is_bg;
 #define cluster_spr_table1e66 ((uint8*)(g_ram+0x1E66))
 #define cluster_spr_table1e7a ((uint8*)(g_ram+0x1E7A))
 #define cluster_spr_table1e8e ((uint8*)(g_ram+0x1E8E))
-#define ow_level_tile_settings ((uint8*)(g_ram+0x1EA2))
+#define ow_level_tile_settings ((uint8 *)(g_ram + 0x1EA2))
 #define ow_event_flags ((uint8*)(g_ram+0x1F02))
 #define ow_players_map ((uint8*)(g_ram+0x1F11))
 #define ow_players_animation ((uint16*)(g_ram+0x1F13))
