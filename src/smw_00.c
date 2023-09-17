@@ -4754,16 +4754,18 @@ void HandlePlayerPhysics_UpdatePMeter() {  // 00d968
   HandlePlayerPhysics_UpdatePMeterEx(0);
 }
 
-uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 j) {  // 00d96a
-  int8 v1 = kHandlePlayerPhysics_DATA_00D5EB[j] + player_pmeter;
-  if (v1 < 0)
-    v1 = 0;
-  if ((uint8)v1 >= 0x70) {
-    j += 1;
-    v1 = 112;
+//uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 j) {  // 00d96a
+uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 addToPemeter) {   // 00d96a
+  //int8 v1 = kHandlePlayerPhysics_DATA_00D5EB[j] + player_pmeter;
+  int8 pmeterNewValue = kHandlePlayerPhysics_DATA_00D5EB[addToPemeter] + player_pmeter;
+  if (pmeterNewValue < 0)
+    pmeterNewValue = 0;
+  if ((uint8)pmeterNewValue >= 0x70) {
+    addToPemeter += 1;
+    pmeterNewValue = 112;
   }
-  player_pmeter = v1;
-  return j;
+  player_pmeter = pmeterNewValue;
+  return addToPemeter;
 }
 
 void HandlePlayerPhysics_Swimming() {  // 00d988
