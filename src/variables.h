@@ -1171,5 +1171,6 @@ enum ControllerButtons {
 /* Custom Phys */
 #define ALLOW_CEL_DASH    1
 #define ALLOW_DJUMP       1
+#define ALLOW_SMASHPIT    1
 
 #endif

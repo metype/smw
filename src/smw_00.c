@@ -4460,10 +4460,8 @@ void HandlePlayerPhysics() {  // 00d5f2
     canCelDash = 0;
   }
 
-  if(ALLOW_DJUMP && CON_PRESS_B && canDJump){
-    PHYS_DoDoubleJump(100, 1);
-    canDJump = 0;
-  }
+  if(ALLOW_SMASHPIT)
+    PHYS_StepSmashPit();
 
   if (!player_in_air_flag) {
     canCelDash = 1;
@@ -4631,6 +4629,10 @@ void HandlePlayerPhysics_InAir() {  // 00d7e4
         (player_yspeed & 0x80) != 0 || !timer_wait_before_cape_flight_begins) {
 LABEL_43:
       if (player_in_air_flag) {
+        if(ALLOW_DJUMP && CON_PRESS_A && canDJump){
+          PHYS_DoDoubleJump(100, 1);
+          canDJump = 0;
+        }
         uint8 v5 = 0;
         if (player_riding_yoshi_flag && yoshi_yoshi_has_wings >> 1) {
           v6 = 2;

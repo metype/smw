@@ -30,4 +30,24 @@ void PHYS_DoDoubleJump(int8 yAdd, int doSpin){
     if(doSpin)
         player_spin_jump_flag = 1;
     player_yspeed = -yAdd;
+    player_in_air_flag = 1;
+}
+
+/*  PHYS_StepSmashPit();
+    Records player's grounded position every second.
+    Restores player to that position if they fall in a pit.
+*/
+void PHYS_StepSmashPit(){
+    printf("player_on_screen_pos_y: %u.\n", player_on_screen_pos_y);
+    if(player_on_screen_pos_y > 240 && player_on_screen_pos_y < 245){
+        player_xspeed = player_yspeed = 0;
+        player_xpos = lastGroundx;
+        player_ypos = lastGroundy;
+    }
+
+    if(counter_global_frames % 60 == 0 && !player_in_air_flag){
+        printf("Tracking player pos.\n");
+        lastGroundx = player_xpos;
+        lastGroundy = player_ypos;
+    }
 }
