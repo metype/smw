@@ -751,7 +751,7 @@ extern uint8 ptr_layer2_is_bg;
 #define spr7c_princess_peach_current_letter (*(uint16*)(g_ram+0x1921))
 #define misc_level_mode_setting (*(uint8*)(g_ram+0x1925))
 #define blocks_screen_to_place_current_object (*(uint8*)(g_ram+0x1928))
-#define misc_level_header_entrance_settings (*(uint8*)(g_ram+0x192A))
+#define misc_entrance_action (*(uint8*)(g_ram+0x192A))
 #define graphics_level_sprite_graphics_setting (*(uint8*)(g_ram+0x192B))
 #define misc_fgpalette_setting (*(uint8*)(g_ram+0x192D))
 #define misc_sprite_palette_setting (*(uint8*)(g_ram+0x192E))

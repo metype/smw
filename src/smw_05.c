@@ -2338,8 +2338,8 @@ bool LoadLevel() {  // 05d796
   uint16 v1;
   int16 v5;
   uint16 v10;
-  uint16 r14w;
-  uint8 r1 = 0;
+  uint16 level_data_index = 0;
+  uint8 entrance_screen_num_and_pos = 0;
   uint8 r2 = 0;  // todo: what is R2 here?
 
   flag_override_no_yoshi_intro_for_midway_entrance = 0;
@@ -2347,29 +2347,30 @@ bool LoadLevel() {  // 05d796
     LoadLevel_05DBAC();
   if (counter_sublevels_entered) {
     uint8 v0 = ((misc_level_layout_flags & 1) != 0) ? HIBYTE(player_ypos) : HIBYTE(player_xpos);
-    r14w = (ow_players_map[(uint8)player_current_characterx4 >> 2] != 0) << 8 | misc_subscreen_exit_entrance_number_lo[v0];
+    level_data_index = (ow_players_map[(uint8)player_current_characterx4 >> 2] != 0) << 8 | misc_subscreen_exit_entrance_number_lo[v0];
 
-    r14w = LmHook_LoadLevelInfo_A(r14w, v0);
+    level_data_index = LmHook_LoadLevelInfo_A(level_data_index, v0);
 
     if (flag_use_secondary_entrance) {
-    uint16 j = r14w;
-    r14w = (r14w & 0b1111111000000000) | kLevelInfo_05F800[j];
-    uint8 r0 = kLevelInfo_05FA00[j];
-    LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[r0 & 0xF];
-    HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[r0 & 0xF];
-    LOBYTE(mirror_current_layer1_ypos) = kLoadLevel_DATA_05D708[(r0 & 0x30) >> 4];
-    LOBYTE(mirror_current_layer2_ypos) = kLoadLevel_DATA_05D70C[r0 >> 6];
-    r1 = kLevelInfo_05FC00[j];
-    LOBYTE(player_xpos) = kLoadLevel_DATA_05D750[r1 >> 5];
-    HIBYTE(player_xpos) = kLoadLevel_DATA_05D758[r1 >> 5];
-    if (HAS_LM_FEATURE(kLmFeature_LoadLevel)) {
-        int tt = LmHook_LoadLevelInfo_E(j, r14w, r0, r1);
-        if (tt < 0)
-        return true;
-        r2 = tt;
-    } else {
-        misc_level_header_entrance_settings = kLm5FE00[j] & 7;
-    }
+        
+        uint16 temp_level_data_index = level_data_index;
+        level_data_index = (level_data_index & ~0xff) | kLevelInfo_05F800[temp_level_data_index];
+        uint8 _5FA00_LevelDataBits = kLevelInfo_05FA00[temp_level_data_index];
+        LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[_5FA00_LevelDataBits & 0b00001111];
+        HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[_5FA00_LevelDataBits & 0b00001111];
+        LOBYTE(mirror_current_layer1_ypos) = kLoadLevel_DATA_05D708[(_5FA00_LevelDataBits & 0b00110000) >> 4];
+        LOBYTE(mirror_current_layer2_ypos) = kLoadLevel_DATA_05D70C[(_5FA00_LevelDataBits & 0b11000000) >> 6];
+        entrance_screen_num_and_pos = kLevelInfo_05FC00[temp_level_data_index];
+        LOBYTE(player_xpos) = kLoadLevel_DATA_05D750[(entrance_screen_num_and_pos & 0b11100000) >> 5];
+        HIBYTE(player_xpos) = kLoadLevel_DATA_05D758[(entrance_screen_num_and_pos & 0b11100000) >> 5];
+        if (HAS_LM_FEATURE(kLmFeature_LoadLevel)) {
+            int tt = LmHook_LoadLevelInfo_E(temp_level_data_index, level_data_index, _5FA00_LevelDataBits, entrance_screen_num_and_pos);
+            if (tt < 0)
+            return true;
+            r2 = tt;
+        } else {
+            misc_entrance_action = kLm5FE00[temp_level_data_index] & 7;
+        }
     }
   } else {
     v1 = 0;
@@ -2390,48 +2391,48 @@ bool LoadLevel() {  // 05d796
     }
     if (v2 >= 0x25)
       v2 -= 0x24;
-    r14w = (ow_players_map[(uint8)v1] != 0) << 8 | v2;
+    level_data_index = (ow_players_map[(uint8)v1] != 0) << 8 | v2;
     //printf("r14w = %i\n", r14w);
-    r14w = LmHook_LoadLevelInfo_C(r14w);
+    level_data_index = LmHook_LoadLevelInfo_C(level_data_index);
   }
 
-  ptr_layer1_data = kLevelData_Layer1(r14w).ptr;
-  ptr_layer2_data = kLevelData_Layer2(r14w).ptr;
-  ptr_layer2_is_bg = kLevelData_Layer2_IsBg[r14w];
+  ptr_layer1_data = kLevelData_Layer1(level_data_index).ptr;
+  ptr_layer2_data = kLevelData_Layer2(level_data_index).ptr;
+  ptr_layer2_is_bg = kLevelData_Layer2_IsBg[level_data_index];
 
   if (g_lunar_magic)
-    lunar_magic_FE = r14w + 1;
+    lunar_magic_FE = level_data_index + 1;
 
   HIBYTE(v5) = 0;
-  ptr_sprite_list_data = (LongPtr){.bank = kLmSpritePtrBankByte[r14w], .addr = kLoadLevel_SpriteDataPtrs[r14w]};
+  ptr_sprite_list_data = (LongPtr){.bank = kLmSpritePtrBankByte[level_data_index], .addr = kLoadLevel_SpriteDataPtrs[level_data_index]};
   uint8 sprite_hdr = *GetSpriteListPtr();
   sprites_sprite_memory_setting = sprite_hdr & 0x1F;
   sprites_sprite_buoyancy_settings = sprite_hdr & 0xC0;
-  uint8 v6 = kLevelInfo_05F000[r14w] >> 4;
+  uint8 v6 = kLevelInfo_05F000[level_data_index] >> 4;
   flag_layer2_horiz_scroll_level_setting = kLoadLevel_L2HorzScrollSettings[v6];
   flag_layer2_vert_scroll_level_setting = kLoadLevel_L2VertScrollSettings[v6];
   flag_layer1_horiz_scroll_level_setting = 1;
-  misc_level_layer3_settings = (kLevelInfo_05F200[r14w] & 0xC0) >> 6;
+  misc_level_layer3_settings = (kLevelInfo_05F200[level_data_index] & 0xC0) >> 6;
   HIBYTE(mirror_current_layer1_ypos) = 0;
   HIBYTE(mirror_current_layer2_ypos) = 0;
-  flag_disable_no_yoshi_intro = kLevelInfo_05F600[r14w] & 0x80;
-  misc_level_layout_flags = (uint8)(kLevelInfo_05F600[r14w] & 0x60) >> 5;
+  flag_disable_no_yoshi_intro = kLevelInfo_05F600[level_data_index] & 0x80;
+  misc_level_layout_flags = (uint8)(kLevelInfo_05F600[level_data_index] & 0x60) >> 5;
   if (!flag_use_secondary_entrance) {
-    v10 = kLevelInfo_05F000[r14w] & 0xF;
+    v10 = kLevelInfo_05F000[level_data_index] & 0xF;
     player_ypos = PAIR16(kLoadLevel_DATA_05D740[v10], kLoadLevel_DATA_05D730[v10]);
-    r2 = kLevelInfo_05F200[r14w];
+    r2 = kLevelInfo_05F200[level_data_index];
     v10 = r2 & 7;
     player_xpos = PAIR16(kLoadLevel_DATA_05D758[v10], kLoadLevel_DATA_05D750[v10]);
-    misc_level_header_entrance_settings = (uint8)(r2 & 0x38) >> 3;
-    LmHook_ExpandLvlHdr(r14w);
-    r2 = kLevelInfo_05F400[r14w];
+    misc_entrance_action = (uint8)(r2 & 0x38) >> 3;
+    LmHook_ExpandLvlHdr(level_data_index);
+    r2 = kLevelInfo_05F400[level_data_index];
     v10 = r2 & 3;
     mirror_current_layer2_ypos = kLoadLevel_DATA_05D70C[v10];
     LOBYTE(v10) = (uint8)(r2 & 0xC) >> 2;
     mirror_current_layer1_ypos = kLoadLevel_DATA_05D708[v10];
-    r1 = kLevelInfo_05F600[r14w];
+    entrance_screen_num_and_pos = kLevelInfo_05F600[level_data_index];
   }
-  LmHook_LoadLevel(r14w);
+  LmHook_LoadLevel(level_data_index);
   if ((misc_level_layout_flags & 1) != 0) {
     HIBYTE(player_ypos) = *ptr_layer1_data & 0x1F;
     camera_last_screen_vert = HIBYTE(player_ypos) + 1;
@@ -2441,15 +2442,15 @@ bool LoadLevel() {  // 05d796
   if (counter_sublevels_entered ||
       ((g_lunar_magic || (lm_var13CD = r2 >> 4)), flag_got_midpoint = 0,
        ow_current_event_number = kLoadLevel_DATA_05D608[ow_level_number_lo], (ow_level_tile_settings[ow_level_number_lo] & 0x40) == 0)) {
-    r1 &= 0x1F;
+    entrance_screen_num_and_pos &= 0x1F;
     if ((misc_level_layout_flags & 1) != 0) {
-      HIBYTE(player_ypos) = r1;
-      HIBYTE(mirror_current_layer1_ypos) = r1;
+      HIBYTE(player_ypos) = entrance_screen_num_and_pos;
+      HIBYTE(mirror_current_layer1_ypos) = entrance_screen_num_and_pos;
       if (flag_layer2_vert_scroll_level_setting != 3)
-        HIBYTE(mirror_current_layer2_ypos) = r1;
+        HIBYTE(mirror_current_layer2_ypos) = entrance_screen_num_and_pos;
       flag_layer1_vert_scroll_level_setting = 1;
     } else {
-      HIBYTE(player_xpos) = r1;
+      HIBYTE(player_xpos) = entrance_screen_num_and_pos;
     }
   } else {
     flag_override_no_yoshi_intro_for_midway_entrance = ow_level_tile_settings[ow_level_number_lo] & 0x40;
@@ -2457,7 +2458,7 @@ bool LoadLevel() {  // 05d796
   }
   uint8 v11;
 
-  LmHook_LoadLevelB(ptr_layer1_data, r2, r14w);
+  LmHook_LoadLevelB(ptr_layer1_data, r2, level_data_index);
 
   if (ow_level_number_lo < 0x52) {
     v11 = 4;
@@ -2480,7 +2481,7 @@ bool LoadLevel() {  // 05d796
       player_xpos = 48;
       LOBYTE(mirror_current_layer1_ypos) = -64;
       LOBYTE(mirror_current_layer2_ypos) = -64;
-      misc_level_header_entrance_settings = 0;
+      misc_entrance_action = 0;
       ptr_sprite_list_data = (LongPtr){.bank = 7, .addr = 0xc3ee};
       LmHook_LoadLevelInfo();
       uint8 sprite_hdr = *GetSpriteListPtr();

@@ -2512,12 +2512,12 @@ void InitializeLevelRAM_00A6CC(uint8 j) {  // 00a6cc
   uint8 v4;
   if ((uint8)mirror_current_layer1_ypos != 0xC0)
     ++flag_enable_vert_scroll;
-  uint8 v1 = misc_level_header_entrance_settings;
-  if (!misc_level_header_entrance_settings)
+  uint8 v1 = misc_entrance_action;
+  if (!misc_entrance_action)
     goto LABEL_8;
-  if (misc_level_header_entrance_settings == 5) {
+  if (misc_entrance_action == 5) {
     int8 v2 = 0;
-    if (misc_level_header_entrance_settings >= 5)
+    if (misc_entrance_action >= 5)
       v2 = 0x80;
     flag_ice_level = (flag_ice_level >> 1) + v2;
 LABEL_8:
@@ -2536,8 +2536,8 @@ LABEL_8:
     }
     return;
   }
-  if (misc_level_header_entrance_settings >= 6) {
-    if (misc_level_header_entrance_settings == 6) {
+  if (misc_entrance_action >= 6) {
+    if (misc_entrance_action == 6) {
       player_facing_direction = j;
       player_cape_image = j;
       yoshi_in_pipe = -1;
