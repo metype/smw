@@ -307,14 +307,14 @@ void SmwVectorReset() {
   RtlApuWrite(APUI03, 0);
   RtlPpuWrite(INIDISP, 0x80);
   *(uint16 *)reset_sprites_y_function_in_ram = 0xf0a9;
-  uint16 v0 = 381;
-  int16 v1 = 0x3fd;
+  uint16 sprite_function_index = 381;
+  int16 sprite_function_pointer = 0x3fd;
   do {
-    *(uint16 *)&reset_sprites_y_function_in_ram[v0 + 2] = 141;
-    *(uint16 *)&reset_sprites_y_function_in_ram[v0 + 3] = v1;
-    v1 -= 4;
-    v0 -= 3;
-  } while ((v0 & 0x8000) == 0);
+    *(uint16 *)&reset_sprites_y_function_in_ram[sprite_function_index + 2] = 141;
+    *(uint16 *)&reset_sprites_y_function_in_ram[sprite_function_index + 3] = sprite_function_pointer;
+    sprite_function_pointer -= 4;
+    sprite_function_index -= 3;
+  } while ((sprite_function_index & 0x8000) == 0);
   reset_sprites_y_function_in_ram[386] = 107;
   HandleSPCUploads_UploadSPCEngine();
   misc_game_mode = gm_LoadNintendoPresents;
@@ -333,9 +333,9 @@ void SmwRunOneFrameOfGame_Internal() {
   waiting_for_vblank = 0;
 }
 
-void ResetSpritesFunc(int wh) {
-  for (; wh < 128; wh++)
-    g_ram[0x201 + wh * 4] = 0xf0;
+void ResetSpritesFunc(int sprite_func_index) {
+  for (; sprite_func_index < 128; sprite_func_index++)
+    g_ram[0x201 + sprite_func_index * 4] = 0xf0;
 }
 
 void HandleSPCUploads_UploadSPCEngine() {  // 0080e8
@@ -377,10 +377,10 @@ void HandleSPCUploads_UploadCreditsMusicBank() {  // 008159
 
 void SmwVectorNMI() {
   int trigger_line = -1;
-  uint8 v0 = io_music_ch1;
+  uint8 current_song_id = io_music_ch1;
   if (io_music_ch1  || g_ram[kSmwRam_APUI02] == io_copy_of_music_ch1) {
-    RtlApuWrite(APUI02, v0);
-    io_copy_of_music_ch1 = v0;
+    RtlApuWrite(APUI02, current_song_id);
+    io_copy_of_music_ch1 = current_song_id;
     io_music_ch1 = 0;
   }
   RtlApuWrite(APUI00, io_sound_ch1);
@@ -554,8 +554,8 @@ void CompressOamEntExt() {  // 008494
 void LoadStripeImage() {  // 0085d2
   if (graphics_stripe_image_to_upload)
     graphics_stripe_image_to_upload += 0;
-  const uint8 *p = (graphics_stripe_image_to_upload == 0) ? stripe_image_upload_data : kLoadStripeImagePtrs(graphics_stripe_image_to_upload / 3).ptr;
-  LoadStripeImage_UploadToVRAM(p);
+  const uint8 *stripe_image_ptr = (graphics_stripe_image_to_upload == 0) ? stripe_image_upload_data : kLoadStripeImagePtrs(graphics_stripe_image_to_upload / 3).ptr;
+  LoadStripeImage_UploadToVRAM(stripe_image_ptr);
   if (!graphics_stripe_image_to_upload) {
     LOBYTE(stripe_image_upload) = graphics_stripe_image_to_upload;
     HIBYTE(stripe_image_upload) = graphics_stripe_image_to_upload;
@@ -585,13 +585,13 @@ void PollJoypadInputs() {  // 008650
   io_controller_hold1_copyp2 = ReadReg(JOY2H);
   io_controller_press1_copyp2 = io_controller_hold1_copyp2 & (io_p2_ctrl_disable_lo ^ io_controller_hold1_copyp2);
   io_p2_ctrl_disable_lo = io_controller_hold1_copyp2;
-  uint8 v0 = io_controllers_plugged_in;
+  uint8 which_controller_plugged_in = io_controllers_plugged_in;
   if ((io_controllers_plugged_in & 0x80) != 0)
-    v0 = player_current_character;
-  io_controller_hold1 = *(&io_controller_hold1_copyp1 + v0) | *(&io_controller_hold2_copyp1 + v0) & 0xC0;
-  io_controller_hold2 = *(&io_controller_hold2_copyp1 + v0);
-  io_controller_press1 = *(&io_controller_press1_copyp1 + v0) | *(&io_controller_press2_copyp1 + v0) & 0x40;
-  io_controller_press2 = *(&io_controller_press2_copyp1 + v0);
+    which_controller_plugged_in = player_current_character;
+  io_controller_hold1 = *(&io_controller_hold1_copyp1 + which_controller_plugged_in) | *(&io_controller_hold2_copyp1 + which_controller_plugged_in) & 0xC0;
+  io_controller_hold2 = *(&io_controller_hold2_copyp1 + which_controller_plugged_in);
+  io_controller_press1 = *(&io_controller_press1_copyp1 + which_controller_plugged_in) | *(&io_controller_press2_copyp1 + which_controller_plugged_in) & 0x40;
+  io_controller_press2 = *(&io_controller_press2_copyp1 + which_controller_plugged_in);
 }
 
 void GameMode14_InLevel_0086C7() {  // 0086c7
@@ -634,13 +634,13 @@ void UploadLevelLayer1And2Tilemaps() {  // 0087ad
 }
 
 void InitializeFirst8KBOfRAM() {  // 008a4e
-  uint16 v0 = 0x1ffe;
+  uint16 ram_index = 0x1ffe;
   do {
-    WORD(g_ram[v0]) = 0;
+    WORD(g_ram[ram_index]) = 0;
     do
-      v0 -= 2;
-    while ((int16)(v0 - 511) < 0 && (int16)(v0 - 256) >= 0);
-  } while (v0 != 0xFFFE);
+      ram_index -= 2;
+    while ((int16)(ram_index - 511) < 0 && (int16)(ram_index - 256) >= 0);
+  } while (ram_index != 0xFFFE);
   stripe_image_upload = 0;
   *(uint16 *)&palettes_dynamic_palette_upload_index = 0;
   stripe_image_upload_data[0] = -1;
@@ -706,13 +706,13 @@ void InitializeStatusBarTilemap() {  // 008cff
   SmwCopyToVram(0x5042, kStatusBarTilemap_SecondRow, 0x38);
   SmwCopyToVram(0x5063, kStatusBarTilemap_SecondRow + 0x38, 0x36);
   SmwCopyToVram(0x508e, kStatusBarTilemap_SomeRow, 8);
-  int8 v4 = 54;
-  uint8 v5 = 108;
+  int8 tilemap_index = 54;
+  uint8 tilemap_data_index = 108;
   do {
-    misc_status_bar_tilemap[(uint8)v4] = kStatusBarTilemap_SecondRow[v5];
-    v5 -= 2;
-    --v4;
-  } while (v4 >= 0);
+    misc_status_bar_tilemap[(uint8)tilemap_index] = kStatusBarTilemap_SecondRow[tilemap_data_index];
+    tilemap_data_index -= 2;
+    --tilemap_index;
+  } while (tilemap_index >= 0);
   misc_status_bar_tilemap[55] = 40;
 }
 
