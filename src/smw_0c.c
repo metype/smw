@@ -1095,7 +1095,7 @@ LABEL_7:
     if (!HIBYTE(misc_layer3_yspeed)) {
       ++misc_game_mode;
       if (counter_enemy_rollcall_screen != 12)
-        misc_game_mode = gm_EndingFadeToEnemies2;
+        ++misc_game_mode;
     }
     goto LABEL_10;
   }
