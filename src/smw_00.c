@@ -969,10 +969,6 @@ void sub_9291(uint16 k) {  // 009291
     misc_hdmawindow_effect_table[k + 1] = -1;
     k += 2;
   } while (k < 0x1C0);
-  SetupHDMAWindowingEffects_0092A0();
-}
-
-void SetupHDMAWindowingEffects_0092A0() {  // 0092a0
   mirror_hdmaenable = 0x80;
 }
 
@@ -1556,7 +1552,7 @@ void GameMode12_PrepareLevel_PrepareNonIggyLarryRoom() {  // 009925
   GameMode12_PrepareLevel_009A1F(v1);
   SetupHDMAWindowingEffects_ClearWindowTable();
   if (misc_nmito_use_flag & 1)
-    SetupHDMAWindowingEffects_0092A0();
+    mirror_hdmaenable = 0x80;
   else
     sub_9291(0x1BE);
 }
@@ -2197,7 +2193,7 @@ void GameMode0C_LoadOverworld() {  // 00a087
     misc_hdmawindow_effect_table[i] = 0;
     misc_hdmawindow_effect_table[i + 1] = -1;
   }
-  SetupHDMAWindowingEffects_0092A0();
+  mirror_hdmaenable = 0x80;
   ++misc_game_mode;
 }
 
@@ -6160,6 +6156,7 @@ void PlayerState00_CheckPlayerPitFall() {  // 00f595
 }
 
 void DamagePlayer_Hurt() {  // 00f5b7
+#ifndef CHEAT_INVICIBLE
   if (!player_current_state && !(timer_end_level | (uint8)(timer_star_power | timer_player_hurt))) {
     counter_pink_berry_cloud_coins = 0;
     if (player_wall_walk_status)
@@ -6181,35 +6178,48 @@ void DamagePlayer_Hurt() {  // 00f5b7
       DamagePlayer_Kill();
     }
   }
+  #endif
 }
 
 void DamagePlayer_Kill() {  // 00f606
+    #ifndef CHEAT_INVICIBLE
   player_yspeed = -112;
   DamagePlayer_PitFall();
+  #endif
 }
 
 void DamagePlayer_PitFall() {  // 00f60a
+#ifdef CHEAT_PIT_BOUNCING
+  player_yspeed = kHandlePlayerPhysics_JumpHeightTable[1] * 50;
+#else
   io_music_ch1 = 9;
   misc_music_register_backup = -1;
   player_current_state = 9;
   player_spin_jump_flag = 0;
   DamagePlayer_SetHurtAnimationTimer(0x30);
+#endif
 }
 
 void DamagePlayer_SetHurtAnimationTimer(uint8 a) {  // 00f61d
+#ifndef CHEAT_INVICIBLE
   player_anim_timer = a;
   flag_sprites_locked = a;
   DamagePlayer_00F622();
+  #endif
 }
 
 void DamagePlayer_00F622() {  // 00f622
+#ifndef CHEAT_INVICIBLE
   player_cape_flying_phase = 0;
   unusedram_7e188a = 0;
+  #endif
 }
 
 void DamagePlayer_KillAndDisableButtons() {  // 00f629
+#ifndef CHEAT_INVICIBLE
   DamagePlayer_Kill();
   DamagePlayer_DisableButtons();
+  #endif
 }
 
 void DamagePlayer_DisableButtons() {  // 00f62d

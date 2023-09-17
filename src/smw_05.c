@@ -2353,7 +2353,7 @@ bool LoadLevel() {  // 05d796
 
     if (flag_use_secondary_entrance) {
     uint16 j = r14w;
-    r14w = (r14w & ~0xff) | kLevelInfo_05F800[j];
+    r14w = (r14w & 0b1111111000000000) | kLevelInfo_05F800[j];
     uint8 r0 = kLevelInfo_05FA00[j];
     LOBYTE(player_ypos) = kLoadLevel_DATA_05D730[r0 & 0xF];
     HIBYTE(player_ypos) = kLoadLevel_DATA_05D740[r0 & 0xF];

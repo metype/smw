@@ -289,7 +289,6 @@ void SetPlayerPose_Entry4(uint8 a);
 void SetPlayerPose(void);
 void SetStandardPPUSettings(void);
 void SetVisibleLayers(uint8 a, uint8 k, uint8 j);
-void SetupHDMAWindowingEffects_0092A0(void);
 void SetupHDMAWindowingEffects_0092A8(void);
 void SetupHDMAWindowingEffects_ClearWindowTable(void);
 void SetupHDMAWindowingEffects_EndHDMA(void);
