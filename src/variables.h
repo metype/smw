@@ -2,6 +2,7 @@
 #define VARIABLES_H
 
 #include "types.h"
+#include "common_rtl.h"
 
 //#define r0w (*(uint16*)(g_ram+0x0))
 //#define r1w (*(uint16*)(g_ram+0x1))
@@ -1136,6 +1137,16 @@ enum ControllerButtons {
   // io_controller_hold2
   cb_L = 0x10,
   cb_R = 0x20,
+};
+
+enum WorldMaps{
+  wm_World2 = 0,  // Shared with Worlds 4 and 6.
+  wm_World1 = 1,
+  wm_World3 = 2,
+  wm_World5 = 3,
+  wm_World7 = 4,
+  wm_Special = 5,
+  wm_Star = 6
 };
 
 #define CHEAT_PIT_BOUNCING
