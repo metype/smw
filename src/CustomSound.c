@@ -193,7 +193,7 @@ void MUS_Step(){
         curMusicPos = (double*)temp;
     }
     
-    printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
+    //printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
     //printf("counter_global_frames: %u.\n", counter_global_frames);
 
     if(curMusicPos >= curMusicEndPoint && curMusicDoLoop)
