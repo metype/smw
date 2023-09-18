@@ -1139,7 +1139,7 @@ enum ControllerButtons {
   cb_R = 0x20,
 };
 
-enum WorldMaps{
+enum WorldMaps{   // To be used with ow_players_map[0].
   wm_World2 = 0,  // Shared with Worlds 4 and 6.
   wm_World1 = 1,
   wm_World3 = 2,
@@ -1149,9 +1149,11 @@ enum WorldMaps{
   wm_Star = 6
 };
 
+/* Cheats */
 #define CHEAT_PIT_BOUNCING
 #define CHEAT_INVICIBLE
 
+/* Inputs */
 #define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
 #define CON_HOLD_RIGHT  (io_controller_hold1 & cb_Right)
 #define CON_HOLD_UP     (io_controller_hold1 & cb_Up)
@@ -1181,6 +1183,15 @@ enum WorldMaps{
 #define CON_PRESS_SELECT  (io_controller_press1 & cb_Select)
 #define CON_PRESS_L       (io_controller_press2 & cb_L)
 #define CON_PRESS_R       (io_controller_press2 & cb_R)
+
+/* World Map */
+#define MAP_WORLD2_4_6  (ow_players_map[0] == wm_World2)
+#define MAP_WORLD1      (ow_players_map[0] == wm_World1)
+#define MAP_WORLD3      (ow_players_map[0] == wm_World3)
+#define MAP_WORLD5      (ow_players_map[0] == wm_World5)
+#define MAP_WORLD7      (ow_players_map[0] == wm_World7)
+#define MAP_SPECIAL     (ow_players_map[0] == wm_Special)
+#define MAP_STAR        (ow_players_map[0] == wm_Star)
 
 /* Custom Sounds */
 #define USE_CUSTOM_MUSIC  1
