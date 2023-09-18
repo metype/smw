@@ -21,3 +21,4 @@ __pycache__
 assets/Music.txt
 assets/Maps.txt
 assets/Game States_Modes.txt
+*.mp3

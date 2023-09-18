@@ -1204,6 +1204,7 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 #define MUSID_EGGSHATCH   10
 #define MUSID_ROLECALL    11
 #define MUSID_STAFFROLL   9
+#define MUSID_STOP        128
 
 // Func. Music
 #define MUSID_PSWITCH     14
