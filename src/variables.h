@@ -1165,3 +1165,8 @@ enum ControllerButtons {
 #define CON_PRESS_SELECT  (io_controller_press1 & cb_Select)
 #define CON_PRESS_L       (io_controller_press2 & cb_L)
 #define CON_PRESS_R       (io_controller_press2 & cb_R)
+
+/* Custom Sounds */
+#define USE_CUSTOM_MUSIC  1
+#define USE_CUSTOM_SOUNDS 1
+#define USE_MUSICVAR_BACK 1
