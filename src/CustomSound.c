@@ -6,7 +6,50 @@
     Requires all songs to be defined first.
     Returns 0 if no suitable song is found.
 */
-int MUS_LoadBasedContext(){}
+int MUS_LoadBasedContext(){
+    switch(misc_game_mode){
+        case gm_Overworld:
+            switch(ow_players_map[0]){
+                case wm_World1:
+                    return MUS_Load("./assets/custom/Overworld/1.txt");
+                case wm_World2:
+                    return MUS_Load("./assets/custom/Overworld/2.txt");
+                case wm_World3:
+                    return MUS_Load("./assets/custom/Overworld/3.txt");
+                case wm_World5:
+                    return MUS_Load("./assets/custom/Overworld/5.txt");
+                case wm_World7:
+                    return MUS_Load("./assets/custom/Overworld/7.txt");
+                case wm_Special:
+                    return MUS_Load("./assets/custom/Overworld/Special.txt");
+                case wm_Star:
+                    return MUS_Load("./assets/custom/Overworld/Star.txt");
+            }
+            break;
+        case gm_Level:  /* TODO: Make this bit based on level IDs. */
+            switch(io_music_ch1){
+                case MUSID_ATHLETIC:
+                    return MUS_Load("./assets/custom/Level/Athletic.txt");
+                case MUSID_OVERWORLD:
+                    return MUS_Load("./assets/custom/Level/Overworld.txt");
+                case MUSID_SWIMMING:
+                    return MUS_Load("./assets/custom/Level/Swimming.txt");
+                case MUSID_UNDERGROUND:
+                    return MUS_Load("./assets/custom/Level/Underground.txt");
+                case MUSID_HAUNTED:
+                    return MUS_Load("./assets/custom/Level/Haunted.txt");
+                case MUSID_CASTLE:
+                    return MUS_Load("./assets/custom/Level/Castle.txt");
+                case MUSID_PALACE:
+                    return MUS_Load("./assets/custom/Level/Palace.txt");
+                case MUSID_BOSS:
+                    return MUS_Load("./assets/custom/Level/Boss.txt");
+            }
+            break;
+    }
+
+    return 0;
+}
 
 /*  MUS_Load(filePath);
     Loads a music file based on given params.
@@ -14,8 +57,8 @@ int MUS_LoadBasedContext(){}
 filePath    ;   Path to music file.
 */
 int MUS_Load(const char* filePath){
-    /*const*/ char* curLine = malloc(256);//[256];
-    /*const*/ char* copyLine = malloc(256);//[256];
+    char* curLine = malloc(256);
+    char* copyLine = malloc(256);
     
     // Read in file.
     FILE* readFile = fopen(filePath, "r");
@@ -27,7 +70,7 @@ int MUS_Load(const char* filePath){
     // Path to music file.
     fgets(curLine, 256, readFile);
     strncpy(copyLine, curLine, strlen(curLine) - 1);
-    copyLine[strlen(curLine) - 1] = NULL;//'\0';
+    copyLine[strlen(curLine) - 1] = NULL;
     gMusic_Playing = Mix_LoadMUS(copyLine);
     if(gMusic_Playing == NULL){
         printf("MUS_Load() Err: Mix_LoadMUS() Err: %s.\n", Mix_GetError());

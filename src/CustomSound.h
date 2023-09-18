@@ -26,7 +26,7 @@ Mix_Chunk* gSound_Default;
 
 /* Funcs */
 int MUS_LoadBasedContext();
-int MUS_Load(const char* /*PATH*/);
+int MUS_Load(const char*);
 void MUS_Step();
 void SND_Step();
 
