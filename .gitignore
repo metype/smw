@@ -18,3 +18,4 @@ __pycache__
 *.sfc
 /third_party/SDL2_mixer-2.6.3/
 /assets/custom/
+assets/Music.txt

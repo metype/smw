@@ -1176,4 +1176,47 @@ enum ControllerButtons {
 #define USE_CUSTOM_SOUNDS 1
 #define USE_MUSICVAR_BACK 1
 
+// Misc. Music
+#define MUSID_TITLE       1
+#define MUSID_KISS        28
+#define MUSID_EGGSHATCH   10
+#define MUSID_ROLECALL    11
+#define MUSID_STAFFROLL   9
+
+// Func. Music
+#define MUSID_PSWITCH     14
+#define MUSID_STARMAN     13
+#define MUSID_KEYFADE     16
+#define MUSID_LEVELFADE   17
+#define MUSID_DEAD        9
+#define MUSID_GAMEOVER    10
+
+// World Music
+#define MUSID_WORLD1      3
+#define MUSID_WORLD2      2
+#define MUSID_WORLD3      4
+#define MUSID_WORLD4      2
+#define MUSID_WORLD5      0 // TODO: Forest of Illusion
+#define MUSID_WORLD6      2
+#define MUSID_WORLD7      0 // TODO: Valley of Bowser
+#define MUSID_SPECIAL     9
+
+// Level Music
+#define MUSID_ATHLETIC    1
+#define MUSID_OVERWORLD   2
+#define MUSID_SWIMMING    3
+#define MUSID_UNDERGROUND 6
+#define MUSID_HAUNTED     7
+#define MUSID_CASTLE      8
+#define MUSID_PALACE      18
+#define MUSID_BOSS        5
+
+// Bowser
+#define MUSID_BOWSER          22
+#define MUSID_BOWSEROUT       23
+#define MUSID_BOWSERIN        24
+#define MUSID_BOWSERINTER     29
+#define MUSID_BOWSERINTEROVER 25  // May be wrong? Possibly switch with 26.
+#define MUSID_BOWSERDEFEAT    27
+
 #endif
