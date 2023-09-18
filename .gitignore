@@ -17,3 +17,4 @@ __pycache__
 /enhanced/
 *.sfc
 /third_party/SDL2_mixer-2.6.3/
+/assets/custom/
