@@ -1,3 +1,8 @@
+#ifndef VARIABLES_H
+#define VARIABLES_H
+
+#include "types.h"
+
 //#define r0w (*(uint16*)(g_ram+0x0))
 //#define r1w (*(uint16*)(g_ram+0x1))
 //#define r2w (*(uint16*)(g_ram+0x2))
@@ -1170,3 +1175,5 @@ enum ControllerButtons {
 #define USE_CUSTOM_MUSIC  1
 #define USE_CUSTOM_SOUNDS 1
 #define USE_MUSICVAR_BACK 1
+
+#endif

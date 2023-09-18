@@ -8,12 +8,56 @@
 */
 int MUS_LoadBasedContext(){}
 
-/*  MUS_Load(file);
+/*  MUS_Load(filePath);
     Loads a music file based on given params.
     Returns 0 if file isn't found.
-file    ;   Path to music file.
+filePath    ;   Path to music file.
 */
-int MUS_Load(const char* file){}
+int MUS_Load(const char* filePath){
+    /*const*/ char* curLine[256];
+    /*const*/ char* copyLine[256];
+    
+    // Read in file.
+    FILE* readFile = fopen(filePath, "r");
+    if(readFile == NULL){
+        printf("MUS_Load() Err: Can't find file at %s.\n", filePath);
+        return 0;
+    }
+    
+    // Path to music file.
+    fgets(curLine, 256, readFile);
+    strncpy(copyLine, curLine, strlen(curLine) - 1);
+    copyLine[strlen(curLine) - 1] = NULL;//'\0';
+    gMusic_Playing = Mix_LoadMUS(copyLine);
+    if(gMusic_Playing == NULL){
+        printf("MUS_Load() Err: Mix_LoadMUS() Err: %s.\n", Mix_GetError());
+        return 0;
+    }
+
+    // Tracking vars.
+    // Line 1: Start Pos
+    // Line 2: End Pos
+    // Line 3: Loop Pos
+    // Line 4: Do Loop
+    fgets(curLine, 256, readFile);
+    curMusicPos = atoi(curLine);
+    fgets(curLine, 256, readFile);
+    curMusicEndPoint = atoi(curLine);
+    fgets(curLine, 256, readFile);
+    curMusicLoopPoint = atoi(curLine);
+    fgets(curLine, 256, readFile);
+    curMusicDoLoop = atoi(curLine);
+
+    fclose(readFile);
+    //free(curLine);
+    //free(copyLine);
+
+    // Play music.
+    Mix_PlayMusic(gMusic_Playing, curMusicDoLoop);
+
+    // Everything read correctly! (Yay)
+    return 1;
+}
 
 /*  MUS_Step();
     Tracks current music.
