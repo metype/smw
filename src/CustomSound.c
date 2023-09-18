@@ -26,7 +26,9 @@ int MUS_LoadBasedContext(){
                     return MUS_Load("./assets/custom/Overworld/Star.txt");
             }
             break;
-        case gm_Level:  /* TODO: Make this bit based on level IDs. */
+        case gm_Level:  /*  TODO: Make this bit based on level IDs. 
+                            Also add in the Func. Music.
+                        */
             switch(io_music_ch1){
                 case MUSID_ATHLETIC:
                     return MUS_Load("./assets/custom/Level/Athletic.txt");
@@ -47,16 +49,16 @@ int MUS_LoadBasedContext(){
             }
             break;
     }
-
     return 0;
 }
 
-/*  MUS_Load(filePath);
+/*  MUS_Load(filePath, doInterrupt);
     Loads a music file based on given params.
     Returns 0 if file isn't found.
 filePath    ;   Path to music file.
+doInerrupt  ;   Whether or not the loaded track should interrupt the current track.
 */
-int MUS_Load(const char* filePath){
+int MUS_Load(const char* filePath, int doInterrupt){
     char* curLine = malloc(256);
     char* copyLine = malloc(256);
     
@@ -67,7 +69,7 @@ int MUS_Load(const char* filePath){
         return 0;
     }
     
-    // Path to music file.
+    // Path to MP3 file.
     fgets(curLine, 256, readFile);
     strncpy(copyLine, curLine, strlen(curLine) - 1);
     copyLine[strlen(curLine) - 1] = NULL;
@@ -76,6 +78,16 @@ int MUS_Load(const char* filePath){
         printf("MUS_Load() Err: Mix_LoadMUS() Err: %s.\n", Mix_GetError());
         return 0;
     }
+
+    // Load interrupt data if applicable.
+    if(doInterrupt && USE_MUSICVAR_BACK){
+        curTrackPath_Back = curTrackPath;
+        curMusicPos_Back = curMusicPos;
+        curMusicLoopPoint_Back = curMusicLoopPoint;
+        curMusicEndPoint_Back = curMusicEndPoint;
+        curMusicDoLoop_Back = curMusicDoLoop;
+    }
+    curTrackPath = filePath;
 
     // Tracking vars.
     // Line 1: Start Pos
@@ -106,7 +118,9 @@ int MUS_Load(const char* filePath){
 /*  MUS_Step();
     Tracks current music.
 */
-void MUS_Step(){}
+void MUS_Step(){
+
+}
 
 /* Sound Funcs */
 /*  SND_Step();
