@@ -15,7 +15,7 @@ int MUS_LoadBasedContext(){
 
     if(isInterrupt){
         printf("MUS_LoadBasedContext(): Loading interrupted music: %s\n", curTrackPath_Back);
-        MUS_LoadFile(curTrackPath_Back, (double)curMusicPos_Back, (double)curMusicEndPoint_Back, (double)curMusicLoopPoint_Back, (double)curMusicDoLoop_Back, 0);
+        MUS_LoadFile(curTrackPath_Back, curMusicPos_Back, curMusicEndPoint_Back, curMusicLoopPoint_Back, curMusicDoLoop_Back, 0);
         return 1;
     }
 
@@ -108,6 +108,8 @@ int MUS_Load(const char* filePath, int doInterrupt){
         curMusicLoopPoint_Back = curMusicLoopPoint;
         curMusicEndPoint_Back = curMusicEndPoint;
         curMusicDoLoop_Back = curMusicDoLoop;
+    }else{
+        isInterrupt = 0;
     }
     curTrackPath = copyLine;
 
@@ -134,6 +136,7 @@ int MUS_Load(const char* filePath, int doInterrupt){
     // Play music.
     Mix_PlayMusic(gMusic_Playing, 0);
     Mix_SetMusicPosition((double)curMusicPos / 1000);
+    Mix_ResumeMusic();
 
     // Everything read correctly! (Yay)
     return 1;
@@ -146,7 +149,7 @@ start,end,loop  ;   Timing points.
 doLoop          ;   Whether or not the track should loop.
 doInterrupt     ;   Whether or not the track should interrupt the current track.
 */
-int MUS_LoadFile(const char* path, double start, double end, double loop, int doLoop, int doInterrupt){
+int MUS_LoadFile(const char* path, double* start, double* end, double* loop, int* doLoop, int* doInterrupt){
     // Load MP3.
     gMusic_Playing = Mix_LoadMUS(path);
     if(gMusic_Playing == NULL){
@@ -168,14 +171,15 @@ int MUS_LoadFile(const char* path, double start, double end, double loop, int do
     curTrackPath = path;
 
     // Tracking vars.
-    curMusicPos = &start;
-    curMusicLoopPoint = &loop;
-    curMusicEndPoint = &end;
-    curMusicDoLoop = &doLoop;
+    curMusicPos = start;
+    curMusicLoopPoint = loop;
+    curMusicEndPoint = end;
+    curMusicDoLoop = doLoop;
 
     // Play music.
     Mix_PlayMusic(gMusic_Playing, 0);
     Mix_SetMusicPosition((double)curMusicPos / 1000);
+    Mix_ResumeMusic();
 
     return 1;
 }
@@ -185,12 +189,14 @@ int MUS_LoadFile(const char* path, double start, double end, double loop, int do
 */
 void MUS_Step(){
     if(gMusic_Playing != NULL && !Mix_PausedMusic()){
-        double temp = Mix_GetMusicPosition(gMusic_Playing);
+        double temp = Mix_GetMusicPosition(gMusic_Playing) * 1000;
         curMusicPos = (double*)temp;
-        printf("curMusicPos: %u.\n", curMusicPos);
     }
     
-    if(curMusicPos >= curMusicLoopPoint && curMusicDoLoop)
+    printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
+    //printf("counter_global_frames: %u.\n", counter_global_frames);
+
+    if(curMusicPos >= curMusicEndPoint && curMusicDoLoop)
         Mix_SetMusicPosition((double)curMusicLoopPoint / 1000);
 }
 
