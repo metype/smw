@@ -7,16 +7,16 @@
 #include <stdio.h>
 
 /* Music Vars */
-int curMusicPos;                            // Music position in ms.
-int curMusicLoopPoint, curMusicEndPoint;    // Where music should loop and end in ms. 
-int curMusicDoLoop;                         // Whether or not the current song should loop.
+double curMusicPos;                            // Music position in ms.
+double curMusicLoopPoint, curMusicEndPoint;    // Where music should loop and end in ms. 
+double curMusicDoLoop;                         // Whether or not the current song should loop.
 Mix_Music* gMusic_Playing;                  // The currently playing track.
 
 // The vars below are used in case something like the P-Switch music intterupts the current track.
 // Non-vanilla behavior. These are only used if allowed.
-int curMusicPos_Back;
-int curMusicLoopPoint_Back, curMusicEndPoint_Back;
-int curMusicDoLoop_Back;
+double curMusicPos_Back;
+double curMusicLoopPoint_Back, curMusicEndPoint_Back;
+double curMusicDoLoop_Back;
 
 // Paths to music files.
 //#define PATH const char*

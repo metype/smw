@@ -380,12 +380,12 @@ void SmwVectorNMI() {
   int trigger_line = -1;
   uint8 current_song_id = io_music_ch1;
   if (io_music_ch1  || g_ram[kSmwRam_APUI02] == io_copy_of_music_ch1) {
-    /*RtlApuWrite(APUI02, current_song_id);
+    if(current_song_id > 0 && MUS_Load("./assets/test/testaudio.txt") == 0){
+      printf("SmwVectorNMI: Attempting to play song %u.\n", io_music_ch1);
+      RtlApuWrite(APUI02, current_song_id);
+    }    
     io_copy_of_music_ch1 = current_song_id;
-    */
     io_music_ch1 = 0;
-    /* PLAY MUSIC HERE */
-    MUS_Load("./assets/test/testaudio.txt");
   }
   RtlApuWrite(APUI00, io_sound_ch1);
   RtlApuWrite(APUI01, io_sound_ch2);

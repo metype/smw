@@ -14,8 +14,8 @@ int MUS_LoadBasedContext(){}
 filePath    ;   Path to music file.
 */
 int MUS_Load(const char* filePath){
-    /*const*/ char* curLine[256];
-    /*const*/ char* copyLine[256];
+    /*const*/ char* curLine = malloc(256);//[256];
+    /*const*/ char* copyLine = malloc(256);//[256];
     
     // Read in file.
     FILE* readFile = fopen(filePath, "r");
@@ -49,11 +49,12 @@ int MUS_Load(const char* filePath){
     curMusicDoLoop = atoi(curLine);
 
     fclose(readFile);
-    //free(curLine);
-    //free(copyLine);
+    free(curLine);
+    free(copyLine);
 
     // Play music.
-    Mix_PlayMusic(gMusic_Playing, curMusicDoLoop);
+    Mix_PlayMusic(gMusic_Playing, 0);
+    Mix_SetMusicPosition(curMusicPos / 1000);
 
     // Everything read correctly! (Yay)
     return 1;
