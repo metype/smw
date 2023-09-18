@@ -17,6 +17,7 @@ __pycache__
 /enhanced/
 *.sfc
 /third_party/SDL2_mixer-2.6.3/
-/assets/custom/
+/assets/custom/test/
 assets/Music.txt
 assets/Maps.txt
+assets/Game States_Modes.txt
