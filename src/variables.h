@@ -1193,7 +1193,7 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 #define MAP_SPECIAL     (ow_players_map[0] == wm_Special)
 #define MAP_STAR        (ow_players_map[0] == wm_Star)
 
-/* Custom Sounds */
+/* Custom Music */
 #define USE_CUSTOM_MUSIC  1
 #define USE_CUSTOM_SOUNDS 1
 #define USE_MUSICVAR_BACK 1
@@ -1241,5 +1241,101 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 #define MUSID_BOWSERINTER     29
 #define MUSID_BOWSERINTEROVER 25  // May be wrong? Possibly switch with 26.
 #define MUSID_BOWSERDEFEAT    27
+
+/* Custom Sounds 
+    Certain sounds share an ID. For which ID uses what channel, refer to https://floating.muncher.se/bot/sound.txt.
+    $1DF9 = io_sound_ch1
+    ? = io_sound_ch2
+    ? = io_sound_ch3
+*/
+// Levels
+#define SNDID_PIPE
+#define SNDID_CHECKPOINT
+#define SNDID_SWITCHBLOCK
+#define SNDID_ITEMPASTGOAL    0x01  // Carrying item past goal.
+#define SNDID_YOSHICOIN
+#define SNDID_GRINDER
+#define SNDID_SPRING
+#define SNDID_DOOR
+#define SNDID_MSGBOX
+
+// Yoshi
+#define SNDID_YOSHIGULP
+#define SNDID_YOSHISPIT       0x01  // ("OW!")
+#define SNDID_YOSHIHATCH
+#define SNDID_YOSHILOSE
+#define SNDID_YOSHIFIRE
+#define SNDID_YOSHIMOUNT
+#define SNDID_YOSHITONGUE
+#define SNDID_YOSHISTOMP
+
+// Mario
+#define SNDID_FLY
+#define SNDID_FLYHURT
+#define SNDID_HITHEAD         0x01
+#define SNDID_SPINJUMPHOP     0x01  // Spin jumping on a spiked enemy.
+#define SNDID_SPINJUMPKILL
+#define SNDID_KICK
+#define SNDID_POWERUP
+#define SNDID_GETCAPE
+#define SNDID_SWIM
+#define SNDID_GETPBALLOON
+#define SNDID_JUMP
+#define SNDID_SPINJUMP
+#define SNDID_FIREBALL
+#define SNDID_ITEMINRESERVE
+#define SNDID_ITEMOUTRESERVE
+#define SNDID_LRSCROLL
+
+// Boss
+#define SNDID_KOOPASHRINK
+#define SNDID_LEMMYWENDYFALL
+#define SNDID_LEMMYWENDYLAVA
+#define SNDID_PEACHHELP
+
+// Overworld
+#define SNDID_TILEREVEAL
+#define SNDID_CASTLECOLLAPSE
+#define SNDID_BLOCKEJECTION
+#define SNDID_TOLEVELTILE
+
+// Ending
+#define SNDID_FIREWORKWHISTLE
+#define SNDID_FIREWORKBANG
+
+// SFX
+#define SNDID_DRYBONES
+#define SNDID_MAGIC
+#define SNDID_PAUSE
+#define SNDID_UNPAUSE
+#define SNDID_STOMP1
+#define SNDID_STOMP2
+#define SNDID_STOMP3
+#define SNDID_STOMP4
+#define SNDID_STOMP5
+#define SNDID_STOMP6
+#define SNDID_STOMP7
+#define SNDID_TIMELOW         0x01  // The thing that plays at 100 seconds.
+#define SNDID_WORLD7APPEARS   0x01  // When the skull thing rises out of the water.
+#define SNDID_BLARRGCOAR
+#define SNDID_COIN
+#define SNDID_POWERBLOCK
+#define SNDID_VINEBLOCK
+#define SNDID_1UP
+#define SNDID_DESTROYEDBLOCK
+#define SNDID_BULLETBILL
+#define SNDID_DRUMROLLSTART
+#define SNDID_DRUMROLLEND
+#define SNDID_THUNDER
+#define SNDID_CHUCKCLAP
+#define SNDID_BOMBBLOW
+#define SNDID_BOMBFUSE
+#define SNDID_WHISTLE
+#define SNDID_PSWITCHOVER
+#define SNDID_SWOOPER
+#define SNDID_PODOBOO
+#define SNDID_STUNNED
+#define SNDID_CORRECT
+#define SNDID_WRONG
 
 #endif
