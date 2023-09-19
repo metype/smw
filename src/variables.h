@@ -1264,7 +1264,7 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 #define SNDID_YOSHISPIT       0x01  // ("OW!")
 #define SNDID_YOSHIHATCH      0x0A
 #define SNDID_YOSHILOSE       0x13
-#define SNDID_YOSHIFIRE       0x17
+#define SNDID_YOSHIFIRE       0x17  // Shared with the Bowser Statues.
 #define SNDID_YOSHIMOUNT      0x1F
 #define SNDID_YOSHITONGUE     0x21
 #define SNDID_YOSHISTOMP      0x25

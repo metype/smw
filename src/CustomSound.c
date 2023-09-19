@@ -201,6 +201,127 @@ void MUS_Step(){
 }
 
 /* Sound Funcs */
+/*  SND_Load_Minor(path);
+    Loads a WAV file from the specified path.
+    Meant to be used with SND_Load().
+path    ;   Path to file.
+*/
+Mix_Chunk* SND_Load_Minor(const char* path){
+    char* curLine = malloc(256);
+    char* copyLine = malloc(256);
+    
+    // Read in file.
+    FILE* readFile = fopen(path, "r");
+    if(readFile == NULL){
+        printf("SND_Load_Minor() Err: Can't find file at %s.\n", path);
+        return 0;
+    }
+
+    // Path to WAV file.
+    fgets(curLine, 256, readFile);
+    strncpy(copyLine, curLine, strlen(curLine) - 1);
+    copyLine[strlen(curLine) - 1] = NULL;
+
+    Mix_Chunk* temp = Mix_LoadWAV(copyLine);
+
+    fclose(readFile);
+    free(curLine);
+    free(copyLine);
+
+    return temp;
+}
+
+/*  SND_Load();
+    Loads all external sound files.
+*/
+void SND_Load(){
+    printf("Loading Custom SFX...\n");
+    gSound_Default = SND_Load_Minor("./assets/custom/SFX/default.txt");
+
+    gSound_Pipe = SND_Load_Minor("./assets/custom/SFX/Levels/pipe.txt");
+    gSound_CheckPoint = SND_Load_Minor("./assets/custom/SFX/Levels/checkpoint.txt");
+    gSound_SwitchBlock = SND_Load_Minor("./assets/custom/SFX/Levels/switch.txt");
+    gSound_ItemPastGoal = SND_Load_Minor("./assets/custom/SFX/Levels/itempastgoal.txt");
+    gSound_YoshiCoin = SND_Load_Minor("./assets/custom/SFX/Levels/yoshicoin.txt");
+    gSound_Grinder = SND_Load_Minor("./assets/custom/SFX/Levels/grinder.txt");
+    gSound_Spring = SND_Load_Minor("./assets/custom/SFX/Levels/spring.txt");
+    gSound_Door = SND_Load_Minor("./assets/custom/SFX/Levels/door.txt");
+    gSound_MsgBox = SND_Load_Minor("./assets/custom/SFX/Levels/msgbox.txt");
+
+    gSound_YoshiGulp = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiSpit = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiHatch = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiLose = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiFire = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiMount = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiTongue = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+    gSound_YoshiStomp = SND_Load_Minor("./assets/custom/SFX/Yoshi/.txt");
+
+    gSound_Fly = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_FlyHurt = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_HitHead = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_SpinJumpHop = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_SpinJumpKill = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_SpinJump = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_Kick = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_PowerUp = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_GetCape = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_Swim = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_GetPBalloon = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_Jump = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_Fireball = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_ItemInReserve = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_ItemOutReserve = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+    gSound_LRScroll = SND_Load_Minor("./assets/custom/SFX/Mario/.txt");
+
+    gSound_KoopaShrink = SND_Load_Minor("./assets/custom/SFX/Boss/.txt");
+    gSound_LemmyWendyFall = SND_Load_Minor("./assets/custom/SFX/Boss/.txt");
+    gSound_LemmyWendyLava = SND_Load_Minor("./assets/custom/SFX/Boss/.txt");
+    gSound_PeachHelp = SND_Load_Minor("./assets/custom/SFX/Boss/.txt");
+
+    gSound_TileReveal = SND_Load_Minor("./assets/custom/SFX/Overworld/.txt");
+    gSound_CastleCollapse = SND_Load_Minor("./assets/custom/SFX/Overworld/.txt");
+    gSound_BlockEjection = SND_Load_Minor("./assets/custom/SFX/Overworld/.txt");
+    gSound_ToLevelTile = SND_Load_Minor("./assets/custom/SFX/Overworld/.txt");
+
+    gSound_FireworkWhistle = SND_Load_Minor("./assets/custom/SFX/Ending/.txt");
+    gSound_FireworkBang = SND_Load_Minor("./assets/custom/SFX/Ending/.txt");
+
+    gSound_Drybones = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Magic = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Pause = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Unpause = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp1 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp2 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp3 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp4 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp5 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp6 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stomp7 = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_TimeLow = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_World7Appears = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_BlarggRoar = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Coin = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_PowerBlock = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_VineBlock = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_1UP = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_DestroyedBlock = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_BulletBill = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_DrumRollStart = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_DrumRollEnd = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Thunder = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_ChuckClap = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_BombBlow = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_BombFuse = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Whistle = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_PSwitchOver = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Swooper = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Podoboo = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Stunned = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Correct = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+    gSound_Wrong = SND_Load_Minor("./assets/custom/SFX/Misc/.txt");
+}
+
 /*  SND_Step();
     Tracks and plays certain sounds based on certain gamestates.
     Requires all sounds to be defined first.
