@@ -6734,8 +6734,13 @@ void SpawnPlayerTurnAroundSmoke_00FE72(uint8 j) {  // 00fe72
 void SpawnPlayerFireball() {  // 00fea8
   uint8 v0 = 9;
   while (ext_spr_spriteid[v0]) {
+      #ifdef CHEAT_INFINITE_FIREBALLS
+    if (--v0 == 0)
+      return;
+#else
     if (--v0 == 7)
       return;
+      #endif
   }
   io_sound_ch3 = 6;
   timer_display_player_shoot_fireball_pose = 10;

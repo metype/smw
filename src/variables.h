@@ -1133,8 +1133,13 @@ enum ControllerButtons {
   cb_R = 0x20,
 };
 
+
 #define CHEAT_PIT_BOUNCING
 #define CHEAT_INVICIBLE
+#define CHEAT_INFINITE_FIREBALLS
+/*
+#define CHEAT_NEVER_SPAWN
+*/
 
 #define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
 #define CON_HOLD_RIGHT  (io_controller_hold1 & cb_Right)

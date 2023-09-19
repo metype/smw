@@ -2980,6 +2980,9 @@ void ParseLevelSpriteList_Entry2() {  // 02a802
 }
 
 bool LoadOneSprite(const uint8 *p, uint8 k, PointU16 pt) {
+    #ifdef CHEAT_NEVER_SPAWN
+  return false;
+  #endif
   ++sprites_load_status[k];
   uint8 v8 = p[2];
   uint8 v9;
@@ -3103,11 +3106,19 @@ void ParseLevelSpriteList_LoadSpriteLoopStrt(uint8 spr_index, uint8 j, PointU16 
 }
 
 uint8 FindFreeNormalSpriteSlot_LowPriority() {  // 02a9de
+#ifdef CHEAT_NEVER_SPAWN
+  return -1;
+#else
   return FindFreeNormalSpriteSlot_02A9E6(2);
+#endif
 }
 
 uint8 FindFreeNormalSpriteSlot_HighPriority() {  // 02a9e4
+#ifdef CHEAT_NEVER_SPAWN
+  return -1;
+#else
   return FindFreeNormalSpriteSlot_02A9E6(0);
+#endif
 }
 
 uint8 FindFreeNormalSpriteSlot_02A9E6(uint8 r14) {  // 02a9ef
