@@ -241,90 +241,90 @@ int SND_Load_Minor(Mix_Chunk* target, const char* path){
 */
 void SND_Load(){
     printf("Loading Custom SFX...\n");
-    gSound_Default = SND_Load_Minor(gSound_Default, "./assets/custom/SFX/default.txt");
+    SND_Load_Minor(gSound_Default, "./assets/custom/SFX/default.txt");
 
-    gSound_Pipe = SND_Load_Minor(gSound_Pipe, "./assets/custom/SFX/Levels/pipe.txt");
-    gSound_CheckPoint = SND_Load_Minor(gSound_CheckPoint, "./assets/custom/SFX/Levels/checkpoint.txt");
-    gSound_SwitchBlock = SND_Load_Minor(gSound_SwitchBlock, "./assets/custom/SFX/Levels/switch.txt");
-    gSound_ItemPastGoal = SND_Load_Minor(gSound_ItemPastGoal, "./assets/custom/SFX/Levels/itempastgoal.txt");
-    gSound_YoshiCoin = SND_Load_Minor(gSound_YoshiCoin, "./assets/custom/SFX/Levels/yoshicoin.txt");
-    gSound_Grinder = SND_Load_Minor(gSound_Grinder, "./assets/custom/SFX/Levels/grinder.txt");
-    gSound_Spring = SND_Load_Minor(gSound_Spring, "./assets/custom/SFX/Levels/spring.txt");
-    gSound_Door = SND_Load_Minor(gSound_Door, "./assets/custom/SFX/Levels/door.txt");
-    gSound_MsgBox = SND_Load_Minor(gSound_MsgBox, "./assets/custom/SFX/Levels/msgbox.txt");
+    SND_Load_Minor(gSound_Pipe, "./assets/custom/SFX/Levels/pipe.txt");
+    SND_Load_Minor(gSound_CheckPoint, "./assets/custom/SFX/Levels/checkpoint.txt");
+    SND_Load_Minor(gSound_SwitchBlock, "./assets/custom/SFX/Levels/switch.txt");
+    SND_Load_Minor(gSound_ItemPastGoal, "./assets/custom/SFX/Levels/itempastgoal.txt");
+    SND_Load_Minor(gSound_YoshiCoin, "./assets/custom/SFX/Levels/yoshicoin.txt");
+    SND_Load_Minor(gSound_Grinder, "./assets/custom/SFX/Levels/grinder.txt");
+    SND_Load_Minor(gSound_Spring, "./assets/custom/SFX/Levels/spring.txt");
+    SND_Load_Minor(gSound_Door, "./assets/custom/SFX/Levels/door.txt");
+    SND_Load_Minor(gSound_MsgBox, "./assets/custom/SFX/Levels/msgbox.txt");
 
-    gSound_YoshiGulp = SND_Load_Minor(gSound_YoshiGulp, "./assets/custom/SFX/Yoshi/yoshigulp.txt");
-    gSound_YoshiSpit = SND_Load_Minor(gSound_YoshiSpit, "./assets/custom/SFX/Yoshi/yoshispit.txt");
-    gSound_YoshiHatch = SND_Load_Minor(gSound_YoshiHatch, "./assets/custom/SFX/Yoshi/yoshihatch.txt");
-    gSound_YoshiLose = SND_Load_Minor(gSound_YoshiLose, "./assets/custom/SFX/Yoshi/yoshilose.txt");
-    gSound_YoshiFire = SND_Load_Minor(gSound_YoshiFire, "./assets/custom/SFX/Yoshi/yoshifire.txt");
-    gSound_YoshiMount = SND_Load_Minor(gSound_YoshiMount, "./assets/custom/SFX/Yoshi/yoshimount.txt");
-    gSound_YoshiTongue = SND_Load_Minor(gSound_YoshiTongue, "./assets/custom/SFX/Yoshi/yoshitongue.txt");
-    gSound_YoshiStomp = SND_Load_Minor(gSound_YoshiStomp, "./assets/custom/SFX/Yoshi/yoshistomp.txt");
+    SND_Load_Minor(gSound_YoshiGulp, "./assets/custom/SFX/Yoshi/yoshigulp.txt");
+    SND_Load_Minor(gSound_YoshiSpit, "./assets/custom/SFX/Yoshi/yoshispit.txt");
+    SND_Load_Minor(gSound_YoshiHatch, "./assets/custom/SFX/Yoshi/yoshihatch.txt");
+    SND_Load_Minor(gSound_YoshiLose, "./assets/custom/SFX/Yoshi/yoshilose.txt");
+    SND_Load_Minor(gSound_YoshiFire, "./assets/custom/SFX/Yoshi/yoshifire.txt");
+    SND_Load_Minor(gSound_YoshiMount, "./assets/custom/SFX/Yoshi/yoshimount.txt");
+    SND_Load_Minor(gSound_YoshiTongue, "./assets/custom/SFX/Yoshi/yoshitongue.txt");
+    SND_Load_Minor(gSound_YoshiStomp, "./assets/custom/SFX/Yoshi/yoshistomp.txt");
 
-    gSound_Fly = SND_Load_Minor(gSound_Fly, "./assets/custom/SFX/Mario/fly.txt");
-    gSound_FlyHurt = SND_Load_Minor(gSound_FlyHurt, "./assets/custom/SFX/Mario/flyhurt.txt");
-    gSound_HitHead = SND_Load_Minor(gSound_HitHead, "./assets/custom/SFX/Mario/hithead.txt");
-    gSound_SpinJumpHop = SND_Load_Minor(gSound_SpinJumpHop, "./assets/custom/SFX/Mario/spinjumphop.txt");
-    gSound_SpinJumpKill = SND_Load_Minor(gSound_SpinJumpKill, "./assets/custom/SFX/Mario/spinjumpkill.txt");
-    gSound_SpinJump = SND_Load_Minor(gSound_SpinJump, "./assets/custom/SFX/Mario/spinjump.txt");
-    gSound_Kick = SND_Load_Minor(gSound_Kick, "./assets/custom/SFX/Mario/kick.txt");
-    gSound_PowerUp = SND_Load_Minor(gSound_PowerUp, "./assets/custom/SFX/Mario/powerup.txt");
-    gSound_GetCape = SND_Load_Minor(gSound_GetCape, "./assets/custom/SFX/Mario/getcape.txt");
-    gSound_Swim = SND_Load_Minor(gSound_Swim, "./assets/custom/SFX/Mario/swim.txt");
-    gSound_GetPBalloon = SND_Load_Minor(gSound_GetPBalloon, "./assets/custom/SFX/Mario/getpballoon.txt");
-    gSound_Jump = SND_Load_Minor(gSound_Jump, "./assets/custom/SFX/Mario/jump.txt");
-    gSound_Fireball = SND_Load_Minor(gSound_Fireball, "./assets/custom/SFX/Mario/fireball.txt");
-    gSound_ItemInReserve = SND_Load_Minor(gSound_ItemInReserve, "./assets/custom/SFX/Mario/iteminreserve.txt");
-    gSound_ItemOutReserve = SND_Load_Minor(gSound_ItemOutReserve, "./assets/custom/SFX/Mario/itemoutreserve.txt");
-    gSound_LRScroll = SND_Load_Minor(gSound_LRScroll, "./assets/custom/SFX/Mario/lrscroll.txt");
+    SND_Load_Minor(gSound_Fly, "./assets/custom/SFX/Mario/fly.txt");
+    SND_Load_Minor(gSound_FlyHurt, "./assets/custom/SFX/Mario/flyhurt.txt");
+    SND_Load_Minor(gSound_HitHead, "./assets/custom/SFX/Mario/hithead.txt");
+    SND_Load_Minor(gSound_SpinJumpHop, "./assets/custom/SFX/Mario/spinjumphop.txt");
+    SND_Load_Minor(gSound_SpinJumpKill, "./assets/custom/SFX/Mario/spinjumpkill.txt");
+    SND_Load_Minor(gSound_SpinJump, "./assets/custom/SFX/Mario/spinjump.txt");
+    SND_Load_Minor(gSound_Kick, "./assets/custom/SFX/Mario/kick.txt");
+    SND_Load_Minor(gSound_PowerUp, "./assets/custom/SFX/Mario/powerup.txt");
+    SND_Load_Minor(gSound_GetCape, "./assets/custom/SFX/Mario/getcape.txt");
+    SND_Load_Minor(gSound_Swim, "./assets/custom/SFX/Mario/swim.txt");
+    SND_Load_Minor(gSound_GetPBalloon, "./assets/custom/SFX/Mario/getpballoon.txt");
+    SND_Load_Minor(gSound_Jump, "./assets/custom/SFX/Mario/jump.txt");
+    SND_Load_Minor(gSound_Fireball, "./assets/custom/SFX/Mario/fireball.txt");
+    SND_Load_Minor(gSound_ItemInReserve, "./assets/custom/SFX/Mario/iteminreserve.txt");
+    SND_Load_Minor(gSound_ItemOutReserve, "./assets/custom/SFX/Mario/itemoutreserve.txt");
+    SND_Load_Minor(gSound_LRScroll, "./assets/custom/SFX/Mario/lrscroll.txt");
 
-    gSound_KoopaShrink = SND_Load_Minor(gSound_KoopaShrink, "./assets/custom/SFX/Boss/koopashrink.txt");
-    gSound_LemmyWendyFall = SND_Load_Minor(gSound_LemmyWendyFall, "./assets/custom/SFX/Boss/lemmywendyfall.txt");
-    gSound_LemmyWendyLava = SND_Load_Minor(gSound_LemmyWendyLava, "./assets/custom/SFX/Boss/lemmywendylava.txt");
-    gSound_PeachHelp = SND_Load_Minor(gSound_PeachHelp, "./assets/custom/SFX/Boss/peachhelp.txt");
+    SND_Load_Minor(gSound_KoopaShrink, "./assets/custom/SFX/Boss/koopashrink.txt");
+    SND_Load_Minor(gSound_LemmyWendyFall, "./assets/custom/SFX/Boss/lemmywendyfall.txt");
+    SND_Load_Minor(gSound_LemmyWendyLava, "./assets/custom/SFX/Boss/lemmywendylava.txt");
+    SND_Load_Minor(gSound_PeachHelp, "./assets/custom/SFX/Boss/peachhelp.txt");
 
-    gSound_TileReveal = SND_Load_Minor(gSound_TileReveal, "./assets/custom/SFX/Overworld/tilereveal.txt");
-    gSound_CastleCollapse = SND_Load_Minor(gSound_CastleCollapse, "./assets/custom/SFX/Overworld/castlecollapse.txt");
-    gSound_BlockEjection = SND_Load_Minor(gSound_BlockEjection, "./assets/custom/SFX/Overworld/blockejection.txt");
-    gSound_ToLevelTile = SND_Load_Minor(gSound_ToLevelTile, "./assets/custom/SFX/Overworld/toleveltile.txt");
+    SND_Load_Minor(gSound_TileReveal, "./assets/custom/SFX/Overworld/tilereveal.txt");
+    SND_Load_Minor(gSound_CastleCollapse, "./assets/custom/SFX/Overworld/castlecollapse.txt");
+    SND_Load_Minor(gSound_BlockEjection, "./assets/custom/SFX/Overworld/blockejection.txt");
+    SND_Load_Minor(gSound_ToLevelTile, "./assets/custom/SFX/Overworld/toleveltile.txt");
 
-    gSound_FireworkWhistle = SND_Load_Minor(gSound_FireworkWhistle, "./assets/custom/SFX/Ending/fireworkwhistle.txt");
-    gSound_FireworkBang = SND_Load_Minor(gSound_FireworkBang, "./assets/custom/SFX/Ending/fireworkbang.txt");
+    SND_Load_Minor(gSound_FireworkWhistle, "./assets/custom/SFX/Ending/fireworkwhistle.txt");
+    SND_Load_Minor(gSound_FireworkBang, "./assets/custom/SFX/Ending/fireworkbang.txt");
 
-    gSound_Drybones = SND_Load_Minor(gSound_Pause, "./assets/custom/SFX/Misc/drybones.txt");
-    gSound_Magic = SND_Load_Minor(gSound_Magic, "./assets/custom/SFX/Misc/magic.txt");
-    gSound_Pause = SND_Load_Minor(gSound_Pause, "./assets/custom/SFX/Misc/pause.txt");
-    gSound_Unpause = SND_Load_Minor(gSound_Unpause, "./assets/custom/SFX/Misc/unpause.txt");
-    gSound_Stomp1 = SND_Load_Minor(gSound_Stomp1, "./assets/custom/SFX/Misc/stomp1.txt");
-    gSound_Stomp2 = SND_Load_Minor( gSound_Stomp2, "./assets/custom/SFX/Misc/stomp2.txt");
-    gSound_Stomp3 = SND_Load_Minor(gSound_Stomp3, "./assets/custom/SFX/Misc/stomp3.txt");
-    gSound_Stomp4 = SND_Load_Minor(gSound_Stomp4, "./assets/custom/SFX/Misc/stomp4.txt");
-    gSound_Stomp5 = SND_Load_Minor(gSound_Stomp5, "./assets/custom/SFX/Misc/stomp5.txt");
-    gSound_Stomp6 = SND_Load_Minor(gSound_Stomp6, "./assets/custom/SFX/Misc/stomp6.txt");
-    gSound_Stomp7 = SND_Load_Minor(gSound_Stomp7, "./assets/custom/SFX/Misc/stomp7.txt");
-    gSound_TimeLow = SND_Load_Minor(gSound_TimeLow, "./assets/custom/SFX/Misc/timelow.txt");
-    gSound_World7Appears = SND_Load_Minor(gSound_World7Appears, "./assets/custom/SFX/Misc/world7appears.txt");
-    gSound_BlarggRoar = SND_Load_Minor(gSound_BlarggRoar, "./assets/custom/SFX/Misc/blarggroar.txt");
-    gSound_Coin = SND_Load_Minor(gSound_Coin, "./assets/custom/SFX/Misc/coin.txt");
-    gSound_PowerBlock = SND_Load_Minor(gSound_PowerBlock, "./assets/custom/SFX/Misc/powerblock.txt");
-    gSound_VineBlock = SND_Load_Minor(gSound_VineBlock, "./assets/custom/SFX/Misc/vineblock.txt");
-    gSound_1UP = SND_Load_Minor(gSound_1UP, "./assets/custom/SFX/Misc/1up.txt");
-    gSound_DestroyedBlock = SND_Load_Minor(gSound_DestroyedBlock, "./assets/custom/SFX/Misc/destroyedblock.txt");
-    gSound_BulletBill = SND_Load_Minor(gSound_BulletBill, "./assets/custom/SFX/Misc/bulletbill.txt");
-    gSound_DrumRollStart = SND_Load_Minor(gSound_DrumRollStart, "./assets/custom/SFX/Misc/drumrollstart.txt");
-    gSound_DrumRollEnd = SND_Load_Minor( gSound_DrumRollEnd, "./assets/custom/SFX/Misc/drumrollend.txt");
-    gSound_Thunder = SND_Load_Minor(gSound_Thunder, "./assets/custom/SFX/Misc/thunder.txt");
-    gSound_ChuckClap = SND_Load_Minor(gSound_ChuckClap, "./assets/custom/SFX/Misc/chuckclap.txt");
-    gSound_BombBlow = SND_Load_Minor(gSound_BombBlow, "./assets/custom/SFX/Misc/bombblow.txt");
-    gSound_BombFuse = SND_Load_Minor(gSound_BombFuse, "./assets/custom/SFX/Misc/bombfuse.txt");
-    gSound_Whistle = SND_Load_Minor(gSound_Whistle, "./assets/custom/SFX/Misc/whistle.txt");
-    gSound_PSwitchOver = SND_Load_Minor(gSound_PSwitchOver, "./assets/custom/SFX/Misc/pswitchover.txt");
-    gSound_Swooper = SND_Load_Minor(gSound_Swooper, "./assets/custom/SFX/Misc/swooper.txt");
-    gSound_Podoboo = SND_Load_Minor(gSound_Podoboo, "./assets/custom/SFX/Misc/podoboo.txt");
-    gSound_Stunned = SND_Load_Minor(gSound_Stunned, "./assets/custom/SFX/Misc/stunned.txt");
-    gSound_Correct = SND_Load_Minor(gSound_Correct, "./assets/custom/SFX/Misc/correct.txt");
-    gSound_Wrong = SND_Load_Minor(gSound_Wrong, "./assets/custom/SFX/Misc/wrong.txt");
+    SND_Load_Minor(gSound_Pause, "./assets/custom/SFX/Misc/drybones.txt");
+    SND_Load_Minor(gSound_Magic, "./assets/custom/SFX/Misc/magic.txt");
+    SND_Load_Minor(gSound_Pause, "./assets/custom/SFX/Misc/pause.txt");
+    SND_Load_Minor(gSound_Unpause, "./assets/custom/SFX/Misc/unpause.txt");
+    SND_Load_Minor(gSound_Stomp1, "./assets/custom/SFX/Misc/stomp1.txt");
+    SND_Load_Minor(gSound_Stomp2, "./assets/custom/SFX/Misc/stomp2.txt");
+    SND_Load_Minor(gSound_Stomp3, "./assets/custom/SFX/Misc/stomp3.txt");
+    SND_Load_Minor(gSound_Stomp4, "./assets/custom/SFX/Misc/stomp4.txt");
+    SND_Load_Minor(gSound_Stomp5, "./assets/custom/SFX/Misc/stomp5.txt");
+    SND_Load_Minor(gSound_Stomp6, "./assets/custom/SFX/Misc/stomp6.txt");
+    SND_Load_Minor(gSound_Stomp7, "./assets/custom/SFX/Misc/stomp7.txt");
+    SND_Load_Minor(gSound_TimeLow, "./assets/custom/SFX/Misc/timelow.txt");
+    SND_Load_Minor(gSound_World7Appears, "./assets/custom/SFX/Misc/world7appears.txt");
+    SND_Load_Minor(gSound_BlarggRoar, "./assets/custom/SFX/Misc/blarggroar.txt");
+    SND_Load_Minor(gSound_Coin, "./assets/custom/SFX/Misc/coin.txt");
+    SND_Load_Minor(gSound_PowerBlock, "./assets/custom/SFX/Misc/powerblock.txt");
+    SND_Load_Minor(gSound_VineBlock, "./assets/custom/SFX/Misc/vineblock.txt");
+    SND_Load_Minor(gSound_1UP, "./assets/custom/SFX/Misc/1up.txt");
+    SND_Load_Minor(gSound_DestroyedBlock, "./assets/custom/SFX/Misc/destroyedblock.txt");
+    SND_Load_Minor(gSound_BulletBill, "./assets/custom/SFX/Misc/bulletbill.txt");
+    SND_Load_Minor(gSound_DrumRollStart, "./assets/custom/SFX/Misc/drumrollstart.txt");
+    SND_Load_Minor(gSound_DrumRollEnd, "./assets/custom/SFX/Misc/drumrollend.txt");
+    SND_Load_Minor(gSound_Thunder, "./assets/custom/SFX/Misc/thunder.txt");
+    SND_Load_Minor(gSound_ChuckClap, "./assets/custom/SFX/Misc/chuckclap.txt");
+    SND_Load_Minor(gSound_BombBlow, "./assets/custom/SFX/Misc/bombblow.txt");
+    SND_Load_Minor(gSound_BombFuse, "./assets/custom/SFX/Misc/bombfuse.txt");
+    SND_Load_Minor(gSound_Whistle, "./assets/custom/SFX/Misc/whistle.txt");
+    SND_Load_Minor(gSound_PSwitchOver, "./assets/custom/SFX/Misc/pswitchover.txt");
+    SND_Load_Minor(gSound_Swooper, "./assets/custom/SFX/Misc/swooper.txt");
+    SND_Load_Minor(gSound_Podoboo, "./assets/custom/SFX/Misc/podoboo.txt");
+    SND_Load_Minor(gSound_Stunned, "./assets/custom/SFX/Misc/stunned.txt");
+    SND_Load_Minor(gSound_Correct, "./assets/custom/SFX/Misc/correct.txt");
+    SND_Load_Minor(gSound_Wrong, "./assets/custom/SFX/Misc/wrong.txt");
 }
 
 /*  SND_Step();
@@ -408,17 +408,17 @@ int SND_Step(){
     }
 
     // Mix_PlayChannel(2,NULL,0);
-    /*switch(io_sound_ch2){
+    switch(io_sound_ch2){
         case SNDID_JUMP:
             return Mix_PlayChannel(2,gSound_Jump,0);
         case SNDID_GRINDER:
             return Mix_PlayChannel(2,gSound_Grinder,0);
-    }*/
+    }
 
     // Mix_PlayChannel(3,NULL,0);
     switch(io_sound_ch3){
         case SNDID_COIN:
-            return Mix_PlayChannel(3,NULL,0);
+            return Mix_PlayChannel(3,gSound_Coin,0);
         case SNDID_POWERBLOCK:
             return Mix_PlayChannel(3,NULL,0);
         case SNDID_VINEBLOCK:
