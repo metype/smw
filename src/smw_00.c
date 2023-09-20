@@ -393,12 +393,12 @@ void SmwVectorNMI() {
 
   MUS_Step();
   
-  //if(io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0)
-  //  printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
-
-  RtlApuWrite(APUI00, io_sound_ch1);
-  RtlApuWrite(APUI01, io_sound_ch2);
-  RtlApuWrite(APUI03, io_sound_ch3);
+  if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0) && SND_Step() == -1){
+    printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
+    RtlApuWrite(APUI00, io_sound_ch1);
+    RtlApuWrite(APUI01, io_sound_ch2);
+    RtlApuWrite(APUI03, io_sound_ch3);
+  }
   io_sound_ch1 = 0;
   io_sound_ch2 = 0;
   io_sound_ch3 = 0;

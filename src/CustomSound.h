@@ -113,6 +113,6 @@ int MUS_Load(const char*,int);
 int MUS_LoadFile(const char*,double*,double*,double*,int*,int*);
 void MUS_Step();
 void SND_Load();
-void SND_Step();
+int SND_Step();
 
 #endif

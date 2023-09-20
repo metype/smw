@@ -1252,7 +1252,7 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 #define SNDID_PIPE            0x04  // Shared with Mario Hurt.
 #define SNDID_CHECKPOINT      0x05
 #define SNDID_SWITCHBLOCK     0x0B
-#define SNDID_ITEMPASTGOAL    0x01  // Carrying item past goal.
+#define SNDID_ITEMPASTGOAL    0x0C  // Carrying item past goal.
 #define SNDID_YOSHICOIN       0x1C
 #define SNDID_GRINDER         0x04
 #define SNDID_SPRING          0x08
@@ -1261,7 +1261,7 @@ enum WorldMaps{   // To be used with ow_players_map[0].
 
 // Yoshi
 #define SNDID_YOSHIGULP       0x06
-#define SNDID_YOSHISPIT       0x01  // ("OW!")
+#define SNDID_YOSHISPIT       0x20  // ("OW!")
 #define SNDID_YOSHIHATCH      0x0A
 #define SNDID_YOSHILOSE       0x13
 #define SNDID_YOSHIFIRE       0x17  // Shared with the Bowser Statues.
