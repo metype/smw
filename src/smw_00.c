@@ -4486,6 +4486,12 @@ void HandlePlayerPhysics() {  // 00d5f2
       if ((player_xspeed & 0x80) != 0)
         v0 = -player_xspeed;
       uint8 v1 = (v0 >> 2) & 0xFE;
+      
+      // This is needed to make sure Mario can jump of out a Cel Dash.
+      if(v1 > 12)
+        v1 = 12;
+      //printf("%u.\n", v1);
+      
       if ((io_controller_press2 & 0x80) == 0 || player_carrying_something_flag2) {
         io_sound_ch2 = 1;
       } else {

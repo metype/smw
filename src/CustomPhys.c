@@ -6,6 +6,7 @@ xAdd,yAdd   ;   Values to add to Mario's speed.
 doSet       ;   Sets Mario's speed instead of adding.
 */
 void PHYS_DoCelDash(int8 xAdd, int8 yAdd, int doSet){
+    printf("PHYS_DoCelDash(): Doing dash.\n");
     int moveHort = (CON_HOLD_LEFT >= 1) - (CON_HOLD_RIGHT >= 1);
     int moveVert = (CON_HOLD_DOWN >= 1) - (CON_HOLD_UP >= 1);
 
@@ -26,11 +27,10 @@ yAdd    ;   What to add to Mario's yspeed.
 doSpin  ;   Whether or not to turn on Mario's spin jump.
 */
 void PHYS_DoDoubleJump(int8 yAdd, int doSpin){
-    //printf("Jumped\n");
+    printf("PHYS_DoDoubleJump: Doing jump.\n");
     if(doSpin)
         player_spin_jump_flag = 1;
     player_yspeed = -yAdd;
-    player_in_air_flag = 1;
 }
 
 /*  PHYS_StepSmashPit();
@@ -38,7 +38,7 @@ void PHYS_DoDoubleJump(int8 yAdd, int doSpin){
     Restores player to that position if they fall in a pit.
 */
 void PHYS_StepSmashPit(){
-    printf("player_on_screen_pos_y: %u.\n", player_on_screen_pos_y);
+    //printf("player_on_screen_pos_y: %u.\n", player_on_screen_pos_y);
     if(player_on_screen_pos_y > 240 && player_on_screen_pos_y < 245){
         player_xspeed = player_yspeed = 0;
         player_xpos = lastGroundx;
@@ -46,7 +46,7 @@ void PHYS_StepSmashPit(){
     }
 
     if(counter_global_frames % 60 == 0 && !player_in_air_flag){
-        printf("Tracking player pos.\n");
+        printf("PHYS_StepSmashPit(): Tracking player pos.\n");
         lastGroundx = player_xpos;
         lastGroundy = player_ypos;
     }
