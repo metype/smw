@@ -220,10 +220,9 @@ int SND_Load_Minor(Mix_Chunk* target, const char* path){
         return 0;
     }
 
-    // Path to WAV file.
+    // Load WAV file.
     fgets(curLine, 256, readFile);
-
-    printf("Attempting to load %s.\n", curLine);
+    printf("SND_Load_Minor(): Attempting to load %s.\n", curLine);
     target = Mix_LoadWAV(curLine);
     if(target == NULL){
         printf("SND_Load_Minor() Err: Mix_LoadWAV() Err: %s.\n", Mix_GetError());
@@ -233,6 +232,7 @@ int SND_Load_Minor(Mix_Chunk* target, const char* path){
     fclose(readFile);
     free(curLine);
 
+    printf("SND_Load_Minor(): Success!\n");
     return 1;
 }
 
@@ -327,18 +327,20 @@ void SND_Load(){
     SND_Load_Minor(gSound_Wrong, "./assets/custom/SFX/Misc/wrong.txt");
 }
 
-/*  SND_Step();
-    Tracks and plays certain sounds based on certain gamestates.
+/* TODO: The next three methods suck and need to be redone. */
+
+/*  SND_Step_Ch1();
+    Tracks and plays certain sounds based on io_sound_ch1.
     Requires all sounds to be defined first. (Call SND_Load().)
     Returns -1 if Mix_PlayChannel() fails or no suitable file was found.
 */
-int SND_Step(){
-    /* TODO: This method sucks and needs to be redone. */
-    
+int SND_Step_Ch1(){
     // Mix_PlayChannel(1,NULL,0);
     switch(io_sound_ch1){
+        case 0:
+            return 0;
         case SNDID_HITHEAD:
-            return Mix_PlayChannel(1,NULL,0);
+            return Mix_PlayChannel(1,gSound_HitHead,0);
         case SNDID_SPINJUMPHOP:
             return Mix_PlayChannel(1,NULL,0);
         case SNDID_KICK:
@@ -406,17 +408,41 @@ int SND_Step(){
         case SNDID_PEACHHELP:
             return Mix_PlayChannel(1,NULL,0);    
     }
+    
+    printf("SND_Step_Ch1(): No suitable sound found.\n");
+    return -1;
+}
 
+/*  SND_Step_Ch2();
+    Tracks and plays certain sounds based on io_sound_ch2.
+    Requires all sounds to be defined first. (Call SND_Load().)
+    Returns -1 if Mix_PlayChannel() fails or no suitable file was found.
+*/
+int SND_Step_Ch2(){
     // Mix_PlayChannel(2,NULL,0);
     switch(io_sound_ch2){
+        case 0:
+            return 0;
         case SNDID_JUMP:
             return Mix_PlayChannel(2,gSound_Jump,0);
         case SNDID_GRINDER:
             return Mix_PlayChannel(2,gSound_Grinder,0);
     }
 
+    printf("SND_Step_Ch2(): No suitable sound found.\n");
+    return -1;
+}
+
+/*  SND_Step_Ch3();
+    Tracks and plays certain sounds based on io_sound_ch3.
+    Requires all sounds to be defined first. (Call SND_Load().)
+    Returns -1 if Mix_PlayChannel() fails or no suitable file was found.
+*/
+int SND_Step_Ch3(){
     // Mix_PlayChannel(3,NULL,0);
     switch(io_sound_ch3){
+        case 0:
+            return 0;
         case SNDID_COIN:
             return Mix_PlayChannel(3,gSound_Coin,0);
         case SNDID_POWERBLOCK:
@@ -499,6 +525,6 @@ int SND_Step(){
             return Mix_PlayChannel(3,NULL,0);
     }
 
-    printf("SND_Step(): No suitable sound found.\n");
+    printf("SND_Step_Ch3(): No suitable sound found.\n");
     return -1;
 }

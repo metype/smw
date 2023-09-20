@@ -393,15 +393,27 @@ void SmwVectorNMI() {
 
   MUS_Step();
   
-  if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0) && SND_Step() == -1){
+  /*if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0) && SND_Step() == -1){
     printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
     RtlApuWrite(APUI00, io_sound_ch1);
     RtlApuWrite(APUI01, io_sound_ch2);
     RtlApuWrite(APUI03, io_sound_ch3);
+  }*/
+  if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0)){
+    printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
+    Mix_ClearError();
+    if(SND_Step_Ch1() == -1)
+      RtlApuWrite(APUI00, io_sound_ch1);
+    if(SND_Step_Ch2() == -1)
+      RtlApuWrite(APUI01, io_sound_ch2);
+    if(SND_Step_Ch3() == -1)
+      RtlApuWrite(APUI03, io_sound_ch3);
+    printf("Mixer Err (if applicable): %s.\n", Mix_GetError());
   }
   io_sound_ch1 = 0;
   io_sound_ch2 = 0;
   io_sound_ch3 = 0;
+
   RtlPpuWrite(W12SEL, mirror_bg1_and2_window_mask_settings);
   RtlPpuWrite(W34SEL, mirror_bg3_and4_window_mask_settings);
   RtlPpuWrite(WOBJSEL, mirror_object_and_color_window_settings);
