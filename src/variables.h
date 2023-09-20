@@ -1275,9 +1275,10 @@ uint16* curLevelID;
 #define MAP_STAR        (ow_players_map[0] == wm_Star)
 
 /* Custom Music */
-#define USE_CUSTOM_MUSIC  1
-#define USE_CUSTOM_SOUNDS 1
-#define USE_MUSICVAR_BACK 1
+#define USE_CUSTOM_MUSIC        1
+#define USE_CUSTOM_SOUNDS       0
+#define USE_MUSICVAR_BACK       1
+#define CUSTOM_MUSIC_PER_LEVEL  1 // Whether or not to play Custom Music per level ID.
 
 // Misc. Music
 #define MUSID_TITLE       1
