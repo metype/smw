@@ -383,10 +383,9 @@ void SmwVectorNMI() {
     //printf("%u\n", current_song_id);
     if(current_song_id > 0 && (!USE_CUSTOM_MUSIC || MUS_LoadBasedContext(misc_game_mode) == 0)){
       Mix_PauseMusic();
-      printf("SmwVectorNMI: Attempting to play song %u.\n", io_music_ch1);
+      //printf("SmwVectorNMI: Attempting to play song %u.\n", io_music_ch1);
       RtlApuWrite(APUI02, current_song_id);
     }
-    //printf("%u\n", current_song_id);
     io_copy_of_music_ch1 = current_song_id;
     io_music_ch1 = 0;
   }
@@ -400,15 +399,15 @@ void SmwVectorNMI() {
     RtlApuWrite(APUI03, io_sound_ch3);
   }*/
   if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0)){
-    printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
+    //printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
     Mix_ClearError();
-    if(SND_Step_Ch1() == -1)
+    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch1() == -1)
       RtlApuWrite(APUI00, io_sound_ch1);
-    if(SND_Step_Ch2() == -1)
+    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch2() == -1)
       RtlApuWrite(APUI01, io_sound_ch2);
-    if(SND_Step_Ch3() == -1)
+    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch3() == -1)
       RtlApuWrite(APUI03, io_sound_ch3);
-    printf("Mixer Err (if applicable): %s.\n", Mix_GetError());
+    //printf("Mixer Err (if applicable): %s.\n", Mix_GetError());
   }
   io_sound_ch1 = 0;
   io_sound_ch2 = 0;
