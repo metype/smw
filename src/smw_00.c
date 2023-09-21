@@ -3,6 +3,7 @@
 #include "smw_rtl.h"
 #include "variables.h"
 #include "assets/smw_assets.h"
+#include "CustomSound.h"
 
 static FuncV *const kInitAndMainLoop_GameModePtrs[42] = {
     &GameMode00_LoadNintendoPresents,
@@ -379,16 +380,38 @@ void SmwVectorNMI() {
   int trigger_line = -1;
   uint8 current_song_id = io_music_ch1;
   if (io_music_ch1  || g_ram[kSmwRam_APUI02] == io_copy_of_music_ch1) {
-    RtlApuWrite(APUI02, current_song_id);
+    //printf("%u\n", current_song_id);
+    if(current_song_id > 0 && (!USE_CUSTOM_MUSIC || MUS_LoadBasedContext(misc_game_mode) == 0)){
+      Mix_PauseMusic();
+      //printf("SmwVectorNMI: Attempting to play song %u.\n", io_music_ch1);
+      RtlApuWrite(APUI02, current_song_id);
+    }
     io_copy_of_music_ch1 = current_song_id;
     io_music_ch1 = 0;
   }
-  RtlApuWrite(APUI00, io_sound_ch1);
-  RtlApuWrite(APUI01, io_sound_ch2);
-  RtlApuWrite(APUI03, io_sound_ch3);
+
+  MUS_Step();
+  
+  /*if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0) && SND_Step() == -1){
+    printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
+    RtlApuWrite(APUI00, io_sound_ch1);
+    RtlApuWrite(APUI01, io_sound_ch2);
+    RtlApuWrite(APUI03, io_sound_ch3);
+  }*/
+  if(!USE_CUSTOM_SOUNDS){
+    RtlApuWrite(APUI00, io_sound_ch1);
+    RtlApuWrite(APUI01, io_sound_ch2);
+    RtlApuWrite(APUI03, io_sound_ch3);
+  }
+  if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0)){
+    //printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
+    Mix_ClearError();
+    //printf("Mixer Err (if applicable): %s.\n", Mix_GetError());
+  }
   io_sound_ch1 = 0;
   io_sound_ch2 = 0;
   io_sound_ch3 = 0;
+
   RtlPpuWrite(W12SEL, mirror_bg1_and2_window_mask_settings);
   RtlPpuWrite(W34SEL, mirror_bg3_and4_window_mask_settings);
   RtlPpuWrite(WOBJSEL, mirror_object_and_color_window_settings);

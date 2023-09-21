@@ -1,3 +1,9 @@
+#ifndef VARIABLES_H
+#define VARIABLES_H
+
+#include "types.h"
+#include "common_rtl.h"
+
 //#define r0w (*(uint16*)(g_ram+0x0))
 //#define r1w (*(uint16*)(g_ram+0x1))
 //#define r2w (*(uint16*)(g_ram+0x2))
@@ -1133,7 +1139,98 @@ enum ControllerButtons {
   cb_R = 0x20,
 };
 
+enum WorldMaps{   // To be used with ow_players_map[0].
+  wm_World2 = 0,  // Shared with Worlds 4 and 6.
+  wm_World1 = 1,
+  wm_World3 = 2,
+  wm_World5 = 3,
+  wm_World7 = 4,
+  wm_Special = 5,
+  wm_Star = 6
+};
 
+/* Level IDs (According to https://www.smwcentral.net/?p=section&a=details&id=4735&r=0 */
+uint16* curLevelID;
+#define LID_BROKENBONUS       0x000
+#define LID_VANILLASECRET2    0x001
+#define LID_VANILLASECRET3    0x002
+#define LID_TOPSECRETAREA     0x003
+#define LID_DONUTGHOSTHOUSE   0x004
+#define LID_DONUTPLAINS3      0x005
+#define LID_DONUTPLAINS4      0x006
+#define LID_MORTONCASTLE      0x007
+#define LID_GREENPALACE       0x008
+#define LID_GREENPALACE       0x008
+#define LID_DONUTPLAINS2      0x009
+#define LID_DONUTSECRET1      0x00A
+#define LID_VANILLAFORTRESS   0x00B
+#define LID_BUTTERBRIDGE1     0x00C
+#define LID_BUTTERBRIDGE2     0x00D
+#define LID_LUDWIGCASTLE      0x00E
+#define LID_CHEESEBRIDGEAREA  0x00F
+#define LID_COOKIEMOUNTAIN    0x010
+#define LID_SODALAKE          0x011
+#define LID_DONUTSECRETHOUSE  0x013
+#define LID_YELLOWPALACE      0x014
+#define LID_DONUTPLAINS1      0x015
+#define LID_MORTONPLAINS      0x017 // Shared with 0x019
+#define LID_SUNKENGHOSTSHIP   0x018
+#define LID_WENDYCASTLE       0x01A
+#define LID_CHOCOLATEFORTRESS 0x01B
+#define LID_CHOCOLATEISLAND5  0x01C
+#define LID_CHOCOLATEISLAND4  0x01D
+#define LID_FORESTFORTRESS    0x01F
+#define LID_ROYCASTLE         0x020
+#define LID_CHOCOGHOSTHOUSE   0x021
+#define LID_CHOCOLATEISLAND1  0x022
+#define LID_CHOCOLATEISLAND3  0x023
+#define LID_CHOCOLATEISLAND2  0x024
+#define LID_IGGYCASTLE        0x101
+#define LID_YOSHIISLAND4      0x102
+#define LID_YOSHIISLAND3      0x103
+#define LID_YOSHIHOUSE        0x104
+#define LID_YOSHIISLAND1      0x105
+#define LID_YOSHIISLAND2      0x106
+#define LID_VANILLAGHOSTHOUSE 0x107
+#define LID_VANILLASECRET1    0x109
+#define LID_VANILLADOME3      0x10A
+#define LID_VANILLASECRET2    0X10B
+#define LID_FRONTDOOR         0X10D
+#define LID_BACKDOOR          0x10E
+#define LID_VALLEYOFBOWSER4   0X10F
+#define LID_LARRYCASTLE       0X110
+#define LID_VALLEYFORTRESS    0X111
+#define LID_VALLEYOFBOWSER3   0X113
+#define LID_VALLEYGHOSTHOUSE  0X114
+#define LID_VALLEYOFBOWSER2   0X115
+#define LID_VALLEYOFBOWSER1   0X116
+#define LID_CHOCOLATESECRET   0X117
+#define LID_VANILLADOME2      0X118
+#define LID_VANILLADOME4      0X119
+#define LID_VANILLADOME1      0X11A
+#define LID_REDPALACE         0X11B
+#define LID_LEMMYCASTLE       0X11C
+#define LID_FORESTGHOSTHOUSE  0X11D
+#define LID_FORESTOFILLUSION4 0X11F
+#define LID_FORESTOFILLUSION2 0X120
+#define LID_BLUEPALACE        0X121
+#define LID_FORESTSECRETAREA  0X122
+#define LID_FORESTOFILLUSION3 0X123
+#define LID_FUNKY             0X125
+#define LID_OUTRAGEOUS        0X126
+#define LID_MONDO             0X127
+#define LID_GROOVY            0X128
+#define LID_GNARLY            0X12A
+#define LID_TUBULAR           0X12B
+#define LID_WAYCOOL           0X12C
+#define LID_AWESOME           0X12D
+#define LID_STARWORLD2        0X130
+#define LID_STARWORLD3        0X132
+#define LID_STARWORLD1        0X134
+#define LID_STARWORLD4        0X135
+#define LID_STARWORLD5        0X136
+
+/* Cheats */
 #define CHEAT_PIT_BOUNCING
 #define CHEAT_INVICIBLE
 #define CHEAT_ALWAYS_FULL_P
@@ -1143,6 +1240,7 @@ enum ControllerButtons {
 #define CHEAT_NEVER_SPAWN
 */
 
+/* Inputs */
 #define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
 #define CON_HOLD_RIGHT  (io_controller_hold1 & cb_Right)
 #define CON_HOLD_UP     (io_controller_hold1 & cb_Up)
@@ -1172,3 +1270,160 @@ enum ControllerButtons {
 #define CON_PRESS_SELECT  (io_controller_press1 & cb_Select)
 #define CON_PRESS_L       (io_controller_press2 & cb_L)
 #define CON_PRESS_R       (io_controller_press2 & cb_R)
+
+/* World Map */
+#define MAP_WORLD2_4_6  (ow_players_map[0] == wm_World2)
+#define MAP_WORLD1      (ow_players_map[0] == wm_World1)
+#define MAP_WORLD3      (ow_players_map[0] == wm_World3)
+#define MAP_WORLD5      (ow_players_map[0] == wm_World5)
+#define MAP_WORLD7      (ow_players_map[0] == wm_World7)
+#define MAP_SPECIAL     (ow_players_map[0] == wm_Special)
+#define MAP_STAR        (ow_players_map[0] == wm_Star)
+
+/* Custom Music */
+#define USE_CUSTOM_MUSIC        1
+#define USE_CUSTOM_SOUNDS       0
+#define USE_MUSICVAR_BACK       1
+#define CUSTOM_MUSIC_PER_LEVEL  1 // Whether or not to play Custom Music per level ID.
+
+// Misc. Music
+#define MUSID_TITLE       1
+#define MUSID_KISS        28
+#define MUSID_EGGSHATCH   10
+#define MUSID_ROLECALL    11
+#define MUSID_STAFFROLL   9
+#define MUSID_STOP        128
+
+// Func. Music
+#define MUSID_PSWITCH     14
+#define MUSID_STARMAN     13
+#define MUSID_KEYFADE     16
+#define MUSID_LEVELFADE   17
+#define MUSID_DEAD        9
+#define MUSID_GAMEOVER    10
+
+// World Music
+#define MUSID_WORLD1      3
+#define MUSID_WORLD2      2
+#define MUSID_WORLD3      4
+#define MUSID_WORLD4      2
+#define MUSID_WORLD5      0 // TODO: Forest of Illusion
+#define MUSID_WORLD6      2
+#define MUSID_WORLD7      0 // TODO: Valley of Bowser
+#define MUSID_SPECIAL     9
+
+// Level Music
+#define MUSID_ATHLETIC    1
+#define MUSID_OVERWORLD   2
+#define MUSID_SWIMMING    3
+#define MUSID_UNDERGROUND 6
+#define MUSID_HAUNTED     7
+#define MUSID_CASTLE      8
+#define MUSID_PALACE      18
+#define MUSID_BOSS        5
+
+// Bowser
+#define MUSID_BOWSER          22
+#define MUSID_BOWSEROUT       23
+#define MUSID_BOWSERIN        24
+#define MUSID_BOWSERINTER     29
+#define MUSID_BOWSERINTEROVER 25  // May be wrong? Possibly switch with 26.
+#define MUSID_BOWSERDEFEAT    27
+
+/* Custom Sounds 
+    Certain sounds share an ID. For which ID uses what channel, refer to https://floating.muncher.se/bot/sound.txt.
+    $1DF9 = io_sound_ch1
+    $1DFA = io_sound_ch2
+    $1DFC = io_sound_ch3
+*/
+// Levels
+#define SNDID_PIPE            0x04  // Shared with Mario Hurt.
+#define SNDID_CHECKPOINT      0x05
+#define SNDID_SWITCHBLOCK     0x0B
+#define SNDID_ITEMPASTGOAL    0x0C  // Carrying item past goal.
+#define SNDID_YOSHICOIN       0x1C
+#define SNDID_GRINDER         0x04
+#define SNDID_SPRING          0x08
+#define SNDID_DOOR            0x0F
+#define SNDID_MSGBOX          0x22  // Shared with Save Prompt.
+
+// Yoshi
+#define SNDID_YOSHIGULP       0x06
+#define SNDID_YOSHISPIT       0x20  // ("OW!")
+#define SNDID_YOSHIHATCH      0x0A
+#define SNDID_YOSHILOSE       0x13
+#define SNDID_YOSHIFIRE       0x17  // Shared with the Bowser Statues.
+#define SNDID_YOSHIMOUNT      0x1F
+#define SNDID_YOSHITONGUE     0x21
+#define SNDID_YOSHISTOMP      0x25
+
+// Mario
+#define SNDID_FLY             0x09
+#define SNDID_FLYHURT         0x0F
+#define SNDID_HITHEAD         0x01
+#define SNDID_SPINJUMPHOP     0x02  // Spin jumping on a spiked enemy.
+#define SNDID_SPINJUMPKILL    0x08
+#define SNDID_KICK            0x03
+#define SNDID_POWERUP         0x0A
+#define SNDID_GETCAPE         0x0D
+#define SNDID_SWIM            0x0E
+#define SNDID_GETPBALLOON     0x1E
+#define SNDID_JUMP            0x01
+#define SNDID_SPINJUMP        0x04
+#define SNDID_FIREBALL        0x06
+#define SNDID_ITEMINRESERVE   0x0B
+#define SNDID_ITEMOUTRESERVE  0x0C
+#define SNDID_LRSCROLL        0x0E
+
+// Boss
+#define SNDID_KOOPASHRINK     0x1F  // When a Koopaling is defeated.
+#define SNDID_LEMMYWENDYFALL  0x23
+#define SNDID_LEMMYWENDYLAVA  0x20
+#define SNDID_PEACHHELP       0x2A
+
+// Overworld
+#define SNDID_TILEREVEAL      0x15
+#define SNDID_CASTLECOLLAPSE  0x16
+#define SNDID_BLOCKEJECTION   0x1C
+#define SNDID_TOLEVELTILE     0x23
+
+// Ending
+#define SNDID_FIREWORKWHISTLE 0x2C
+#define SNDID_FIREWORKBANG    0x2B
+
+// SFX
+#define SNDID_DRYBONES        0x07
+#define SNDID_MAGIC           0x10
+#define SNDID_PAUSE           0x11
+#define SNDID_UNPAUSE         0x12
+#define SNDID_STOMP1          0x13
+#define SNDID_STOMP2          0x14
+#define SNDID_STOMP3          0x15
+#define SNDID_STOMP4          0x16
+#define SNDID_STOMP5          0x17
+#define SNDID_STOMP6          0x18
+#define SNDID_STOMP7          0x19
+#define SNDID_TIMELOW         0x1D  // The thing that plays at 100 seconds.
+#define SNDID_WORLD7APPEARS   0x21  // When the skull thing rises out of the water.
+#define SNDID_BLARGGROAR      0x25
+#define SNDID_COIN            0x01
+#define SNDID_POWERBLOCK      0x02
+#define SNDID_VINEBLOCK       0x03
+#define SNDID_1UP             0x05
+#define SNDID_DESTROYEDBLOCK  0x07  // Shared with Monty Moles.
+#define SNDID_BULLETBILL      0x09
+#define SNDID_DRUMROLLSTART   0x11
+#define SNDID_DRUMROLLEND     0x12
+#define SNDID_THUNDER         0x18
+#define SNDID_CHUCKCLAP       0x19  // Shared with bubbles.
+#define SNDID_BOMBBLOW        0x1A
+#define SNDID_BOMBFUSE        0x1B
+#define SNDID_WHISTLE         0x1E
+#define SNDID_PSWITCHOVER     0x24
+#define SNDID_SWOOPER         0x26
+#define SNDID_PODOBOO         0x27
+#define SNDID_STUNNED         0x28
+#define SNDID_CORRECT         0x29
+#define SNDID_WRONG           0x2A
+
+#endif

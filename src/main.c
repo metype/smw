@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <SDL.h>
+#include <SDL_mixer.h>
 #ifdef _WIN32
 #include "platform/win32/volume_control.h"
 #include <direct.h>
@@ -23,6 +24,8 @@
 #include "config.h"
 #include "util.h"
 #include "smw_spc_player.h"
+
+#include "CustomSound.h"
 
 #include "snes/snes.h"
 #ifdef __SWITCH__
@@ -389,6 +392,14 @@ int main(int argc, char** argv) {
     printf("Failed to init SDL: %s\n", SDL_GetError());
     return 1;
   }
+
+  // Init SDL_Mixer
+  Mix_Init(MIX_INIT_MP3);
+  if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    printf("Failed to open audio device: %s\n", Mix_GetError());
+
+  // Load Custom SFX.
+  SND_Load();
 
   bool custom_size = g_config.window_width != 0 && g_config.window_height != 0;
   int window_width = custom_size ? g_config.window_width : g_current_window_scale * g_snes_width;
