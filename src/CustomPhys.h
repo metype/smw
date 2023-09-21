@@ -17,9 +17,11 @@ int* cc_coinTimer_Cur;      // Time before next coin is drained.
 int* cc_disableLevelTimer;  // Whether or not to disable the level timer.
 
 /* Escape Challenge Vars */
-int* ec_finishedLevel;              // Whether or not player has finished the level.
+int* ec_finishedEscape;             // Whether or not player has reached the end.
+int* ec_startedEscape;
 uint8* ec_finishHortRange;          // How close Player has to be to the left-most side of the level to complete it after escape.
-int* ec_escapeTimer;                // Time until un-timely demise.
+int* ec_escapeTimer;                // Time until un-timely demise in seconds.
+int* ec_spawnedPizzaFace;              // Whether or not Pizza Face has spawned.
 uint8* pizzaFace_x, *pizzaFace_y;   // God do I even want to attempt this?
 uint8* pizzaFace_w, *pizzaFace_h;   // Size of pizza face.
 
@@ -31,5 +33,10 @@ void PHYS_StepSmashPit();
 /* Challenge Funcs */
 void CHAL_InitCoinChallenge(uint8,int,int);
 void CHAL_StepCoinChallenge();
+void CHAL_InitEscape(int,uint8);
+void CHAL_StepEscape();
+void CHAL_EndEscape();
+void CHAL_PizzaInit(uint8,uint8);
+void CHAL_PizzaStep();
 
 #endif

@@ -1174,6 +1174,7 @@ enum ControllerButtons {
 #define ALLOW_SMASHPIT    1
 
 /* Challenges */
-#define CHALLENGE_COIN    1
+#define CHALLENGE_COIN    0
+#define CHALLENGE_ESCAPE  1
 
 #endif

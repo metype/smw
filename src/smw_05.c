@@ -2337,6 +2337,8 @@ const uint8 *GetSpriteListPtr() {
 }
 
 bool LoadLevel() {  // 05d796
+  CHAL_EndEscape();
+  
   uint16 v1;
   int16 v5;
   uint16 v10;

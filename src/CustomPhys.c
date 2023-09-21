@@ -47,7 +47,7 @@ void PHYS_StepSmashPit(){
     }
 
     if(counter_global_frames % 60 == 0 && !player_in_air_flag){
-        printf("PHYS_StepSmashPit(): Tracking player pos.\n");
+        //printf("PHYS_StepSmashPit(): Tracking player pos.\n");
         lastGroundx = player_xpos;
         lastGroundy = player_ypos;
     }
@@ -85,3 +85,58 @@ void CHAL_StepCoinChallenge(){
         player_current_coin_count = cc_startingCoins;
     }
 }
+
+/*  CHAL_InitEscape(time,hortRange);
+    Starts the escape sequence.
+time        ;   Escape timer in seconds.
+hortRange   ;   How far player has to be from the left side of the level to finish the escape.
+*/
+void CHAL_InitEscape(int time, uint8 hortRange){
+    ec_escapeTimer = time * 60;
+    ec_finishHortRange = hortRange;
+    ec_startedEscape = 1;
+    ec_finishedEscape = 0;
+    printf("CHAL_InitEscape(): Starting escape.\n");
+}
+
+/*  CHAL_StepEscape();
+    Counts down the escape timer, checks if Player is finished.
+*/
+void CHAL_StepEscape(){
+    ec_escapeTimer--;
+    if(ec_escapeTimer <= 0){
+        /*if(!spawnedPizzaFace)
+            CHAL_PizzaInit(player_xpos, player_ypos);*/
+        // Temp
+        DamagePlayer_Kill();
+        CHAL_EndEscape();
+    }
+    printf("CHAL_StepEscape(): Time left %u.\n", ec_escapeTimer);
+
+    if(player_xpos <= ec_finishHortRange){
+        EndLevel_Tape(0);
+        ec_finishedEscape = 1;
+        CHAL_EndEscape();
+    }
+}
+
+/*  CHAL_EndEscape();
+    Ends the escape seq.
+*/
+void CHAL_EndEscape(){
+    ec_startedEscape = 0;
+    ec_finishHortRange = 0;
+    ec_escapeTimer = 0;
+    ec_spawnedPizzaFace = 0;
+}
+
+/*  CHAL_PizzaInit(x,y);
+    Inits Pizza Face at the specifed coords.
+x,y     ;   You know what these are.
+*/
+void CHAL_PizzaInit(uint8 x, uint8 y){}
+
+/*  CHAL_PizzaStep();
+    Moves Pizza Face.
+*/
+void CHAL_PizzaStep();

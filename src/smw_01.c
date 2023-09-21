@@ -3,6 +3,7 @@
 #include "smw_rtl.h"
 #include "variables.h"
 #include "assets/smw_assets.h"
+#include "CustomPhys.h"
 
 void (*kUnk_18137[13])(uint8) = {
     &SprStatus00_EmptySlot,   &SprStatus01_Init,         &SprStatus02_Dead,
@@ -5139,6 +5140,35 @@ void Spr07B_GoalTape_Init(uint8 k) {  // 01c075
   spr_table1534[k] = v2;
 }
 
+/*  EndLevel_Tape();
+    Ends the level in the Goal Tape style.
+    TODO: Need to make a prototype. Find out what "k" does in Spr_07B_GoalTape().
+*/
+void EndLevel_Tape(uint8 k){
+  //printf("EndLevel_Tape(): k = %u.\n", k);
+  flag_secret_goal_sprite = spr_table187b[k] >> 2;
+  io_music_ch1 = 12;
+  misc_music_register_backup = -1;
+  if(!CHALLENGE_ESCAPE || ec_finishedEscape){
+    timer_end_level = -1;
+    timer_star_power = 0;
+    ++spr_table1602[k];
+    if (CheckPlayerToNormalSpriteCollision(k)) {
+      io_sound_ch3 = 9;
+      ++spr_table160e[k];
+      spr_table1594[k] = spr_table1528[k] - spr_ypos_lo[k];
+      spr_decrementing_table1540[k] = 0x80;
+      Spr07B_GoalTape_GiveBonusStars(k);
+    } else {
+      spr_property_bits1686[k] = 0;
+    }
+  }else if(!ec_startedEscape){
+    CHAL_InitEscape(180, 32);
+  }
+  /* TODO: Edit this to make sure SPRs don't dissapear around the goal tape. */
+  Spr07B_GoalTape_TriggerGoalTape();
+}
+
 void Spr07B_GoalTape(uint8 k) {  // 01c098
   Spr07B_GoalTape_Draw(k);
   if (!flag_sprites_locked && !spr_table1602[k]) {
@@ -5151,22 +5181,7 @@ void Spr07B_GoalTape(uint8 k) {  // 01c098
     uint16 r0w = spr_table00c2[k] | spr_table151c[k] << 8;
     if ((uint16)(player_xpos - r0w) < 0x10 &&
         (uint8)(spr_table1534[k] & 1) >= (HIBYTE(player_ypos) + (spr_table1528[k] < LOBYTE(player_ypos)))) {
-      flag_secret_goal_sprite = spr_table187b[k] >> 2;
-      io_music_ch1 = 12;
-      misc_music_register_backup = -1;
-      timer_end_level = -1;
-      timer_star_power = 0;
-      ++spr_table1602[k];
-      if (CheckPlayerToNormalSpriteCollision(k)) {
-        io_sound_ch3 = 9;
-        ++spr_table160e[k];
-        spr_table1594[k] = spr_table1528[k] - spr_ypos_lo[k];
-        spr_decrementing_table1540[k] = 0x80;
-        Spr07B_GoalTape_GiveBonusStars(k);
-      } else {
-        spr_property_bits1686[k] = 0;
-      }
-      Spr07B_GoalTape_TriggerGoalTape();
+      EndLevel_Tape(k);
     }
   }
 }

@@ -4454,6 +4454,9 @@ LABEL_6:
 }
 
 void HandlePlayerPhysics() {  // 00d5f2
+  if(CHALLENGE_ESCAPE && ec_startedEscape)
+    CHAL_StepEscape();
+  
   uint8 v4;
   uint8 r1 = 0;
 
@@ -6500,9 +6503,11 @@ void Spr07B_GoalTape_TriggerGoalTape() {  // 00fa80
       if (spr_current_status[i] == 11) {
         Spr07B_GoalTape_LvlEndPowerUp(i);
       } else if (spr_spriteid[i] != 123 && spr_yoffscreen_flag[i] | spr_xoffscreen_flag[i] || (spr_property_bits1686[i] & 0x20) != 0) {
-        if ((spr_property_bits190f[i] & 2) == 0)
+        if ((spr_property_bits190f[i] & 2) == 0){
           spr_current_status[i] = 0;
+        }
       } else {
+        // Gets rid of the Goal Tape.
         spr_decrementing_table1540[i] = 16;
         spr_current_status[i] = 6;
       }
@@ -6510,6 +6515,7 @@ void Spr07B_GoalTape_TriggerGoalTape() {  // 00fa80
   }
   for (int8 j = 7; j >= 0; --j)
     ext_spr_spriteid[(uint8)j] = 0;
+  printf("Spr07B_GoalTape_TriggerGoalTape(): Ending Level.\n");
 }
 
 void Spr07B_GoalTape_LvlEndPowerUp(uint8 j) {  // 00fb00
