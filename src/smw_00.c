@@ -4554,6 +4554,9 @@ LABEL_46:;
     goto LABEL_54;
   if (!player_in_air_flag) {
     timer_show_running_frames_before_take_off = 16;
+    #ifdef CHEAT_ALWAYS_FULL_P
+    timer_show_running_frames_before_take_off = 0;
+    #endif
 LABEL_53:
     v5 = 2;
     goto LABEL_54;
@@ -4762,6 +4765,9 @@ uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 addToPemeter) {   // 00d96a
     pmeterNewValue = 112;
   }
   player_pmeter = pmeterNewValue;
+  #ifdef CHEAT_ALWAYS_FULL_P
+  player_pmeter = 0x70;
+  #endif
   return addToPemeter;
 }
 

@@ -1136,8 +1136,10 @@ enum ControllerButtons {
 
 #define CHEAT_PIT_BOUNCING
 #define CHEAT_INVICIBLE
-#define CHEAT_INFINITE_FIREBALLS
+#define CHEAT_ALWAYS_FULL_P
+
 /*
+#define CHEAT_INFINITE_FIREBALLS
 #define CHEAT_NEVER_SPAWN
 */
 
