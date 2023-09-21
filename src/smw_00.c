@@ -2535,12 +2535,12 @@ void InitializeLevelRAM_00A6CC(uint8 j) {  // 00a6cc
   uint8 v4;
   if ((uint8)mirror_current_layer1_ypos != 0xC0)
     ++flag_enable_vert_scroll;
-  uint8 v1 = misc_level_header_entrance_settings;
-  if (!misc_level_header_entrance_settings)
+  uint8 v1 = misc_entrance_action;
+  if (!misc_entrance_action)
     goto LABEL_8;
-  if (misc_level_header_entrance_settings == 5) {
+  if (misc_entrance_action == 5) {
     int8 v2 = 0;
-    if (misc_level_header_entrance_settings >= 5)
+    if (misc_entrance_action >= 5)
       v2 = 0x80;
     flag_ice_level = (flag_ice_level >> 1) + v2;
 LABEL_8:
@@ -2559,8 +2559,8 @@ LABEL_8:
     }
     return;
   }
-  if (misc_level_header_entrance_settings >= 6) {
-    if (misc_level_header_entrance_settings == 6) {
+  if (misc_entrance_action >= 6) {
+    if (misc_entrance_action == 6) {
       player_facing_direction = j;
       player_cape_image = j;
       yoshi_in_pipe = -1;
@@ -4466,6 +4466,7 @@ LABEL_6:
 void HandlePlayerPhysics() {  // 00d5f2
   uint8 playerAccel;
   uint8 isPlayerHoldingLeft = 0;
+  //printf("Player x pos : %i\n", player_xpos);
   //printf("io_controller_hold1&2: %u, %u\n", io_controller_hold1, io_controller_hold2);
   if (!player_in_air_flag) {
     player_ducking_flag = 0;
@@ -4576,6 +4577,9 @@ LABEL_46:;
     goto LABEL_54;
   if (!player_in_air_flag) {
     timer_show_running_frames_before_take_off = 16;
+    #ifdef CHEAT_ALWAYS_FULL_P
+    timer_show_running_frames_before_take_off = 0;
+    #endif
 LABEL_53:
     v5 = 2;
     goto LABEL_54;
@@ -4784,6 +4788,9 @@ uint8 HandlePlayerPhysics_UpdatePMeterEx(uint8 addToPemeter) {   // 00d96a
     pmeterNewValue = 112;
   }
   player_pmeter = pmeterNewValue;
+  #ifdef CHEAT_ALWAYS_FULL_P
+  player_pmeter = 0x70;
+  #endif
   return addToPemeter;
 }
 
@@ -6756,8 +6763,13 @@ void SpawnPlayerTurnAroundSmoke_00FE72(uint8 j) {  // 00fe72
 void SpawnPlayerFireball() {  // 00fea8
   uint8 v0 = 9;
   while (ext_spr_spriteid[v0]) {
+      #ifdef CHEAT_INFINITE_FIREBALLS
+    if (--v0 == 0)
+      return;
+#else
     if (--v0 == 7)
       return;
+      #endif
   }
   io_sound_ch3 = 6;
   timer_display_player_shoot_fireball_pose = 10;

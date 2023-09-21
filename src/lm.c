@@ -1869,11 +1869,11 @@ uint16 LmHook_LoadLevelInfo_A(uint16 a, uint16 k) {
 
   uint8 f = misc_subscreen_exit_properties[k];
   if (!(f & 4)) {
-    misc_level_header_entrance_settings = 0;
+    misc_entrance_action = 0;
     return (a & 0xff) | (ow_level_number_lo >= 0x25) << 8;
   }
   flag_use_secondary_entrance = (f >> 1) & 1;
-  misc_level_header_entrance_settings = (f & 8) << 3;
+  misc_entrance_action = (f & 8) << 3;
   return ((f & 1) | (f >> 4) << 1) << 8 | (a & 0xff);
 }
 
@@ -1884,7 +1884,7 @@ void LmHook_ExpandLvlHdr(uint16 j) {
   uint8 R4_ = kLm6FC00[j];
   lm_var13CD = kLm6FE00[j];
   uint8 v2 = kLm5DE00[j];
-  misc_level_header_entrance_settings |= v2 & 0xC0;
+  misc_entrance_action |= v2 & 0xC0;
   if ((v2 & 0x20) != 0) {
     uint8 v3 = 8 * (v2 & 0x18);
     LOBYTE(player_xpos) = 2 * v3;
@@ -2196,13 +2196,13 @@ void LmHook_LevelNamesPatch(uint16 a) {
 
 int LmHook_LoadLevelInfo_E(uint16 k, uint16 lvl, uint8 r0, uint8 r1) {
   uint8 f = kLm5FE00[k];
-  misc_level_header_entrance_settings |= f & 0x87;
+  misc_entrance_action |= f & 0x87;
   uint8 r15 = (f & 8) >> 3;
   uint8 r2 = kLmLevelData5DC85[k];
   uint8 r4 = r2 & 0x7F;
   uint8 g = kLmLevelData5DC8A[k];
   lm_var13CD = g & 0xC0;
-  misc_level_header_entrance_settings |= 2 * (g & 0x20);
+  misc_entrance_action |= 2 * (g & 0x20);
   r4 |= kLm6FC00[lvl] & 0x80;
   lm_var13CD = kLm6FE00[lvl] & 0x3F | g & 0xC0;
   if ((f & 0x40) != 0) {
