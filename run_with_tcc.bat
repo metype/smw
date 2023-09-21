@@ -1,6 +1,7 @@
 @echo off
 
 set SDL2=third_party\SDL2-2.28.1
+set SDL2IMG=third_party\SDL2_image-2.6.3
 
 IF NOT EXIST "third_party\tcc\tcc.exe" (
   ECHO:
@@ -25,12 +26,22 @@ IF NOT EXIST "%SDL2%\lib\x64\SDL2.dll" (
   REM
 )
 
+IF NOT EXIST "%SDL2IMG%\lib\x64\SDL2_image.dll" (
+  ECHO:
+  ECHO ERROR: SDL_image is not unzipped properly into %SDL2IMG%
+  ECHO:
+  PAUSE
+  EXIT /B 1
+) ELSE (
+  REM
+)
 
 echo Building with TCC...
-third_party\tcc\tcc.exe -osmw.exe -DCOMPILER_TCC=1 -DSTBI_NO_SIMD=1 -DHAVE_STDINT_H=1 -D_HAVE_STDINT_H=1 -DSYSTEM_VOLUME_MIXER_AVAILABLE=0 -I%SDL2%/include -L%SDL2%/lib/x64 -lSDL2 -I. src/*.c src/snes/*.c third_party/gl_core/gl_core_3_1.c smb1/*.c smbll/*.c
+third_party\tcc\tcc.exe -osmw.exe -DCOMPILER_TCC=1 -DSTBI_NO_SIMD=1 -DHAVE_STDINT_H=1 -D_HAVE_STDINT_H=1 -DSYSTEM_VOLUME_MIXER_AVAILABLE=0 -I%SDL2%/include -L%SDL2%/lib/x64 -I%SDL2IMG%/include -L%SDL2IMG%/lib/x64 -lSDL2 -lSDL2_image -I. src/*.c src/snes/*.c third_party/gl_core/gl_core_3_1.c smb1/*.c smbll/*.c
 IF ERRORLEVEL 1 goto GETOUT
 
 copy %SDL2%\lib\x64\SDL2.dll .
+copy %SDL2IMG%\lib\x64\SDL2_image.dll .
 
 echo Running...
 smw.exe 

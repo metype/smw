@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <SDL.h>
+#include <SDL_image.h>
 #ifdef _WIN32
 #include "platform/win32/volume_control.h"
 #include <direct.h>
@@ -387,6 +388,12 @@ int main(int argc, char** argv) {
   // set up SDL
   if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) != 0) {
     printf("Failed to init SDL: %s\n", SDL_GetError());
+    return 1;
+  }
+
+  // Init SDL_image
+  if(IMG_Init(IMG_INIT_PNG) == 0){
+    printf("Failed to init SDL_image: %s\n", IMG_GetError());
     return 1;
   }
 
