@@ -1,5 +1,6 @@
 #include "CustomPhys.h"
 
+/* Phys Funcs */
 /*  PHYS_DoCelDash(xAdd, yAdd);
     Adds to (or sets) Mario's speed based on given args.
 xAdd,yAdd   ;   Values to add to Mario's speed.
@@ -49,5 +50,38 @@ void PHYS_StepSmashPit(){
         printf("PHYS_StepSmashPit(): Tracking player pos.\n");
         lastGroundx = player_xpos;
         lastGroundy = player_ypos;
+    }
+}
+
+/* Challenge Funcs */
+/*  CHAL_InitCoinChallenge(coins, time, disable);
+    Inits the coin challenge with the specified parameters.
+coins   ;   The amount of coins started with per-level.
+time    ;   The amount of time before coins are drained in seconds.
+disable ;   Disables the level timer.
+*/
+void CHAL_InitCoinChallenge(uint8 coins, int time, int disable){
+    cc_startingCoins = coins;
+    cc_coinTimer_Max = cc_coinTimer_Cur = time * 60;
+    cc_disableLevelTimer = disable;
+}
+
+/*  CHAL_StepCoinChallenge();
+    Drains coins based on timer and gamestate.
+*/
+void CHAL_StepCoinChallenge(){
+    if(misc_game_mode == gm_Level){
+        //printf("CHAL_StepCoinChallenge(): Coin Timer: %i.\n", cc_coinTimer_Cur);
+        cc_coinTimer_Cur--;
+        if(cc_coinTimer_Cur <= 0 && player_current_coin_count > 0){
+            //printf("CHAL_StepCoinChallenge(): Stealing Coin.\n");
+            player_current_coin_count--;
+            cc_coinTimer_Cur = cc_coinTimer_Max;
+            
+        }else if(player_current_coin_count == 0){
+            DamagePlayer_Kill();
+        }
+    }else{
+        player_current_coin_count = cc_startingCoins;
     }
 }

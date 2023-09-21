@@ -3484,6 +3484,8 @@ void GameMode14_InLevel_Return00C592() {  // 00c592
 }
 
 void GameMode14_InLevel_HandlePlayerState() {  // 00c593
+  if(CHALLENGE_COIN)
+    CHAL_StepCoinChallenge();
   kGameMode14_InLevel_PlayerStatePtrs[player_current_state]();
 }
 

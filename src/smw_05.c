@@ -4,6 +4,8 @@
 #include "variables.h"
 #include "assets/smw_assets.h"
 #include "snes/snes.h"
+#include "CustomPhys.h"
+
 void (*kBufferScrollingTiles_Layer1_Main_PtrsLong058823[32])(void) = {
     &BufferScrollingTiles_Layer1,
     &BufferScrollingTiles_Layer1,
@@ -2502,6 +2504,9 @@ bool LoadLevel() {  // 05d796
 LABEL_47:
   if (counter_sublevels_entered && !flag_active_bonus_game && ow_level_number_lo == 36)
     LoadLevel_HandleChocolateIsland2Gimmick();
+
+  if(CHALLENGE_COIN)
+    CHAL_InitCoinChallenge(50, 2, 0);
 
   return false;
 }
