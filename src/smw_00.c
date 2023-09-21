@@ -384,7 +384,7 @@ void SmwVectorNMI() {
   int trigger_line = -1;
   uint8 v0 = io_music_ch1;
   if (io_music_ch1  || g_ram[kSmwRam_APUI02] == io_copy_of_music_ch1) {
-    RtlApuWrite(APUI02, v0);
+    //RtlApuWrite(APUI02, v0);
     io_copy_of_music_ch1 = v0;
     io_music_ch1 = 0;
   }
@@ -3795,6 +3795,7 @@ void PlayerState00_00C96B() {  // 00c96b
 void PlayerState00_LevelFinished(uint8 j, uint8 a) {  // 00c9fe
   g_did_finish_level_hook = true;
   misc_exit_level_action = a;
+  printf("PlayerState00_LevelFinished(): misc_exit_level_action = %u.\n", misc_exit_level_action);
   if (misc_currently_active_boss_end_cutscene) {
     uint8 v2 = 8;
     if (ow_level_number_lo == kLevelsThatTriggerCutscenes[8])

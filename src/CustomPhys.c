@@ -114,7 +114,8 @@ void CHAL_StepEscape(){
     printf("CHAL_StepEscape(): Time left %u.\n", ec_escapeTimer);
 
     if(player_xpos <= ec_finishHortRange){
-        EndLevel_Tape(0);
+        //EndLevel_Tape(0);
+        PlayerState00_LevelFinished(11,2);
         ec_finishedEscape = 1;
         CHAL_EndEscape();
     }
