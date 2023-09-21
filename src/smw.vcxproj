@@ -163,6 +163,7 @@
     <ClCompile Include="common_cpu_infra.c" />
     <ClCompile Include="common_rtl.c" />
     <ClCompile Include="config.c" />
+    <ClCompile Include="CustomSound.c" />
     <ClCompile Include="glsl_shader.c" />
     <ClCompile Include="lm.c" />
     <ClCompile Include="main.c" />
@@ -228,6 +229,7 @@
     <ClInclude Include="common_rtl.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="consts.h" />
+    <ClInclude Include="CustomSound.h" />
     <ClInclude Include="funcs.h" />
     <ClInclude Include="glsl_shader.h" />
     <ClInclude Include="smw_rtl.h" />

@@ -23,21 +23,21 @@ int MUS_LoadBasedContext(){
 
     switch(misc_game_mode){
         case gm_OverworldFadeIn:
-            switch(ow_players_map[0]){
+            switch(ow_players_map[0]){ 
                 case wm_World1:
-                    return MUS_Load("./assets/custom/Overworld/1.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/1.txt", 0);
                 case wm_World2:
-                    return MUS_Load("./assets/custom/Overworld/2.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/2.txt", 0);
                 case wm_World3:
-                    return MUS_Load("./assets/custom/Overworld/3.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/3.txt", 0);
                 case wm_World5:
-                    return MUS_Load("./assets/custom/Overworld/5.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/5.txt", 0);
                 case wm_World7:
-                    return MUS_Load("./assets/custom/Overworld/7.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/7.txt", 0);
                 case wm_Special:
-                    return MUS_Load("./assets/custom/Overworld/Special.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/Special.txt", 0);
                 case wm_Star:
-                    return MUS_Load("./assets/custom/Overworld/Star.txt", 0);
+                    return MUS_Load("./assets/custom/Music/Overworld/Star.txt", 0);
             }
             break;
         case gm_PrepareLevel:   /*  TODO: Make this bit based on level IDs. 

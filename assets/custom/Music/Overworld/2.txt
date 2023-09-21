@@ -1,5 +1,5 @@
-./assets/custom/Overworld/[MP3 FILE].mp3
+./assets/custom/Overworld/phosphor.mp3
 0
-0
-0
+371000
+371000
 1

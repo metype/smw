@@ -40,9 +40,6 @@
     <ClCompile Include="snes\dsp.c">
       <Filter>Snes</Filter>
     </ClCompile>
-    <ClCompile Include="snes\input.c">
-      <Filter>Snes</Filter>
-    </ClCompile>
     <ClCompile Include="snes\ppu.c">
       <Filter>Snes</Filter>
     </ClCompile>
@@ -160,6 +157,9 @@
     <ClCompile Include="lm.c">
       <Filter>Smw</Filter>
     </ClCompile>
+    <ClCompile Include="CustomSound.c">
+      <Filter>Smw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="funcs.h">
@@ -187,9 +187,6 @@
       <Filter>Snes</Filter>
     </ClInclude>
     <ClInclude Include="snes\dsp_regs.h">
-      <Filter>Snes</Filter>
-    </ClInclude>
-    <ClInclude Include="snes\input.h">
       <Filter>Snes</Filter>
     </ClInclude>
     <ClInclude Include="snes\ppu.h">
@@ -260,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="..\smbll\smbll_rtl.h">
       <Filter>Smb Lost Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomSound.h">
+      <Filter>Smw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

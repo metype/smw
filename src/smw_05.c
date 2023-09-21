@@ -2514,7 +2514,7 @@ LABEL_47:
   if (counter_sublevels_entered && !flag_active_bonus_game && ow_level_number_lo == 36)
     LoadLevel_HandleChocolateIsland2Gimmick();
 
-  curLevelID = r14w;
+  curLevelID = level_data_index;
   printf("Loading Level: %u.\n", curLevelID);
 
   return false;
