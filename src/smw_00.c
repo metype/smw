@@ -4591,16 +4591,16 @@ LABEL_54:
   HandlePlayerPhysics_00D742(playerAccel, isPlayerHoldingLeft | player_slope_player_is_on1 | (2 * v5));
 }
 
-void HandlePlayerPhysics_00D742(uint8 k, uint8 j) {  // 00d742
+void HandlePlayerPhysics_00D742(uint8 playerAccel, uint8 j) {  // 00d742
   if (player_xspeed == kHandlePlayerPhysics_DATA_00D535[j] ||
       ((kHandlePlayerPhysics_DATA_00D535[j] ^ (player_xspeed - kHandlePlayerPhysics_DATA_00D535[j])) & 0x80) == 0) {
     HandlePlayerPhysics_00D76B();
   } else {
-    int v2 = k >> 1;
-    uint16 v3 = kHandlePlayerPhysics_MarioAccel[v2];
+    //int v2 = k >> 1;
+    uint16 v3 = kHandlePlayerPhysics_MarioAccel[/*v2*/ playerAccel >> 1];
     if (flag_ice_level) {
       if (!player_in_air_flag)
-        v3 = kHandlePlayerPhysics_DATA_00D43D[v2];
+        v3 = kHandlePlayerPhysics_DATA_00D43D[/*v2*/ playerAccel >> 1];
     }
     *(uint16 *)&player_sub_xspeed = *(uint16 *)&player_sub_xspeed + v3;
   }
