@@ -398,15 +398,14 @@ void SmwVectorNMI() {
     RtlApuWrite(APUI01, io_sound_ch2);
     RtlApuWrite(APUI03, io_sound_ch3);
   }*/
+  if(!USE_CUSTOM_SOUNDS){
+    RtlApuWrite(APUI00, io_sound_ch1);
+    RtlApuWrite(APUI01, io_sound_ch2);
+    RtlApuWrite(APUI03, io_sound_ch3);
+  }
   if((io_sound_ch1 != 0 || io_sound_ch2 != 0 || io_sound_ch3 != 0)){
     //printf("Current sound channels: %u / %u / %u.\n", io_sound_ch1, io_sound_ch2, io_sound_ch3);
     Mix_ClearError();
-    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch1() == -1)
-      RtlApuWrite(APUI00, io_sound_ch1);
-    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch2() == -1)
-      RtlApuWrite(APUI01, io_sound_ch2);
-    if(!USE_CUSTOM_SOUNDS || SND_Step_Ch3() == -1)
-      RtlApuWrite(APUI03, io_sound_ch3);
     //printf("Mixer Err (if applicable): %s.\n", Mix_GetError());
   }
   io_sound_ch1 = 0;
