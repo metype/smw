@@ -31,6 +31,8 @@ uint8* pizzaFace_x, *pizzaFace_y;   // God do I even want to attempt this?
 uint8* pizzaFace_w, *pizzaFace_h;   // Size of pizza face.
 SDL_Texture* ec_textureTimer;
 SDL_Texture* ec_textureTimerDigits; // 30 x 43
+int* ec_tvWid, *ec_tvHgt;
+int* ec_digWid, *ec_digHgt;
 
 /* Phys Funcs */
 void PHYS_DoCelDash(int8,int8,int);
@@ -42,7 +44,7 @@ void CHAL_InitCoinChallenge(uint8,int,int);
 void CHAL_StepCoinChallenge();
 void CHAL_InitEscape(int,uint8);
 void CHAL_StepEscape();
-void CHAL_DrawEscape(SDL_Renderer*);
+void CHAL_DrawEscape();
 void CHAL_EndEscape();
 void CHAL_PizzaInit(uint8,uint8);
 void CHAL_PizzaStep();

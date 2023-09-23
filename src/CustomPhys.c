@@ -95,10 +95,13 @@ pos     ;   Which place the digit should be placed.
 */
 void CHAL_SetTimerVars(SDL_Rect* src, SDL_Rect* des, int digit, int pos){
     src->x = (digit % 10) * 30;
-    des->x = pos * 30;
-    src->y = des->y = 0;
-    src->w = des->w = 30;
-    src->h = des->h = 43;
+    des->x = (pos * (int)ec_digWid / 2) + 20;
+    src->y = 0;
+    des->y = 50;
+    src->w = 30;
+    des->w = (int)ec_digHgt / 1.25;
+    src->h = 43;
+    des->h = (int)ec_digHgt / 1.25;
 }
 
 /*  CHAL_InitEscape(time,hortRange);
@@ -114,6 +117,10 @@ void CHAL_InitEscape(int time, uint8 hortRange){
     printf("CHAL_InitEscape(): Starting escape.\n");
 
     // Load texture-related vars.
+    ec_digWid = 30 / 2;
+    ec_digHgt = 43 / 2;
+    ec_tvWid = 278;
+    ec_tvHgt = 268;
     ec_textureTimer = IMG_LoadTexture(g_renderer, "./assets/custom/Textures/PizzaTower/PTTV.png");
     ec_textureTimerDigits = IMG_LoadTexture(g_renderer, "./assets/custom/Textures/PizzaTower/PTUI.png");
     printf("%s.\n", IMG_GetError());
@@ -144,12 +151,15 @@ void CHAL_StepEscape(){
 /*  CHAL_DrawEscape();
     Draws the escape timer and Pizza Head.
 */
-void CHAL_DrawEscape(SDL_Renderer* ren){
+void CHAL_DrawEscape(){
     // TV
     SDL_Rect sTV, dTV;
     sTV.x = sTV.y = dTV.x = dTV.y = 0;
-    sTV.w = 278;
-    sTV.h = 268;
+    sTV.w = ec_tvWid;
+    sTV.h = ec_tvHgt;
+    dTV.w = (int)ec_tvWid/3;
+    dTV.h = (int)ec_tvHgt/3;
+    SDL_RenderCopy(g_renderer, ec_textureTimer, &sTV, &dTV);
 
     // Digits
     SDL_Rect sDig1, dDig1, sDig2, dDig2, sDig3, dDig3;
@@ -157,9 +167,9 @@ void CHAL_DrawEscape(SDL_Renderer* ren){
     CHAL_SetTimerVars(&sDig2, &dDig2, ((int)ec_escapeTimer/60)%100 / 10, 1);    // 10s
     CHAL_SetTimerVars(&sDig3, &dDig3, ((int)ec_escapeTimer/60)%10, 2);          // 1s
 
-    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig1, &dDig1);
-    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig2, &dDig2);
-    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig3, &dDig3);
+    SDL_RenderCopy(g_renderer, ec_textureTimerDigits, &sDig1, &dDig1);
+    SDL_RenderCopy(g_renderer, ec_textureTimerDigits, &sDig2, &dDig2);
+    SDL_RenderCopy(g_renderer, ec_textureTimerDigits, &sDig3, &dDig3);
 }
 
 /*  CHAL_EndEscape();
