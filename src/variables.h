@@ -2,6 +2,10 @@
 #define VARIABLES_H
 
 #include "common_rtl.h"
+#include <SDL.h>
+
+/* SDL Vars */
+SDL_Renderer* g_renderer;
 
 //#define r0w (*(uint16*)(g_ram+0x0))
 //#define r1w (*(uint16*)(g_ram+0x1))

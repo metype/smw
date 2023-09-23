@@ -32,6 +32,8 @@
 
 #include "assets/smw_assets.h"
 
+#include "CustomPhys.h"
+
 typedef struct GamepadInfo {
   uint32 modifiers;
   SDL_JoystickID joystick_id;
@@ -254,7 +256,7 @@ static void SDLCALL AudioCallback(void *userdata, Uint8 *stream, int len) {
 
 
 // State for sdl renderer
-static SDL_Renderer *g_renderer;
+//static SDL_Renderer *g_renderer;
 static SDL_Texture *g_texture;
 static SDL_Rect g_sdl_renderer_rect;
 
@@ -315,6 +317,11 @@ static void SdlRenderer_EndDraw(void) {
   //  printf("%f ms\n", v * 1000);
   SDL_RenderClear(g_renderer);
   SDL_RenderCopy(g_renderer, g_texture, &g_sdl_renderer_rect, NULL);
+  
+  // Draw Escape Timer-related things
+  if(ec_startedEscape)
+    CHAL_DrawEscape(g_renderer);
+  
   SDL_RenderPresent(g_renderer); // vsyncs to 60 FPS?
 }
 
@@ -396,6 +403,9 @@ int main(int argc, char** argv) {
     printf("Failed to init SDL_image: %s\n", IMG_GetError());
     return 1;
   }
+
+  // Pass renderer to CustomPhys.
+  renderTarget = g_renderer;
 
   bool custom_size = g_config.window_width != 0 && g_config.window_height != 0;
   int window_width = custom_size ? g_config.window_width : g_current_window_scale * g_snes_width;
