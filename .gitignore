@@ -16,9 +16,11 @@ smw_assets.dat
 __pycache__
 /enhanced/
 *.sfc
-/third_party/SDL2_mixer-2.6.3/
+/third_party/
 /assets/custom/test/
+/assets/custom/Textures/
 assets/Music.txt
 assets/Maps.txt
 assets/Game States_Modes.txt
 *.mp3
+*.dll
