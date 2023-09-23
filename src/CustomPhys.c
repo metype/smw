@@ -95,9 +95,9 @@ pos     ;   Which place the digit should be placed.
 */
 void CHAL_SetTimerVars(SDL_Rect* src, SDL_Rect* des, int digit, int pos){
     src->x = (digit % 10) * 30;
-    des->x = (pos * (int)ec_digWid / 2) + 20;
+    des->x = (pos * (int)ec_digWid / 2) + 25;
     src->y = 0;
-    des->y = 50;
+    des->y = 45;
     src->w = 30;
     des->w = (int)ec_digHgt / 1.25;
     src->h = 43;
@@ -138,7 +138,7 @@ void CHAL_StepEscape(){
         DamagePlayer_Kill();
         CHAL_EndEscape();
     }
-    printf("CHAL_StepEscape(): Time left %u.\n", (int)ec_escapeTimer / 60);
+    //printf("CHAL_StepEscape(): Time left %u.\n", (int)ec_escapeTimer / 60);
 
     if(player_xpos <= ec_finishHortRange){
         //EndLevel_Tape(0);

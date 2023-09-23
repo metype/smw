@@ -30,7 +30,7 @@ int* ec_spawnedPizzaFace;           // Whether or not Pizza Face has spawned.
 uint8* pizzaFace_x, *pizzaFace_y;   // God do I even want to attempt this?
 uint8* pizzaFace_w, *pizzaFace_h;   // Size of pizza face.
 SDL_Texture* ec_textureTimer;
-SDL_Texture* ec_textureTimerDigits; // 30 x 43
+SDL_Texture* ec_textureTimerDigits;
 int* ec_tvWid, *ec_tvHgt;
 int* ec_digWid, *ec_digHgt;
 
