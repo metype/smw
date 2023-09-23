@@ -322,3 +322,22 @@ uint8 *ApplyBps(const uint8 *src, size_t src_size_in,
     return NULL;
   return dst;
 }
+
+json_value* GetValueByKey(char* key, json_value* value) {
+  if(!value) return NULL;
+  for(int i = 0; i < value->u.object.length; i++) {
+        if(!strcmp(key, value->u.object.values[i].name)) {
+            return value->u.object.values[i].value;
+        }
+    }
+  return NULL;
+}
+
+char* str_concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}

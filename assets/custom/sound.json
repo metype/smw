@@ -1,0 +1,9 @@
+{
+    "music.overworld.2" : {
+        "path" : "./assets/custom/Overworld/phosphor.mp3",
+        "start_at" : 0,
+        "end_at" : 371000,
+        "loop_point" : 0,
+        "do_loop" : false
+    }
+}

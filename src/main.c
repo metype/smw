@@ -14,6 +14,8 @@
 #include <unistd.h>
 #endif
 
+#include "libs/json.h"
+
 #include "assets/smw_assets.h"
 
 #include "snes/ppu.h"
@@ -32,8 +34,6 @@
 #include "switch_impl.h"
 #endif
 
-#include "assets/smw_assets.h"
-
 typedef struct GamepadInfo {
   uint32 modifiers;
   SDL_JoystickID joystick_id;
@@ -45,6 +45,7 @@ typedef struct GamepadInfo {
 
 
 static void SDLCALL AudioCallback(void *userdata, Uint8 *stream, int len);
+static void LoadAudioModConfig();
 static void LoadAssets();
 static void SwitchDirectory();
 static void RenderNumber(uint8 *dst, size_t pitch, int n, uint8 big);
@@ -77,7 +78,7 @@ enum {
   kDefaultSamples = 2048,
 };
 
-static const char kWindowTitle[] = "SMW";
+static const char kWindowTitle[] = "Super Mario World";
 static uint32 g_win_flags = SDL_WINDOW_RESIZABLE;
 static SDL_Window *g_window;
 
@@ -354,6 +355,8 @@ int main(int argc, char** argv) {
     argc -= 1, argv += 1;
   }
   ParseConfigFile(config_file);
+
+  LoadAudioModConfig();
 
   LoadAssets();
 
@@ -905,6 +908,46 @@ static bool VerifyAssetsFile(const uint8 *data, size_t length) {
     *(uint32 *)(data + 80) != kNumberOfAssets)
     return false;
   return true;
+}
+
+static const char *kMusicModFileCandidates[] = {
+  "sound.json",
+  "assets/sound.json",
+  "assets/custom/sound.json",
+};
+
+static void LoadAudioModConfig() {
+
+  size_t length = 0;
+  uint8 *data = NULL;
+  for (int i = 0; i < 3 && data == NULL; i++)
+    data = ReadWholeFile(kMusicModFileCandidates[i], &length);
+
+  if(!data){
+    gLoadedSoundModFile = NULL;
+    printf("Failed to find a sound.json in any standard location. If you have one check the README on where to put it. This is not an error.\n");
+    return;
+  }
+
+  printf("sound.json found!\nAttempting parse...\n");
+
+  json_settings settings = { 0 };
+
+  char* err = malloc(sizeof(char)*json_error_max);
+
+  json_value* config_data = json_parse_ex (&settings, data, length, err);
+
+  if(!config_data) {
+    gLoadedSoundModFile = NULL;
+    printf("Found a sound.json but failed in parse!\n%s\n", err);
+    exit(1);
+    return;
+  }
+
+  printf("Success!\n");
+
+  gLoadedSoundModFile = config_data;
+  return;
 }
 
 static const char *kAssetFileCandidates[] = {

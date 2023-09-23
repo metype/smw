@@ -38,7 +38,7 @@ IF NOT EXIST "%SDL2MIX%\lib\x64\SDL2_mixer.dll" (
 )
 
 echo Building with TCC...
-third_party\tcc\tcc.exe -osmw.exe -DCOMPILER_TCC=1 -DSTBI_NO_SIMD=1 -DHAVE_STDINT_H=1 -D_HAVE_STDINT_H=1 -DSYSTEM_VOLUME_MIXER_AVAILABLE=0 -I%SDL2%/include -L%SDL2%/lib/x64 -I%SDL2MIX%/include -L%SDL2MIX%/lib/x64 -lSDL2 -lSDL2_mixer -I. src/*.c src/snes/*.c third_party/gl_core/gl_core_3_1.c smb1/*.c smbll/*.c
+third_party\tcc\tcc.exe -osmw.exe -DCOMPILER_TCC=1 -DSTBI_NO_SIMD=1 -DHAVE_STDINT_H=1 -D_HAVE_STDINT_H=1 -DSYSTEM_VOLUME_MIXER_AVAILABLE=0 -I%SDL2%/include -L%SDL2%/lib/x64 -I%SDL2MIX%/include -L%SDL2MIX%/lib/x64 -lSDL2 -lSDL2_mixer -I. src/*.c src/libs/*.c src/snes/*.c third_party/gl_core/gl_core_3_1.c smb1/*.c smbll/*.c -g
 IF ERRORLEVEL 1 goto GETOUT
 
 copy %SDL2%\lib\x64\SDL2.dll .

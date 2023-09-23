@@ -1194,7 +1194,7 @@ uint16* curLevelID;
 #define LID_VANILLAGHOSTHOUSE 0x107
 #define LID_VANILLASECRET1    0x109
 #define LID_VANILLADOME3      0x10A
-#define LID_VANILLASECRET2    0X10B
+#define LID_DONUTSECRET2      0X10B
 #define LID_FRONTDOOR         0X10D
 #define LID_BACKDOOR          0x10E
 #define LID_VALLEYOFBOWSER4   0X10F
@@ -1229,16 +1229,6 @@ uint16* curLevelID;
 #define LID_STARWORLD1        0X134
 #define LID_STARWORLD4        0X135
 #define LID_STARWORLD5        0X136
-
-/* Cheats */
-#define CHEAT_PIT_BOUNCING
-#define CHEAT_INVICIBLE
-#define CHEAT_ALWAYS_FULL_P
-
-/*
-#define CHEAT_INFINITE_FIREBALLS
-#define CHEAT_NEVER_SPAWN
-*/
 
 /* Inputs */
 #define CON_HOLD_LEFT   (io_controller_hold1 & cb_Left)
@@ -1425,5 +1415,14 @@ uint16* curLevelID;
 #define SNDID_STUNNED         0x28
 #define SNDID_CORRECT         0x29
 #define SNDID_WRONG           0x2A
+
+/* Cheats */
+/*
+#define CHEAT_PIT_BOUNCING
+#define CHEAT_INVICIBLE
+#define CHEAT_ALWAYS_FULL_P
+#define CHEAT_INFINITE_FIREBALLS
+#define CHEAT_NEVER_SPAWN
+*/
 
 #endif

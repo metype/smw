@@ -51,19 +51,37 @@ The keys can be reconfigured in smw.ini
 
 Additionally, the following commands are available:
 
-| Key | Action                |
-| --- | --------------------- |
-| Tab | Turbo mode |
-| P   | Pause (with dim)                |
-| Shift+P   | Pause (without dim)                |
-| Ctrl+Up   | Increase window size                |
-| Ctrl+Down   | Decrease window size                |
-| T   | Toggle replay turbo mode  |
-| K   | Clear all input history from the joypad log  |
-| L   | Stop replaying a shapshot  |
-| R   | Toggle between fast and slow renderer |
-| F   | Display renderer performance |
-| F1-F10 | Load snapshot      |
-| Alt+Enter | Toggle Fullscreen     |
-| Shift+F1-F10 | Save snapshot |
-| Ctrl+F1-F10 | Replay the snapshot |
+| Key          | Action                                      |
+| ------------ | ------------------------------------------- |
+| Tab          | Turbo mode                                  |
+| P            | Pause (with dim)                            |
+| Shift+P      | Pause (without dim)                         |
+| Ctrl+Up      | Increase window size                        |
+| Ctrl+Down    | Decrease window size                        |
+| T            | Toggle replay turbo mode                    |
+| K            | Clear all input history from the joypad log |
+| L            | Stop replaying a shapshot                   |
+| R            | Toggle between fast and slow renderer       |
+| F            | Display renderer performance                |
+| F1-F10       | Load snapshot                               |
+| Alt+Enter    | Toggle Fullscreen                           |
+| Shift+F1-F10 | Save snapshot                               |
+| Ctrl+F1-F10  | Replay the snapshot                         |
+
+## Modification
+
+This fork has added several modifications to the base game during the cleaning up process, at the bottom of `variables.h`, you will find commented out defines for several cheats you may enable
+
+| Name                     | Action                                                                                                                              |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| CHEAT_PIT_BOUNCING       | When you fall into a pit Mario (red or green) will, instead of dying, bounce back out.                                              |
+| CHEAT_INVICIBLE          | Nothing can kill or hurt the player, even a time up.                                                                                |
+| CHEAT_ALWAYS_FULL_P      | As long as you are holding run you will be at full P-Speed at all times                                                             |
+| CHEAT_INFINITE_FIREBALLS | Due to how fireballs work, this causes rendering artifacts and is generally not reccomended, but it removes the limit on fireballs. |
+| CHEAT_NEVER_SPAWN        | Don't enable this, all the functions to find free sprite slots return -1 and the game never spawns anything. This includes the control sprites for autoscrollers, (in Top Secret Area and Yoshi's House) for enabling level exit on screen hit, etc. It's just a bad idea. Oh and every level goal: key, goal tape, orb is a sprite; they're all gone too. |
+
+There is also a sound.json file you can create to modify the sounds the game plays. This must be placed in one of the following locations for the game to find it.
+
+* sound.json
+* assets/sound.json
+* assets/custom/sound.json
