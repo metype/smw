@@ -115,9 +115,9 @@ void CHAL_StepEscape(){
 
     if(player_xpos <= ec_finishHortRange){
         //EndLevel_Tape(0);
+        CHAL_EndEscape();
         PlayerState00_LevelFinished(11,2);
         ec_finishedEscape = 1;
-        CHAL_EndEscape();
     }
 }
 

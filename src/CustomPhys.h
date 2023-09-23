@@ -4,6 +4,8 @@
 #include "variables.h"
 #include "types.h"
 #include "funcs.h"
+#include "SDL.h"
+#include "SDL_image.h"
 #include <stdio.h>
 
 /* Smash Pit Vars */

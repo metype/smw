@@ -5147,7 +5147,7 @@ void Spr07B_GoalTape_Init(uint8 k) {  // 01c075
 void EndLevel_Tape(uint8 k){
   //printf("EndLevel_Tape(): k = %u.\n", k);
   flag_secret_goal_sprite = spr_table187b[k] >> 2;
-  io_music_ch1 = 12;
+  /*io_music_ch1 = 12;
   misc_music_register_backup = -1;
   if(!CHALLENGE_ESCAPE || ec_finishedEscape){
     timer_end_level = -1;
@@ -5162,7 +5162,7 @@ void EndLevel_Tape(uint8 k){
     } else {
       spr_property_bits1686[k] = 0;
     }
-  }else if(!ec_startedEscape){
+  }else */if(!ec_startedEscape){
     CHAL_InitEscape(180, 32);
   }
   /* TODO: Edit this to make sure SPRs don't dissapear around the goal tape. */
