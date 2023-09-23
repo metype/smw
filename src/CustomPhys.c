@@ -7,7 +7,7 @@ xAdd,yAdd   ;   Values to add to Mario's speed.
 doSet       ;   Sets Mario's speed instead of adding.
 */
 void PHYS_DoCelDash(int8 xAdd, int8 yAdd, int doSet){
-    printf("PHYS_DoCelDash(): Doing dash.\n");
+    //printf("PHYS_DoCelDash(): Doing dash.\n");
     int moveHort = (CON_HOLD_LEFT >= 1) - (CON_HOLD_RIGHT >= 1);
     int moveVert = (CON_HOLD_DOWN >= 1) - (CON_HOLD_UP >= 1);
 
@@ -86,6 +86,21 @@ void CHAL_StepCoinChallenge(){
     }
 }
 
+/*  CHAL_SetTimerVars();
+    Sets the given src and des rect based on the given params.
+    Intended to be used in CHAL_InitEscape().
+src,des ;   Texture rects.
+digit   ;   Which digit this texture is for.
+pos     ;   Which place the digit should be placed.
+*/
+void CHAL_SetTimerVars(SDL_Rect* src, SDL_Rect* des, int digit, int pos){
+    src->x = (digit % 10) * 30;
+    des->x = pos * 30;
+    src->y = des->y = 0;
+    src->w = des->w = 30;
+    src->h = des->h = 43;
+}
+
 /*  CHAL_InitEscape(time,hortRange);
     Starts the escape sequence.
 time        ;   Escape timer in seconds.
@@ -97,6 +112,11 @@ void CHAL_InitEscape(int time, uint8 hortRange){
     ec_startedEscape = 1;
     ec_finishedEscape = 0;
     printf("CHAL_InitEscape(): Starting escape.\n");
+
+    // Load texture-related vars.
+    ec_textureTimer = IMG_LoadTexture(g_renderer, "./assets/custom/Textures/PizzaTower/PTTV.png");
+    ec_textureTimerDigits = IMG_LoadTexture(g_renderer, "./assets/custom/Textures/PizzaTower/PTUI.png");
+    printf("%s.\n", IMG_GetError());
 }
 
 /*  CHAL_StepEscape();
@@ -111,7 +131,7 @@ void CHAL_StepEscape(){
         DamagePlayer_Kill();
         CHAL_EndEscape();
     }
-    printf("CHAL_StepEscape(): Time left %u.\n", ec_escapeTimer);
+    printf("CHAL_StepEscape(): Time left %u.\n", (int)ec_escapeTimer / 60);
 
     if(player_xpos <= ec_finishHortRange){
         //EndLevel_Tape(0);
@@ -119,6 +139,27 @@ void CHAL_StepEscape(){
         PlayerState00_LevelFinished(11,2);
         ec_finishedEscape = 1;
     }
+}
+
+/*  CHAL_DrawEscape();
+    Draws the escape timer and Pizza Head.
+*/
+void CHAL_DrawEscape(SDL_Renderer* ren){
+    // TV
+    SDL_Rect sTV, dTV;
+    sTV.x = sTV.y = dTV.x = dTV.y = 0;
+    sTV.w = 278;
+    sTV.h = 268;
+
+    // Digits
+    SDL_Rect sDig1, dDig1, sDig2, dDig2, sDig3, dDig3;
+    CHAL_SetTimerVars(&sDig1, &dDig1, ((int)ec_escapeTimer/60)%1000 / 100, 0);  // 100s
+    CHAL_SetTimerVars(&sDig2, &dDig2, ((int)ec_escapeTimer/60)%100 / 10, 1);    // 10s
+    CHAL_SetTimerVars(&sDig3, &dDig3, ((int)ec_escapeTimer/60)%10, 2);          // 1s
+
+    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig1, &dDig1);
+    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig2, &dDig2);
+    SDL_RenderCopy(ren, ec_textureTimerDigits, &sDig3, &dDig3);
 }
 
 /*  CHAL_EndEscape();
