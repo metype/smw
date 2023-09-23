@@ -15,7 +15,15 @@
         "do_loop" : true,
         "do_interrupt" : false
     },
-    "music.level.14" : {
+    "music.level.1" : {
+        "path" : "./assets/custom/Music/Overworld/LeavesFillThePath.mp3",
+        "start_at" : 0,
+        "end_at" : 46948,
+        "loop_point" : 0,
+        "do_loop" : true,
+        "do_interrupt" : false
+    },
+    "music.gameplay.14" : {
         "path" : "./assets/custom/Music/Overworld/LeavesFillThePath.mp3",
         "start_at" : 0,
         "end_at" : 5000,

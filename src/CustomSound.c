@@ -13,67 +13,77 @@ int MUS_LoadBasedContext(){
         printf("MUS_LoadBasedContext(): Stopping current track.\n");
         return 1;
     }
-
-    if(isInterrupt){
-        printf("MUS_LoadBasedContext(): Loading interrupted music: %s\n", curTrackPath_Back);
-        //MUS_LoadFile(curTrackPath_Back, &curMusicPos_Back, &curMusicEndPoint_Back, &curMusicLoopPoint_Back, &curMusicDoLoop_Back, 0);
-        return 1;
-    }
-
+    
     //printf("misc_game_mode: %u.\n", misc_game_mode);
 
     char* load_music_key = malloc(sizeof(char)*512);
     load_music_key[0] = NULL;
     char *extra_id;
 
-    switch(misc_game_mode){
-        case gm_OverworldFadeIn:
-        case gm_Overworld:
-            extra_id = malloc(sizeof(char)*2);
-            extra_id[0] = '0' + ow_players_map[0];
-            extra_id[1] = NULL;
-            strcat(load_music_key, "music.overworld.\0");
-            strcat(load_music_key, extra_id);
-            break;
-        case gm_PrepareLevel:   /*  TODO: Make this bit based on level IDs. 
-                                    Also add in the Func. Music.
-                                */
-            switch(io_music_ch1){
-                case MUSID_ATHLETIC:
-                    return MUS_Load("./assets/custom/Level/Athletic.txt", 0);
-                case MUSID_OVERWORLD:
-                    return MUS_Load("./assets/custom/Level/Overworld.txt", 0);
-                case MUSID_SWIMMING:
-                    return MUS_Load("./assets/custom/Level/Swimming.txt", 0);
-                case MUSID_UNDERGROUND:
-                    return MUS_Load("./assets/custom/Level/Underground.txt", 0);
-                case MUSID_HAUNTED:
-                    return MUS_Load("./assets/custom/Level/Haunted.txt", 0);
-                case MUSID_CASTLE:
-                    return MUS_Load("./assets/custom/Level/Castle.txt", 0);
-                case MUSID_PALACE:
-                    return MUS_Load("./assets/custom/Level/Palace.txt", 0);
-                case MUSID_BOSS:
-                    return MUS_Load("./assets/custom/Level/Boss.txt", 0);
-            }
-            break;
-        case gm_Level:
-            /*switch(io_music_ch1){
-                case MUSID_PSWITCH:
-                    return MUS_Load("./assets/custom/Gameplay/PSwitch.txt", 1);
-            }*/
-            extra_id = malloc(sizeof(char)*2);
-            //printf("io_music_ch1: %u.\n", io_music_ch1);
-            /*extra_id[0] = '0' + io_music_ch1;
-            printf("extra_id: %c.\n", extra_id[0]);
-            extra_id[1] = NULL;*/
-            sprintf(extra_id, "%d", io_music_ch1);
-            printf("extra_id: %s.\n", extra_id);
-            strcat(load_music_key, "music.level.\0");
-            strcat(load_music_key, extra_id);
-            break;
+    if(isInterrupt){
+        printf("MUS_LoadBasedContext(): Loading interrupted music at %u: %s.\n", curMusicPos_Back, curTrackPath_Back);
+        extra_id = malloc(sizeof(char)*2);
+        sprintf(extra_id, "%d", io_music_ch1);
+        printf("extra_id: %s.\n", extra_id);
+        strcat(load_music_key, "music.level.\0");
+        strcat(load_music_key, extra_id);
+        isInterrupt = 0;
+    }else{
+        switch(misc_game_mode){
+            case gm_OverworldFadeIn:
+            case gm_Overworld:
+                extra_id = malloc(sizeof(char)*2);
+                extra_id[0] = '0' + ow_players_map[0];
+                extra_id[1] = NULL;
+                strcat(load_music_key, "music.overworld.\0");
+                strcat(load_music_key, extra_id);
+                break;
+            case gm_PrepareLevel:   /*  TODO: Make this bit based on level IDs. 
+                                        Also add in the Func. Music.
+                                    */
+                /*switch(io_music_ch1){
+                    case MUSID_ATHLETIC:
+                        return MUS_Load("./assets/custom/Level/Athletic.txt", 0);
+                    case MUSID_OVERWORLD:
+                        return MUS_Load("./assets/custom/Level/Overworld.txt", 0);
+                    case MUSID_SWIMMING:
+                        return MUS_Load("./assets/custom/Level/Swimming.txt", 0);
+                    case MUSID_UNDERGROUND:
+                        return MUS_Load("./assets/custom/Level/Underground.txt", 0);
+                    case MUSID_HAUNTED:
+                        return MUS_Load("./assets/custom/Level/Haunted.txt", 0);
+                    case MUSID_CASTLE:
+                        return MUS_Load("./assets/custom/Level/Castle.txt", 0);
+                    case MUSID_PALACE:
+                        return MUS_Load("./assets/custom/Level/Palace.txt", 0);
+                    case MUSID_BOSS:
+                        return MUS_Load("./assets/custom/Level/Boss.txt", 0);
+                }*/
+                extra_id = malloc(sizeof(char)*2);
+                sprintf(extra_id, "%d", io_music_ch1);
+                printf("extra_id: %s.\n", extra_id);
+                strcat(load_music_key, "music.level.\0");
+                strcat(load_music_key, extra_id);
+                break;
+            case gm_Level:
+                /*switch(io_music_ch1){
+                    case MUSID_PSWITCH:
+                        return MUS_Load("./assets/custom/Gameplay/PSwitch.txt", 1);
+                }*/
+                extra_id = malloc(sizeof(char)*2);
+                //printf("io_music_ch1: %u.\n", io_music_ch1);
+                /*extra_id[0] = '0' + io_music_ch1;
+                printf("extra_id: %c.\n", extra_id[0]);
+                extra_id[1] = NULL;*/
+                sprintf(extra_id, "%d", io_music_ch1);
+                printf("extra_id: %s.\n", extra_id);
+                strcat(load_music_key, "music.gameplay.\0");
+                strcat(load_music_key, extra_id);
+                break;
+        }
     }
-    return MUS_Load(load_music_key, 0);
+
+    return MUS_Load(load_music_key, (isInterrupt != NULL && isInterrupt));
 }
 
 /*  MUS_Load(filePath, doInterrupt);
@@ -111,7 +121,10 @@ int MUS_Load(const char* key, int doInterrupt){
     strcpy(desired_path, desired_path_value->u.string.ptr);
 
     if(desired_start_value) {
-        desired_start = desired_start_value->u.integer;
+        if(doInterrupt)
+            desired_start = curMusicPos_Back;
+        else
+            desired_start = desired_start_value->u.integer;
     }
 
     if(desired_end_value) {
@@ -128,6 +141,9 @@ int MUS_Load(const char* key, int doInterrupt){
 
     if(should_do_interrupt_value) {
         should_do_interrupt = should_do_interrupt_value->u.boolean;
+        if(should_do_interrupt){
+            curMusicPos_Back = curMusicPos;
+        }
     }
 
     return MUS_LoadFile(desired_path, &desired_start, (desired_end >= 0)? &desired_end : NULL, (desired_loop >= 0)? &desired_loop : NULL, &should_do_loop, &should_do_interrupt);
@@ -173,6 +189,8 @@ int MUS_LoadFile(const char* path, double* start, double* end, double* loop, int
         curMusicEndPoint = *end;
     curMusicDoLoop = *doLoop;
 
+    printf("MUS_LoadFile(): Loading music with vars: %u, %u, %u, %i, %i.\n", curMusicPos, curMusicEndPoint, curMusicLoopPoint, curMusicDoLoop, isInterrupt);
+
     // Play music.
     Mix_PlayMusic(gMusic_Playing, 0);
     Mix_SetMusicPosition((double)curMusicPos / 1000);
@@ -186,11 +204,11 @@ int MUS_LoadFile(const char* path, double* start, double* end, double* loop, int
 */
 void MUS_Step(){
     if(gMusic_Playing != NULL && !Mix_PausedMusic()){
-        double temp = Mix_GetMusicPosition(gMusic_Playing) * 1000;
-        curMusicPos = temp;
+        //double temp = Mix_GetMusicPosition(gMusic_Playing) * 1000;
+        curMusicPos = Mix_GetMusicPosition(gMusic_Playing) * 1000;//temp;
     }
     
-    //printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
+    printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
     //printf("counter_global_frames: %u.\n", counter_global_frames);
 
 

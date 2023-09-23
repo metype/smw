@@ -14,7 +14,7 @@ json_value* gLoadedSoundModFile;
 const char* curTrackPath;                   // Path to whatever is currently playing.
 double curMusicPos;                         // Music position in ms.
 double curMusicLoopPoint, curMusicEndPoint; // Where music should loop and end in ms. 
-double curMusicDoLoop;                      // Whether or not the current song should loop.
+int curMusicDoLoop;                      // Whether or not the current song should loop.
 int isInterrupt;                             // Whether or not the current track interrupted a previous track.
 Mix_Music* gMusic_Playing;                  // The currently playing track.
 
@@ -23,7 +23,7 @@ Mix_Music* gMusic_Playing;                  // The currently playing track.
 const char* curTrackPath_Back;
 double curMusicPos_Back;
 double curMusicLoopPoint_Back, curMusicEndPoint_Back;
-double curMusicDoLoop_Back;
+int curMusicDoLoop_Back;
 
 /* Sound Vars */
 Mix_Chunk* gSound_Default;
