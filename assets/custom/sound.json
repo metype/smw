@@ -4,6 +4,23 @@
         "start_at" : 0,
         "end_at" : 371000,
         "loop_point" : 0,
-        "do_loop" : false
+        "do_loop" : false,
+        "do_interrupt" : false
+    },
+    "music.overworld.1" : {
+        "path" : "./assets/custom/Music/Overworld/LeavesFillThePath.mp3",
+        "start_at" : 0,
+        "end_at" : 46948,
+        "loop_point" : 15955,
+        "do_loop" : true,
+        "do_interrupt" : false
+    },
+    "music.level.14" : {
+        "path" : "./assets/custom/Music/Overworld/LeavesFillThePath.mp3",
+        "start_at" : 0,
+        "end_at" : 5000,
+        "loop_point" : 0,
+        "do_loop" : true,
+        "do_interrupt" : true
     }
 }

@@ -16,7 +16,7 @@ int MUS_LoadBasedContext(){
 
     if(isInterrupt){
         printf("MUS_LoadBasedContext(): Loading interrupted music: %s\n", curTrackPath_Back);
-        MUS_LoadFile(curTrackPath_Back, &curMusicPos_Back, &curMusicEndPoint_Back, &curMusicLoopPoint_Back, &curMusicDoLoop_Back, 0);
+        //MUS_LoadFile(curTrackPath_Back, &curMusicPos_Back, &curMusicEndPoint_Back, &curMusicLoopPoint_Back, &curMusicDoLoop_Back, 0);
         return 1;
     }
 
@@ -58,10 +58,19 @@ int MUS_LoadBasedContext(){
             }
             break;
         case gm_Level:
-            switch(io_music_ch1){
+            /*switch(io_music_ch1){
                 case MUSID_PSWITCH:
                     return MUS_Load("./assets/custom/Gameplay/PSwitch.txt", 1);
-            }
+            }*/
+            extra_id = malloc(sizeof(char)*2);
+            //printf("io_music_ch1: %u.\n", io_music_ch1);
+            /*extra_id[0] = '0' + io_music_ch1;
+            printf("extra_id: %c.\n", extra_id[0]);
+            extra_id[1] = NULL;*/
+            sprintf(extra_id, "%d", io_music_ch1);
+            printf("extra_id: %s.\n", extra_id);
+            strcat(load_music_key, "music.level.\0");
+            strcat(load_music_key, extra_id);
             break;
     }
     return MUS_Load(load_music_key, 0);
