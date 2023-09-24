@@ -103,8 +103,11 @@ int MUS_Load(const char* key, int doInterrupt){
     }
 
     char* desired_path = malloc(sizeof(char)*_MAX_PATH);
-    double desired_start = 0, desired_end = -1, desired_loop = -1;
-    int should_do_loop = true, should_do_interrupt = false;
+    double *desired_start = malloc(sizeof(double)), *desired_end = malloc(sizeof(double)), *desired_loop = malloc(sizeof(double));
+    int *should_do_loop = malloc(sizeof(int)), *should_do_interrupt = malloc(sizeof(int));
+
+    *desired_end = -1;
+    *desired_loop = -1;
 
     json_value* desired_path_value = GetValueByKey("path", music_info);
     json_value* desired_start_value = GetValueByKey("start_at", music_info);
@@ -122,31 +125,39 @@ int MUS_Load(const char* key, int doInterrupt){
 
     if(desired_start_value) {
         if(doInterrupt)
-            desired_start = curMusicPos_Back;
+            *desired_start = curMusicPos_Back;
         else
-            desired_start = desired_start_value->u.integer;
+            *desired_start = desired_start_value->u.integer;
     }
 
     if(desired_end_value) {
-        desired_end = desired_end_value->u.integer;
+        *desired_end = desired_end_value->u.integer;
     }
 
     if(desired_loop_value) {
-        desired_loop = desired_loop_value->u.integer;
+        *desired_loop = desired_loop_value->u.integer;
     }
 
     if(should_do_loop_value) {
-        should_do_loop = should_do_loop_value->u.boolean;
+        *should_do_loop = should_do_loop_value->u.boolean;
     }
 
     if(should_do_interrupt_value) {
-        should_do_interrupt = should_do_interrupt_value->u.boolean;
+        *should_do_interrupt = should_do_interrupt_value->u.boolean;
         if(should_do_interrupt){
             curMusicPos_Back = curMusicPos;
         }
     }
 
-    return MUS_LoadFile(desired_path, &desired_start, (desired_end >= 0)? &desired_end : NULL, (desired_loop >= 0)? &desired_loop : NULL, &should_do_loop, &should_do_interrupt);
+    int ret_value = MUS_LoadFile(desired_path, desired_start, desired_end, desired_loop, should_do_loop, should_do_interrupt);
+    free(desired_start);
+    free(desired_path);
+    free(desired_end);
+    free(desired_loop);
+    free(should_do_interrupt);
+    free(should_do_loop);
+
+    return ret_value;
 }
 
 /*  MUS_LoadFile(path, start, end, loop, doLoop);
@@ -177,23 +188,28 @@ int MUS_LoadFile(const char* path, double* start, double* end, double* loop, int
     }
     curTrackPath = path;
 
+    bool defaultLoop = (loop == NULL), defaultEnd = (end == NULL);
+
+    if(!defaultLoop) defaultLoop = (*loop < 0);
+    if(!defaultEnd) defaultEnd = (*end < 0);
+
     // Tracking vars.
     curMusicPos = *start;
-    if(loop == NULL)
+    if(defaultLoop)
         curMusicLoopPoint = Mix_MusicDuration(gMusic_Playing) * 1000;
     else
         curMusicLoopPoint = *loop;
-    if(end == NULL)
+    if(defaultEnd)
         curMusicEndPoint = Mix_MusicDuration(gMusic_Playing) * 1000;
     else
         curMusicEndPoint = *end;
     curMusicDoLoop = *doLoop;
 
-    printf("MUS_LoadFile(): Loading music with vars: %u, %u, %u, %i, %i.\n", curMusicPos, curMusicEndPoint, curMusicLoopPoint, curMusicDoLoop, isInterrupt);
+    printf("MUS_LoadFile(): Loading music with vars: %f, %f, %f, %i, %i.\n", curMusicPos, curMusicEndPoint, curMusicLoopPoint, curMusicDoLoop, isInterrupt);
 
     // Play music.
     Mix_PlayMusic(gMusic_Playing, 0);
-    Mix_SetMusicPosition((double)curMusicPos / 1000);
+    Mix_SetMusicPosition(curMusicPos / 1000);
     Mix_ResumeMusic();
 
     return 1;
@@ -208,7 +224,7 @@ void MUS_Step(){
         curMusicPos = Mix_GetMusicPosition(gMusic_Playing) * 1000;//temp;
     }
     
-    printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
+    //printf("Stuff: %u / %u / %u.\n", curMusicEndPoint, curMusicLoopPoint, curMusicPos);
     //printf("counter_global_frames: %u.\n", counter_global_frames);
 
 
