@@ -16,6 +16,7 @@ double curMusicPos;                         // Music position in ms.
 double curMusicLoopPoint, curMusicEndPoint; // Where music should loop and end in ms. 
 int curMusicDoLoop;                      // Whether or not the current song should loop.
 int isInterrupt;                             // Whether or not the current track interrupted a previous track.
+int doingInterrupt;
 Mix_Music* gMusic_Playing;                  // The currently playing track.
 
 // The vars below are used in case something like the P-Switch music intterupts the current track.
